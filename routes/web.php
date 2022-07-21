@@ -15,7 +15,7 @@ Route::post('/auth/login',[LoginController::class,"login"])->name("auth.login");
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get("/home",[ViewsController::class,"dashboard"])->name("dashboard");
+    Route::get("/home",[ViewsController::class,"dashboard"])->name("home");
     Route::get("/dashboard",[ViewsController::class,"dashboard"])->name("dashboard");
     Route::get("/relatorios/facebook",[RelatoriosController::class,"facebook"])->name("relatorios.facebook");
 });

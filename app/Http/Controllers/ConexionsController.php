@@ -31,7 +31,7 @@ class ConexionsController extends Controller
             $endpoint = "https://facebook.com/".env('FB_API_VERSION')."/dialog/oauth";
             $params = array(
                 "client_id" => env("FB_APP_ID"),
-                "redirect_uri" => route("conexions.facebook.callback"),
+                "redirect_uri" => env("FB_APP_CALLBACK"),
                 "state" => env("FACEBOOK_APP_STATE"),
                 "scope"=>"email,attribution_read,ads_management,ads_read,public_profile,read_insights"
             );
@@ -45,7 +45,7 @@ class ConexionsController extends Controller
                 "route"=>null // name of the route
             ]
         ];
-        return view('conexions.facebook',compact('breadcrumblinks','urllogin'));
+        return view('conexions.facebook',compact('breadcrumblinks','6697'));
     }
 
 

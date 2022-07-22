@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use FacebookAds\Object\AdSet;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
-use Illuminate\Http\Request;
-
 use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Fields\CampaignFields;
+use Illuminate\Http\Request;
 
 class RelatoriosController extends Controller
 {
@@ -74,12 +73,18 @@ class RelatoriosController extends Controller
                     "id"=>$campaign->{CampaignFields::ID},
                     "name"=>$campaign->{CampaignFields::NAME},
                     "status"=>$campaign->{CampaignFields::STATUS},
-                    "start_time"=>$campaign->{CampaignFields::START_TIME},
-                    "end_time"=>$campaign->{CampaignFields::STOP_TIME},
+                    "start_time"=>date('Y-m-d H:i:s', strtotime($campaign->{CampaignFields::START_TIME})),
+                    "end_time"=>date('Y-m-d H:i:s', strtotime($campaign->{CampaignFields::STOP_TIME}))
                 ));
             }
+            $breadcrumblinks = [
+                [
+                    "active"=>true,
+                    "title"=>"Campanhas de facebook",
+                    "route"=>"relatorios.facebook" // name of the route
+                ]
+            ];
 
-
-        return view('containers.relatorios.facebook',compact("campaigns"));
+        return view('containers.relatorios.facebook',compact("campaigns","breadcrumblinks"));
     }
 }

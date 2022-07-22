@@ -12,7 +12,17 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">@yield("currentpage","Intelligence")</li>
+                                    @isset($breadcrumblinks)
+                                        @foreach ($breadcrumblinks as $bread)
+                                            <li class="breadcrumb-item {{ $bread["active"] ? 'active' : '' }}" aria-current="page">
+                                            @if ($bread["route"])
+                                                <a href="{{ route($bread["route"]) }}">{{ $bread["title"] }}</a>
+                                            @else
+                                                {{ $bread["title"] }}
+                                            @endif
+                                            </li>
+                                        @endforeach
+                                    @endisset
                                 </ol>
                             </nav>
                         </div>

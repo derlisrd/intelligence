@@ -86,21 +86,12 @@
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
-                                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-alert"></i><span
-                                    class="hide-menu">Errors </span></a>
+                                href="javascript:void(0)" aria-expanded="false"><i class="fas fa-rocket"></i><span
+                                    class="hide-menu">Conexões</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="error-403.html" class="sidebar-link"><i
-                                            class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 403
-                                        </span></a></li>
-                                <li class="sidebar-item"><a href="error-404.html" class="sidebar-link"><i
-                                            class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 404
-                                        </span></a></li>
-                                <li class="sidebar-item"><a href="error-405.html" class="sidebar-link"><i
-                                            class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 405
-                                        </span></a></li>
-                                <li class="sidebar-item"><a href="error-500.html" class="sidebar-link"><i
-                                            class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 500
-                                        </span></a></li>
+                                <li class="sidebar-item"><a href={{ route('conexions.facebook') }} class="sidebar-link"><i class="fab fa-facebook-square"></i>
+                                    <span class="hide-menu"> Conectar facebook</span></a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

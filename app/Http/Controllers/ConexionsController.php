@@ -45,7 +45,7 @@ class ConexionsController extends Controller
                 "route"=>null // name of the route
             ]
         ];
-        return view('conexions.facebook',compact('breadcrumblinks','6697'));
+        return view('conexions.facebook',compact('breadcrumblinks','urllogin'));
     }
 
 

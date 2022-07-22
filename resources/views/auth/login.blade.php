@@ -20,6 +20,18 @@
                         </div>
                         <form action="{{ route("auth.login") }}" method="POST">
                             @csrf
+
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger" role="alert">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+
                             <div class="form-group mt-3">
                                 <input type="email" class="form-control my-3" name="email" autocomplete="off" autofocus required>
                                 <label class="form-control-placeholder" for="email">Email</label>

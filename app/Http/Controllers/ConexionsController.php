@@ -59,22 +59,7 @@ class ConexionsController extends Controller
         return view('conexions.facebookcallback',compact('userfb'));
     }
 
-    public function ejemplo(){
-        $token = $_GET['token'];
-        $access_token = $token;
-        $app_secret = env("FB_APP_SECRET");
-        $app_id = env("FB_APP_ID");
-        $iduser = $_GET['id'];
-        //version v14.0
-        $endpoint = "https://graph.facebook.com/".env("FB_API_VERSION")."/".$iduser."/adaccounts?access_token=$access_token";
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,$endpoint);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-        $fbme = curl_exec($ch);
-        curl_close($ch);
-        print_r($fbme);
-    }
+
 
 
 
@@ -97,7 +82,12 @@ class ConexionsController extends Controller
                 "route"=>null // name of the route
             ]
         ];
-        return view('conexions.facebook',compact('breadcrumblinks','urllogin'));
+
+        $fbuser = new FacebookUser();
+        $fbusers = $fbuser->all();
+
+
+        return view('conexions.facebook',compact('breadcrumblinks','urllogin','fbusers'));
     }
 
 

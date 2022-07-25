@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\FacebookUser;
 use Illuminate\Http\Request;
 use FacebookAds\Object\AdSet;
 use FacebookAds\Api;
@@ -11,6 +13,30 @@ use FacebookAds\Object\Fields\AdsInsightsFields;
 
 class RelatoriosFacebookController extends Controller
 {
+
+
+    public function getAcountsConnected(){
+
+    }
+
+
+    public function getCampainByUserId(Request $request){
+        $id = $request->id;
+        $fbusers = new FacebookUser();
+
+        $fbuser = $fbusers::find($id);
+        $facebook_user_id = $fbuser->facebook_user_id;
+        $access_token = $fbuser->access_token;
+        $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?access_token=".$access_token;
+
+        $response = json_decode(getcurl($endpoint),true);
+
+
+
+
+        dd($response);
+
+    }
 
 
     public function getCampaign(Request $request){
@@ -60,4 +86,9 @@ class RelatoriosFacebookController extends Controller
         return view('containers.relatorios.facebook_campaign',compact("campaigns","breadcrumblinks"));
 
     }
+
+
+
+
+
 }

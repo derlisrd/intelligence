@@ -10,26 +10,22 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Facebook</h5>
+            <h5 class="card-title">Contas conectadas</h5>
             <div class="table-responsive">
                 <table id="zero_config" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>NOME</th>
-                            <th>STATUS</th>
-                            <th>INICIO</th>
-                            <th>FIN</th>
+                            <th>EMAIL</th>
+                            <th>USER ID</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($campaigns as $campaign)
+                        @foreach ($fbusers as $user)
                             <tr>
-                                <td>
-                                    <a href="{{ url('/relatorios/facebook/'. $campaign['id']) }}">{{ $campaign['name'] }}</a>
-                                </td>
-                                <td>{{ $campaign['status'] }}</td>
-                                <td>{{ $campaign['start_time']}}</td>
-                                <td>{{ $campaign['end_time'] }}</td>
+                                <td><b><a href="/relatorios/facebook/user/{{ $user->id }}"> {{ $user->name }}</a></b></td>
+                                <td><b>{{ $user->email }}</b></td>
+                                <td><b>{{ $user->facebook_user_id}}</b></td>
                             </tr>
                         @endforeach
 
@@ -37,12 +33,13 @@
                     <tfoot>
                         <tr>
                             <th>NOME</th>
-                            <th>STATUS</th>
-                            <th>INICIO</th>
-                            <th>FIN</th>
+                            <th>EMAIL</th>
+                            <th>USER ID</th>
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+        </div>
     </div>
 </div>
 

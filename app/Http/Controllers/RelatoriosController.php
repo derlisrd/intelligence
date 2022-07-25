@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FacebookUser;
 use FacebookAds\Object\AdSet;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
@@ -11,7 +12,20 @@ use Illuminate\Http\Request;
 
 class RelatoriosController extends Controller
 {
+
+
     public function facebook(){
+
+        $fbuser = new FacebookUser();
+        $fbusers = $fbuser->all();
+
+        return view('containers.relatorios.facebook_lista',compact("fbusers"));
+
+    }
+
+
+
+    public function facebook_(){
 
 
 

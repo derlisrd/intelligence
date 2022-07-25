@@ -52,10 +52,10 @@ class ConexionsController extends Controller
             $fbme = curl_exec($ch2);
             curl_close($ch2);
              $fbresponse = json_decode($fbme,true);
-             $datas = $fbresponse['access_token'];
 
 
-            dd($datas);
+
+            dd($fbresponse);
 
 
 

@@ -27,7 +27,8 @@ class ConexionsController extends Controller
                 "client_id" => env("FB_APP_ID"),
                 "client_secret" => env("FB_APP_SECRET"),
                 "redirect_uri" => env("FB_APP_CALLBACK"),
-                "code"=>$code
+                "code"=>$code,
+                "fields"=>array("email", "id")
             );
             $ch = curl_init();
             curl_setopt($ch,CURLOPT_URL,$endpoint.'?'.http_build_query($params));

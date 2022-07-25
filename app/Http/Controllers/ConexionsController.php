@@ -69,7 +69,7 @@ class ConexionsController extends Controller
             $params = array(
                 "client_id" => env("FB_APP_ID"),
                 "redirect_uri" => env("FB_APP_CALLBACK"),
-                "state" => env("FACEBOOK_APP_STATE"),
+                "state" => "active",
                 "scope"=>"email,attribution_read,ads_management,ads_read,public_profile,read_insights"
             );
 

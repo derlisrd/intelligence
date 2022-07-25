@@ -35,14 +35,15 @@ class ConexionsController extends Controller
             curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
 
             $fb = curl_exec($ch);
+            dd($fb);
             $fbresponse = json_decode($fb,true);
             curl_close($ch);
             $fb_token = $fbresponse['access_token'];
 
 
-            dd($fb_token);
+            //dd($fb_token);
         }
-        return view('conexions.facebookcallback',compact('fb_token'));
+        //return view('conexions.facebookcallback',compact('fb_token'));
     }
 
 

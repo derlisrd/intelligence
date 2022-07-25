@@ -24,9 +24,9 @@ class ConexionsController extends Controller
             $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/oauth/access_token";
             $code = $_GET['code'];
             $params = array(
-                "client_id" => env("FACEBOOK_APP_ID"),
-                "client_secret" => env("FACEBOOK_SECRET_KEY"),
-                "redirect_uri" => env("FACEBOOK_REDIRECT_URI"),
+                "client_id" => env("FB_APP_ID"),
+                "client_secret" => env("FB_APP_SECRET"),
+                "redirect_uri" => env("FB_APP_CALLBACK"),
                 "code"=>$code
             );
             $ch = curl_init();
@@ -39,6 +39,8 @@ class ConexionsController extends Controller
             curl_close($ch);
             $fb_token = $fbresponse['access_token'];
 
+
+            dd($fb_token);
         }
         return view('conexions.facebookcallback',compact('fb_token'));
     }

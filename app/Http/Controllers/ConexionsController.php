@@ -38,11 +38,8 @@ class ConexionsController extends Controller
             $endpoint = $endpoint.'?'.http_build_query($params);
             $fbresponse = json_decode(getcurl($endpoint),true);
             $access_token = $fbresponse['access_token'];
-            dd($fbresponse);
 
-            $endpointme = "https://graph.facebook.com/".env('FB_API_VERSION')."/me";
-            $params2 = array("fields"=>"email,id,name","access_token"=>$access_token);
-            $$endpointme = $endpointme.'?'.http_build_query($params2);
+            $endpointme = "https://graph.facebook.com/".env('FB_API_VERSION')."/me?fields=email,id,name,access_token=$access_token";
 
             $fbresponse2 = json_decode(getcurl($endpointme),true);
 

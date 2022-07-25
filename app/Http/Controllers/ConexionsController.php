@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FacebookUser;
 use Illuminate\Http\Request;
 
 class ConexionsController extends Controller
@@ -39,27 +40,28 @@ class ConexionsController extends Controller
             $fb = curl_exec($ch);
             $fbresponse = json_decode($fb,true);
             curl_close($ch);
-            $fb_token = $fbresponse['access_token'];
+            $access_token = $fbresponse['access_token'];
 
 
             $endpointme = "https://graph.facebook.com/".env('FB_API_VERSION')."/me";
             $ch2 = curl_init();
-            $params2 = array("fields"=>"email","access_token"=>$fb_token);
+            $params2 = array("fields"=>"email","access_token"=>$access_token);
 
             curl_setopt($ch2,CURLOPT_URL,$endpointme.'?'.http_build_query($params2));
             curl_setopt($ch2,CURLOPT_RETURNTRANSFER,true);
             curl_setopt($ch2,CURLOPT_SSL_VERIFYPEER, false);
             $fbme = curl_exec($ch2);
             curl_close($ch2);
-             $fbresponse = json_decode($fbme,true);
+            $fbresponse2 = json_decode($fbme,true);
+            $email = $fbresponse2['email'];
 
 
+            $Facebook  = new FacebookUser();
+            $Facebook->email = $email;
+            $Facebook->access_token = $access_token;
+            $Facebook->save();
 
-            dd($fbresponse);
 
-
-
-            //dd($fb_token);
         }
         //return view('conexions.facebookcallback',compact('fb_token'));
     }

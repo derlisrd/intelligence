@@ -22,13 +22,14 @@ class ConexionsController extends Controller
 
         if(isset($_GET['code'])){
             $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/oauth/access_token";
+
             $code = $_GET['code'];
             $params = array(
                 "client_id" => env("FB_APP_ID"),
                 "client_secret" => env("FB_APP_SECRET"),
                 "redirect_uri" => env("FB_APP_CALLBACK"),
                 "code"=>$code,
-                "fields"=>array("email", "id")
+                "fields"=>"email"
             );
             $ch = curl_init();
             curl_setopt($ch,CURLOPT_URL,$endpoint.'?'.http_build_query($params));
@@ -36,10 +37,30 @@ class ConexionsController extends Controller
             curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
 
             $fb = curl_exec($ch);
-            dd($fb);
             $fbresponse = json_decode($fb,true);
             curl_close($ch);
             $fb_token = $fbresponse['access_token'];
+
+
+            dd($fb);
+
+
+/*
+            $endpointme = "https://graph.facebook.com/".env('FB_API_VERSION')."/me";
+            $ch2 = curl_init();
+            $params2 = array("fields"=>"email","access_token"=>$fb_token);
+
+            curl_setopt($ch2,CURLOPT_URL,$endpointme.'?'.http_build_query($params2));
+            curl_setopt($ch2,CURLOPT_RETURNTRANSFER,true);
+            curl_setopt($ch2,CURLOPT_SSL_VERIFYPEER, false);
+            $fbme = curl_exec($ch2);
+            curl_close($ch2);
+             $fbresponse = json_decode($fbme,true);
+             $datas = $fbresponse['access_token'];
+             */
+
+
+
 
 
             //dd($fb_token);

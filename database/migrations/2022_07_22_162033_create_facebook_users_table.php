@@ -16,6 +16,7 @@ class CreateFacebookUsersTable extends Migration
         Schema::create('facebook_users', function (Blueprint $table) {
             $table->id();
             $table->string('email');
+            $table->string('name');
             $table->string('facebook_user_id');
             $table->text("access_token");
             $table->timestamps();

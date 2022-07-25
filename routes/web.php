@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get("/ejemplo",[ConexionsController::class,"ejemplo"]);
+
 });
 
 

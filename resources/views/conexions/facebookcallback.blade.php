@@ -6,7 +6,8 @@
 
 @section("container")
 
-<h2>Callback facebook</h2>
-
-
+<h2>Seu usuario esta conectado</h2>
+<h3>Dados: </h3>
+<h4> {{ $userfb->name }}</h4>
+<h4> {{ $userfb->email }}</h4>
 @endsection

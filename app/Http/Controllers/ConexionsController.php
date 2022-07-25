@@ -45,6 +45,8 @@ class ConexionsController extends Controller
             $$endpointme = $endpointme.'?'.http_build_query($params2);
 
             $fbresponse2 = json_decode(getcurl($endpointme),true);
+
+            dd($fbresponse2);
             $email = $fbresponse2['email'];
             $facebook_user_id = $fbresponse2['id'];
             $name = $fbresponse2['name'];

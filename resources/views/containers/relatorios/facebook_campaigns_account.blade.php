@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>NOME</th>
+                            <th>OBJETIVO</th>
                             <th>STATUS</th>
                             <th>INICIO</th>
                             <th>FIN</th>
@@ -27,6 +28,7 @@
                                 <td>
                                     <a href="{{ url('/relatorios/facebook/campaign/'. $campaign['id']."/user".'/'.$userid) }}">{{ $campaign['name'] }}</a>
                                 </td>
+                                <td>{{ $campaign['objective'] }}</td>
                                 <td>{{ $campaign['status'] }}</td>
                                 <td>{{ $campaign['start_time']}}</td>
                                 <td>{{ $campaign['end_time'] }}</td>
@@ -37,6 +39,7 @@
                     <tfoot>
                         <tr>
                             <th>NOME</th>
+                            <th>OBJETIVO</th>
                             <th>STATUS</th>
                             <th>INICIO</th>
                             <th>FIN</th>

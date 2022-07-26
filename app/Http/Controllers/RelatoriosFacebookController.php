@@ -9,6 +9,7 @@ use FacebookAds\Object\AdSet;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\AdAccount;
+use FacebookAds\Object\Campaign;
 use FacebookAds\Object\Fields\CampaignFields;
 use FacebookAds\Object\Fields\AdsInsightsFields;
 
@@ -78,6 +79,18 @@ class RelatoriosFacebookController extends Controller
         $api = Api::init($app_id, $app_secret, $access_token);
         $api->setLogger(new CurlLogger());
 
+        $fields = array();
+        $params = array(
+        );
+        echo json_encode((new Campaign($id))->getAds(
+        $fields,
+        $params
+        )->getResponse()->getContent(), JSON_PRETTY_PRINT);
+
+
+        /* $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+
         $fields = ['impressions','cpc','cpm','ctr','campaign_name','clicks'];
         $params = array('breakdown' => 'publisher_platform');
         $cursor = (new AdSet($id))->getInsights($fields,$params);
@@ -105,7 +118,7 @@ class RelatoriosFacebookController extends Controller
                 "route"=>null // name of the route
             ]
         ];
-        dd($campaigns);
+        dd($campaigns); */
         //return view('containers.relatorios.facebook_campaign',compact("campaigns","breadcrumblinks"));
     }
 
@@ -122,17 +135,32 @@ class RelatoriosFacebookController extends Controller
 
             $app_id = env('FB_APP_ID');
             $app_secret = env('FB_APP_SECRET');
-            $api_version = env('FB_API_VERSION');
 
-            Api::init($app_id, $app_secret, $access_token);
+
+
+            $api = Api::init($app_id, $app_secret, $access_token);
+            $api->setLogger(new CurlLogger());
+
+            $fields = array(
+            'objective','id','name','status','start_time','stop_time'
+            );
+            $params = array(
+            'effective_status' => array('ACTIVE','PAUSED'),
+            );
+
+            $api = Api::init($app_id, $app_secret, $access_token);
+            $api->setLogger(new CurlLogger());
             $account = new AdAccount($act_account_id);
-            $cursor = $account->getCampaigns(['id','name','status','start_time','stop_time']);
+            $cursor = $account->getCampaigns($fields,$params);
+
+
             $campaigns = [];
             foreach ($cursor as $campaign) {
                 array_push($campaigns,
                 array(
                     "id"=>$campaign->{CampaignFields::ID},
                     "name"=>$campaign->{CampaignFields::NAME},
+                    "objective"=>$campaign->{CampaignFields::OBJECTIVE},
                     "status"=>$campaign->{CampaignFields::STATUS},
                     "start_time"=>date('Y-m-d H:i:s', strtotime($campaign->{CampaignFields::START_TIME})),
                     "end_time"=>date('Y-m-d H:i:s', strtotime($campaign->{CampaignFields::STOP_TIME}))

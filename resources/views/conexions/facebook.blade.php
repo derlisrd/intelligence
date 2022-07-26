@@ -7,7 +7,7 @@
 @section("container")
 <div class="my-5">
     <fb:login-button
-  scope="email,attribution_read,ads_management,ads_read,public_profile,read_insights"
+  scope="email,ads_management,ads_read,read_insights"
   onlogin="checkLoginState();">
 </fb:login-button>
 </div>

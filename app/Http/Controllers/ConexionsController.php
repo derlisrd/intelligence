@@ -68,8 +68,8 @@ class ConexionsController extends Controller
             $endpoint = "https://facebook.com/".env('FB_API_VERSION')."/dialog/oauth";
             $params = array(
                 "client_id" => env("FB_APP_ID"),
-                //"redirect_uri" => env("FB_APP_CALLBACK"),
-                "redirect_uri" => url('conexions/facebook/callback'),
+                "redirect_uri" => env("FB_APP_CALLBACK"),
+                //"redirect_uri" => url('conexions/facebook/callback'),
                 "state" => "active",
                 "scope"=>"email,ads_management,ads_read,attribution_read,business_management,pages_manage_ads,read_insights"
 

@@ -9,4 +9,12 @@ class FacebookUser extends Model
 {
     use HasFactory;
     protected $table= "facebook_users";
+
+
+    //relacion uno a muchos
+    public function bussiness_accounts(){
+
+        return $this->hasMany(FacebookBussinessAccount::class,'facebook_users_id');
+
+    }
 }

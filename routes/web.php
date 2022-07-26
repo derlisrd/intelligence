@@ -28,8 +28,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get("/relatorios/facebook",[RelatoriosController::class,"facebook"])->name("relatorios.facebook");
-    Route::get("/relatorios/facebook/user/{id}",[RelatoriosFacebookController::class,'getCampainByUserId'])->name("relatorios.facebook.user");
-
+    Route::get("/relatorios/facebook/user/{id}",[RelatoriosFacebookController::class,'getBussinessAccountByUserId']);
+    Route::get("/relatorios/facebook/campaign/{id}/user/{user_id}",[RelatoriosFacebookController::class,"getCampaingById"]);
+    Route::get("/relatorios/facebook/campaigns/account/{id}",[RelatoriosFacebookController::class,"getCampaignsByAccountId"]);
 
     Route::get("/conexions",[ConexionsController::class,"conexions"])->name("conexions");
     Route::get("/conexions/facebook",[ConexionsController::class,"facebook"])->name("conexions.facebook");

@@ -18,8 +18,14 @@ class RelatoriosController extends Controller
 
         $fbuser = new FacebookUser();
         $fbusers = $fbuser->all();
-
-        return view('containers.relatorios.facebook_lista',compact("fbusers"));
+        $breadcrumblinks = [
+            [
+                "active"=>true,
+                "title"=>"Facebook",
+                "route"=>null// name of the route
+            ]
+        ];
+        return view('containers.relatorios.facebook_lista',compact("fbusers","breadcrumblinks"));
 
     }
 
@@ -55,7 +61,7 @@ class RelatoriosController extends Controller
             Api::init($app_id, $app_secret, $access_token);
 
             // The Api object is now available through singleton
-            //$api = Api::instance();
+            $api = Api::instance();
             $account = new AdAccount($ad_account_id);
             $cursor = $account->getCampaigns(['id','name','status','start_time','end_time']);
 

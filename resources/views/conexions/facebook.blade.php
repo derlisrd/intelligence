@@ -6,10 +6,7 @@
 
 @section("container")
 <div class="my-5">
-    <fb:login-button
-  scope="email,ads_management,ads_read,read_insights"
-  onlogin="checkLoginState();">
-</fb:login-button>
+    <a href="{{ $urllogin }}" class="btn btn-primary">Facebook</a>
 </div>
 
 
@@ -56,32 +53,3 @@
     </div>
 </div>
 @endsection
-
-
-<script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '{{ env('FB_APP_ID') }}',
-        cookie     : true,
-        xfbml      : true,
-        version    : '{{ env('FB_API_VERSION') }}'
-      });
-
-      FB.AppEvents.logPageView();
-
-    };
-
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "https://connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-
-     function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
-  </script>

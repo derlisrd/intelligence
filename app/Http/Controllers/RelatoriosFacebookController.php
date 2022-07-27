@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FacebookBussinessAccount;
+use App\Models\FacebookBusinessAccount;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
 use FacebookAds\Object\AdSet;
@@ -22,7 +22,7 @@ class RelatoriosFacebookController extends Controller
 
     public function getBussinessAccountByUserId(Request $request){
         $id = $request->id;
-        $fbusers = new FacebookBussinessAccount();
+        $fbusers = new FacebookBusinessAccount();
         $fb = $fbusers::where('facebook_users_id', $id)->get();
 
         if($fb->isEmpty()){
@@ -30,10 +30,10 @@ class RelatoriosFacebookController extends Controller
             $facebookuser = $facebookusers::find($id);
             $facebook_user_id = $facebookuser->facebook_user_id;
             $access_token = $facebookuser->access_token;
-            $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?access_token=".$access_token;
+            $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=account_id,id,name&limit=100?access_token=".$access_token;
             $response = json_decode(getcurl($endpoint),true);
             foreach($response['data'] as $value) {
-                $fbinsert = new FacebookBussinessAccount();
+                $fbinsert = new FacebookBusinessAccount();
                 $fbinsert->facebook_users_id = $id;
                 $fbinsert->account_id=$value['account_id'];
                 $fbinsert->act_account_id=$value['id'];
@@ -66,7 +66,7 @@ class RelatoriosFacebookController extends Controller
 
         $id = $request->id;
         $user_id = $request->user_id;
-        $user = new FacebookBussinessAccount();
+        $user = new FacebookBusinessAccount();
         $get_user = $user->find($user_id);
         $access_token = $get_user->facebook_user->access_token;
         //$ad_account_id = $get_user->act_account_id;
@@ -128,7 +128,7 @@ class RelatoriosFacebookController extends Controller
 
 
             $id = $request->id;
-            $accounts = new FacebookBussinessAccount();
+            $accounts = new FacebookBusinessAccount();
             $accountget = $accounts::find($id);
             $act_account_id = $accountget->act_account_id;
             $access_token = $accountget->facebook_user->access_token;

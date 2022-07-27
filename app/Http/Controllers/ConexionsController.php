@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FacebookBusinessAccount;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
 
@@ -37,31 +38,61 @@ class ConexionsController extends Controller
             ];
             $endpoint = $endpoint.'?'.http_build_query($params);
             $fbresponse = json_decode(getcurl($endpoint),true);
-
-
             $access_token = $fbresponse['access_token'];
 
+            $userdata = $this->SaveUserFacebook($access_token);
+            $id = $userdata->id;
+
+
+
+
+        }
+        return view('conexions.facebookcallback',compact('userfb'));
+    }
+
+    private function SaveBussinessAccounts($id){
+
+            try {
+                $facebookusers = new FacebookUser();
+                $facebookuser = $facebookusers::find($id);
+                $facebook_user_id = $facebookuser->facebook_user_id;
+                $access_token = $facebookuser->access_token;
+                $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=name,id,account_id,access_token=".$access_token;
+                $response = json_decode(getcurl($endpoint),true);
+                foreach($response['data'] as $value) {
+                    $fbinsert = new FacebookBusinessAccount();
+                    $fbinsert->facebook_users_id = $id;
+                    $fbinsert->account_id=$value['account_id'];
+                    $fbinsert->act_account_id=$value['id'];
+                    $fbinsert->save();
+                }
+            } catch (\Throwable $th) {
+                print 'Error: ' . $th->getMessage();
+                die();
+            }
+    }
+
+    private function SaveUserFacebook($access_token){
+        try {
+
             $endpointme = "https://graph.facebook.com/".env('FB_API_VERSION')."/me?fields=email,id,name&access_token=$access_token";
-
             $fbresponse2 = json_decode(getcurl($endpointme),true);
-
             $email = $fbresponse2['email'];
             $facebook_user_id = $fbresponse2['id'];
             $name = $fbresponse2['name'];
-
             $Facebook  = new FacebookUser();
             $Facebook->email = $email;
             $Facebook->name = $name;
             $Facebook->facebook_user_id = $facebook_user_id;
             $Facebook->access_token = $access_token;
             $Facebook->save();
-            $userfb = $Facebook::find($Facebook->id);
+            return $Facebook::find($Facebook->id);
 
+        } catch (\Throwable $th) {
+            print 'Error: ' . $th->getMessage();
+            die();
         }
-        return view('conexions.facebookcallback',compact('userfb'));
     }
-
-
 
 
 

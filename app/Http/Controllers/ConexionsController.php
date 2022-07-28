@@ -42,6 +42,9 @@ class ConexionsController extends Controller
 
             $userdata = $this->SaveUserFacebook($access_token);
             $id = $userdata->id;
+            $this->SaveBussinessAccounts($id);
+            $userfb = $userdata;
+
 
 
 
@@ -62,6 +65,7 @@ class ConexionsController extends Controller
                 foreach($response['data'] as $value) {
                     $fbinsert = new FacebookBusinessAccount();
                     $fbinsert->facebook_users_id = $id;
+                    $fbinsert->name = $value['name'];
                     $fbinsert->account_id=$value['account_id'];
                     $fbinsert->act_account_id=$value['id'];
                     $fbinsert->save();

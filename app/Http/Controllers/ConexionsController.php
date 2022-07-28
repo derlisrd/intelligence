@@ -61,7 +61,7 @@ class ConexionsController extends Controller
                 $facebookuser = $facebookusers::find($id);
                 $facebook_user_id = $facebookuser->facebook_user_id;
                 $access_token = $facebookuser->access_token;
-                $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=name,id,account_id&access_token=".$access_token;
+                $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=name,id,account_id&limit=100&access_token=".$access_token;
                 $response = json_decode(getcurl($endpoint),true);
                 foreach($response['data'] as $value) {
                     $fbinsert = new FacebookAdsAccount();

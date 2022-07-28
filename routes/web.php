@@ -27,10 +27,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard",[ViewsController::class,"dashboard"])->name("dashboard");
 
 
-    Route::get("/relatorios/facebook",[RelatoriosController::class,"facebook"])->name("relatorios.facebook");
+    /* Route::get("/relatorios/facebook",[RelatoriosController::class,"facebook"])->name("relatorios.facebook");
     Route::get("/relatorios/facebook/user/{id}",[RelatoriosFacebookController::class,'getBussinessAccountByUserId']);
     Route::get("/relatorios/facebook/campaign/{id}/user/{user_id}",[RelatoriosFacebookController::class,"getCampaingById"]);
-    Route::get("/relatorios/facebook/campaigns/account/{id}",[RelatoriosFacebookController::class,"getCampaignsByAccountId"]);
+    Route::get("/relatorios/facebook/campaigns/account/{id}",[RelatoriosFacebookController::class,"getCampaignsByAccountId"]);  */
+
+    Route::get("/relatorios/facebook",[RelatoriosFacebookController::class,"getFacebookUsers"])->name("relatorios.facebook.users");
+    Route::get('/relatorios/facebook/adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getAdAccountsByUserId"])->name('relatorios.facebook.adaccounts');
+    Route::get('/relatorios/facebook/{fbuser_id}/campaigns/{act_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.campaigns');
+
 
     Route::get("/conexions",[ConexionsController::class,"conexions"])->name("conexions");
     Route::get("/conexions/facebook",[ConexionsController::class,"facebook"])->name("conexions.facebook");

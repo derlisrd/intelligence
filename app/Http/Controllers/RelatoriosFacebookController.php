@@ -13,11 +13,58 @@ use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Campaign;
 use FacebookAds\Object\Fields\CampaignFields;
 use FacebookAds\Object\Fields\AdsInsightsFields;
+use Laravel\Ui\Presets\React;
 
 class RelatoriosFacebookController extends Controller
 {
 
+    public function getFacebookusers(){
+        $fbusers = FacebookUser::all();
+        $breadcrumblinks = [
+            [
+                "active"=>false,
+                "title"=>"Facebook",
+                "route"=>"containers.relatorios.facebook.users" // name of the route
+            ],
+            [
+                "active"=>true,
+                "title"=>"Contas",
+                "route"=>null // name of the route
+            ]
+        ];
+        return view('containers.relatorios.facebook.users',compact("fbusers"));
+    }
 
+    public function getAdAccountsByUserId (Request $request){
+
+        $id = $request->user_fb_id;
+        $fbuser = FacebookUser::find($id);
+
+        return view('containers.relatorios.facebook.adaccounts',compact("fbuser"));
+
+    }
+
+    public function getCampaignsByAdAccountId (Request $request){
+        $act_id = "act_".$request->act_id;
+        $fbuserid = $request->fbuser_id;
+        $fbuser = FacebookUser::find($fbuserid);
+        $access_token = $fbuser->access_token;
+        $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
+
+
+        $api = Api::init($app_id, $app_secret, $access_token);
+            $api->setLogger(new CurlLogger());
+
+            $fields = ['impressions','cpm','cpc','clicks','location','ctr','spend','account_id','account_name','ad_id','adset_name','adset_id'];
+            $params = ['breakdown' => 'publisher_platform','date_preset'=>'last_90d'];
+            echo json_encode((new AdSet($act_id))->getInsights(
+            $fields,
+            $params
+            )->getResponse()->getContent(), JSON_PRETTY_PRINT);
+
+
+    }
 
 
 

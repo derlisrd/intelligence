@@ -28,8 +28,8 @@
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span
                                     class="hide-menu">Relatorios: </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="{{ route('relatorios.facebook') }}" class="sidebar-link"><i class="mdi mdi-facebook-box"></i><span class="hide-menu"> Facebook</span></a></li>
-                                <li class="sidebar-item"><a href="{{ route('relatorios.facebook') }}" class="sidebar-link"><i class="mdi mdi-google-plus"></i><span class="hide-menu"> Google</span></a></li>
+                                <li class="sidebar-item"><a href="{{ route('relatorios.facebook.users') }}" class="sidebar-link"><i class="mdi mdi-facebook-box"></i><span class="hide-menu"> Facebook</span></a></li>
+                                <li class="sidebar-item"><a href="{{ route('relatorios.facebook.users') }}" class="sidebar-link"><i class="mdi mdi-google-plus"></i><span class="hide-menu"> Google</span></a></li>
                             </ul>
                         </li>
 

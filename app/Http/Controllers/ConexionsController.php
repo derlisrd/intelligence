@@ -39,11 +39,11 @@ class ConexionsController extends Controller
             $endpoint = $endpoint.'?'.http_build_query($params);
             $fbresponse = json_decode(getcurl($endpoint),true);
             $access_token = $fbresponse['access_token'];
-            dd($fbresponse);
-            /* $userdata = $this->SaveUserFacebook($access_token);
+
+            $userdata = $this->SaveUserFacebook($access_token);
             $id = $userdata->id;
             $this->SaveBussinessAccounts($id);
-            $userfb = $userdata; */
+            $userfb = $userdata;
 
 
 
@@ -60,7 +60,7 @@ class ConexionsController extends Controller
                 $facebookuser = $facebookusers::find($id);
                 $facebook_user_id = $facebookuser->facebook_user_id;
                 $access_token = $facebookuser->access_token;
-                $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=name,id,account_id,access_token=".$access_token;
+                $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=name,id,account_id&access_token=".$access_token;
                 $response = json_decode(getcurl($endpoint),true);
                 foreach($response['data'] as $value) {
                     $fbinsert = new FacebookBusinessAccount();

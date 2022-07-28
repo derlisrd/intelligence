@@ -13,6 +13,7 @@ class CreateFacebookUsersTable extends Migration
      */
     public function up()
     {
+
         Schema::create('facebook_users', function (Blueprint $table) {
             $table->id();
             $table->string('email');

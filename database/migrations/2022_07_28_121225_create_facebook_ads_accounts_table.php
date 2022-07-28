@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacebookBussinessAccountsTable extends Migration
+class CreateFacebookAdsAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateFacebookBussinessAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('facebook_business_accounts', function (Blueprint $table) {
+        Schema::create('facebook_ads_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger("facebook_users_id")->nullable();
             $table->foreign("facebook_users_id")->references("id")->on("facebook_users")->onDelete("set null");
-            $table->string('facebook_business_id');
+            $table->string('account_id');
+            $table->string("act_account_id");
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateFacebookBussinessAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facebook_business_accounts');
+        Schema::dropIfExists('facebook_ads_accounts');
     }
 }

@@ -39,11 +39,11 @@ class ConexionsController extends Controller
             $endpoint = $endpoint.'?'.http_build_query($params);
             $fbresponse = json_decode(getcurl($endpoint),true);
             $access_token = $fbresponse['access_token'];
-
-            $userdata = $this->SaveUserFacebook($access_token);
+            dd($fbresponse);
+            /* $userdata = $this->SaveUserFacebook($access_token);
             $id = $userdata->id;
             $this->SaveBussinessAccounts($id);
-            $userfb = $userdata;
+            $userfb = $userdata; */
 
 
 

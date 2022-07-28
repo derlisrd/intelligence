@@ -11,6 +11,7 @@ use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Campaign;
+use FacebookAds\Object\Fields\AdSetFields;
 use FacebookAds\Object\Fields\CampaignFields;
 use FacebookAds\Object\Fields\AdsInsightsFields;
 use Laravel\Ui\Presets\React;
@@ -39,7 +40,6 @@ class RelatoriosFacebookController extends Controller
 
         $id = $request->user_fb_id;
         $fbuser = FacebookUser::find($id);
-
         return view('containers.relatorios.facebook.adaccounts',compact("fbuser"));
 
     }
@@ -52,18 +52,40 @@ class RelatoriosFacebookController extends Controller
         $app_id = env('FB_APP_ID');
         $app_secret = env('FB_APP_SECRET');
 
-
         $api = Api::init($app_id, $app_secret, $access_token);
-            $api->setLogger(new CurlLogger());
+        $api->setLogger(new CurlLogger());
+            //'date_preset'=>'last_90d'
+            /* $fields = ['impressions','cpm','cpc','clicks','location','ctr','spend','account_id','account_name','ad_id','adset_name','adset_id'];
+            $params = ['breakdown' => 'publisher_platform','time_range'=>"{'since':'2022-04-01','until':'2022-04-30'}"];
 
-            $fields = ['impressions','cpm','cpc','clicks','location','ctr','spend','account_id','account_name','ad_id','adset_name','adset_id'];
-            $params = ['breakdown' => 'publisher_platform','date_preset'=>'last_90d'];
+
             echo json_encode((new AdSet($act_id))->getInsights(
             $fields,
             $params
-            )->getResponse()->getContent(), JSON_PRETTY_PRINT);
+            )->getResponse()->getContent(), JSON_PRETTY_PRINT); */
 
 
+            /* $account = new AdAccount($act_id );
+            $adsets = $account->getAdSets(array(
+            AdSetFields::NAME,
+            AdSetFields::CONFIGURED_STATUS,
+            AdSetFields::EFFECTIVE_STATUS,
+            ));
+
+            foreach ($adsets as $adset) {
+                echo $adset->{AdSetFields::NAME}.PHP_EOL."<br />";
+            } */
+
+            $api = Api::init($app_id, $app_secret, $access_token);
+            $api->setLogger(new CurlLogger());
+
+            $fields = ['name','objective','id'];
+            $params = array('effective_status' => array('ACTIVE','PAUSED'));
+            $datos = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+
+            $campaigns= $datos['data'];
+
+            return view ('containers.relatorios.facebook.campaigns',compact('campaigns'));
     }
 
 

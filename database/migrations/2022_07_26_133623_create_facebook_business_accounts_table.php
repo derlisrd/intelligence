@@ -30,6 +30,6 @@ class CreateFacebookBussinessAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facebook_bussiness_accounts');
+        Schema::dropIfExists('facebook_business_accounts');
     }
 }

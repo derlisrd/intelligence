@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FacebookAdsAccount;
 use App\Models\FacebookBusinessAccount;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
@@ -63,7 +64,7 @@ class ConexionsController extends Controller
                 $endpoint = "https://graph.facebook.com/".env('FB_API_VERSION')."/".$facebook_user_id."/adaccounts?fields=name,id,account_id&access_token=".$access_token;
                 $response = json_decode(getcurl($endpoint),true);
                 foreach($response['data'] as $value) {
-                    $fbinsert = new FacebookBusinessAccount();
+                    $fbinsert = new FacebookAdsAccount();
                     $fbinsert->facebook_users_id = $id;
                     $fbinsert->name = $value['name'];
                     $fbinsert->account_id=$value['account_id'];

@@ -12,9 +12,9 @@ class FacebookUser extends Model
 
 
     //relacion uno a muchos
-    public function bussiness_accounts(){
+    public function ads_accounts(){
 
-        return $this->hasMany(FacebookBussinessAccount::class,'facebook_users_id');
+        return $this->hasMany(FacebookAdsAccount::class,'facebook_users_id');
 
     }
 }

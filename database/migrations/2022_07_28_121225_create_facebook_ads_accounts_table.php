@@ -15,9 +15,9 @@ class CreateFacebookAdsAccountsTable extends Migration
     {
         Schema::create('facebook_ads_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger("facebook_users_id")->nullable();
             $table->foreign("facebook_users_id")->references("id")->on("facebook_users")->onDelete("set null");
+            $table->string('name');
             $table->string('account_id');
             $table->string("act_account_id");
             $table->timestamps();

@@ -94,21 +94,18 @@ class RelatoriosFacebookController extends Controller
                 "title"=>"Contas de anuncio ",
                 "route"=>'relatorios.facebook.adaccounts',
                 "routeparams"=>[$fbuserid]
-                /* "route"=> 'relatorios.facebook.campaigns', // name of the route
-                "routeparams"=>[$fbuserid,$request->act_id] */
             ],
             [
                 "active"=>true,
-                "title"=>"Campanhas da conta",
+                "title"=>"Campanhas",
                 "route"=>null // name of the route
             ]
         ];
+
+
+
         return view ('containers.relatorios.facebook.campaigns',compact('campaigns','breadcrumblinks','datos_ads_account','fbuserid'));
     }
-
-
-
-
 
 
 
@@ -118,6 +115,50 @@ class RelatoriosFacebookController extends Controller
 
         $fbuser_id = $request->fbuser_id;
         $campaign_id = $request->campaign_id;
+        $fbuser = FacebookUser::find($fbuser_id);
+        $access_token = $fbuser->access_token;
+        $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
+
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+
+        $fields = ['impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id'];
+
+        $params = [];
+        $datas = (new Campaign($campaign_id))->getInsights($fields,$params)->getResponse()->getContent();
+
+        $insights = $datas['data'];
+
+
+
+        $breadcrumblinks = [
+            [
+                "active"=>false,
+                "title"=>"Contas de facebook",
+                "route"=>"relatorios.facebook.users" // name of the route
+            ],
+            [
+                "active"=>false,
+                "title"=>"Contas de anuncio ",
+                "route"=>'relatorios.facebook.adaccounts',
+                "routeparams"=>[$fbuser_id]
+                /* "route"=> 'relatorios.facebook.campaigns', // name of the route
+                "routeparams"=>[$fbuserid,$request->act_id] */
+            ],
+            [
+                "active"=>false,
+                "title"=>"Campanhas",
+                "route"=> 'relatorios.facebook.campaigns', // name of the route
+                "routeparams"=>[$fbuser_id,$insights[0]['account_id']]
+            ],
+            [
+                "active"=>true,
+                "title"=>"Visoes",
+                "route"=>null // name of the route
+            ]
+        ];
+        return view('containers.relatorios.facebook.insights',compact("insights",'breadcrumblinks'));
 
 
     }

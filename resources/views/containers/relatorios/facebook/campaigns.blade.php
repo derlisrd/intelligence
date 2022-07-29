@@ -10,7 +10,7 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Campaigns</h5>
+            <h5 class="card-title">Campanhas da conta: {{ $datos_ads_account->name }}</h5>
             <div class="table-responsive">
                 <table id="zero_config" class="table table-striped table-bordered">
                     <thead>
@@ -27,7 +27,7 @@
                                 <td>{{ $campaign['name'] }}</td>
                                 <td>{{ $campaign['objective'] }}</td>
                                 <td>{{ $campaign['id'] }}</td>
-                                <td><a href="#" class="btn btn-primary">Visoes</a></td>
+                                <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['id']]) }}" class="btn btn-primary">Visoes</a></td>
                             </tr>
                         @endforeach
                     </tbody>

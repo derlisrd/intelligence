@@ -14,4 +14,7 @@ class ViewsController extends Controller
         return view('containers.dashboard');
     }
 
+    public function home(){
+        return view('containers.dashboard');
+    }
 }

@@ -16,7 +16,15 @@
                                         @foreach ($breadcrumblinks as $bread)
                                             <li class="breadcrumb-item {{ $bread["active"] ? 'active' : '' }}" aria-current="page">
                                             @if ($bread["route"])
-                                                <a href="{{ route($bread["route"]) }}">{{ $bread["title"] }}</a>
+                                                <a href="
+                                                    @if(isset( $bread['routeparams']) )
+                                                        {{  route($bread["route"],$bread['routeparams']) }}
+                                                    @else
+                                                       {{  route($bread["route"]) }}
+                                                    @endif
+                                                ">
+                                                    {{ $bread["title"] }}
+                                                </a>
                                             @else
                                                 {{ $bread["title"] }}
                                             @endif

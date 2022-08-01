@@ -243,8 +243,6 @@ class RelatoriosFacebookController extends Controller
             $app_id = env('FB_APP_ID');
             $app_secret = env('FB_APP_SECRET');
 
-
-
             $api = Api::init($app_id, $app_secret, $access_token);
             $api->setLogger(new CurlLogger());
 
@@ -298,6 +296,29 @@ class RelatoriosFacebookController extends Controller
 
 
 
+    public function getCampaignsByAdAccountIdJson (Request $request){
+
+        $act_id = "act_".$request->act_id;
+        $fbuserid = $request->fbuser_id;
+        $fbuser = FacebookUser::find($fbuserid);
+
+
+        $access_token = $fbuser->access_token;
+        $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
+
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+
+        $fields = ['name','objective','id'];
+        $params = array('effective_status' => array('ACTIVE','PAUSED'));
+        $datos = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+
+        $campaigns= $datos['data'];
+
+        return response()->json(["act"=>$act_id,"fbuser_id"=>$fbuserid,"token"=>$access_token,"campaigns"=>$campaigns]);
+
+    }
 
 
 }

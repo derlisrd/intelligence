@@ -8,44 +8,74 @@
 
 
 <div class="row">
+    <div class="col-12 col-sm-4 m-3">
+        <label for="accounts">Contas de anuncios</label>
+        <select  class="form-select form-select-lg mb-3" id="accounts" onchange="changeAccount(this)">
+            <option value="">Seleccionar</option>
+            @foreach ($fbuser->ads_accounts as $account)
+                <option value="{{ $account->account_id }}">{{ $account->name }}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-               Conta: {{ $fbuser->email }}
-            </h5>
-            <div class="table-responsive">
+            <h3 class="card-title">
+               Campanhas
+            </h3>
+
+            <div class="table-responsive" id="_table-responsive">
                 <table id="zero_config" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th><b>NOME</b></th>
-                            <th><b>BUSSINESS ACT ID</b></th>
-                            <th><b>FB USER ID</b></th>
-                            <th><b>ACOES</b></th>
+                            <th>NOME</th>
+                            <th>OBJETIVO</th>
+                            <th>ID CAMPANHA</th>
+                            <th>ACCOES</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($fbuser->ads_accounts as $account)
-                            <tr>
-                                <td>{{ $account->name }}</td>
-                                <td>{{ $account->account_id }}</td>
-                                <td>{{ $account->facebook_users_id}}</td>
-                                <td><a href="{{ route('relatorios.facebook.campaigns',[$fbuser->id,$account->account_id]) }}" class="btn btn-primary">Campanhas</a></td>
-                            </tr>
-                        @endforeach
+                    <tbody id="_tablebody">
 
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th><b>NOME</b></th>
-                            <th><b>BUSSINESS ACT ID</b></th>
-                            <th><b>FB USER ID</b></th>
-                            <th><b>ACOES</b></th>
+                            <th>NOME</th>
+                            <th>OBJETIVO</th>
+                            <th>ID CAMPANHA</th>
+                            <th>ACCOES</th>
                         </tr>
                     </tfoot>
                 </table>
+
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    async function changeAccount(e){
+        let act_account_id = e.value;
+        let fbuser_id = {{ $fbuser->id }}
+
+        if(act_account_id){
+            param = act_account_id;
+            let res = await fetch("/relatorios/facebook/api/campaigns/"+param+"/"+fbuser_id)
+            let data = await res.json();
+            let campaigns = data.campaigns;
+            let htmlcampaigns = "";
+            campaigns.forEach(e=> {
+                htmlcampaigns += `<tr>
+                                <td>${e.name }</td>
+                                <td>${e.objective}</td>
+                                <td>${e.id}</td>
+                                <td><a href="#" class="btn btn-primary">Visoes</a></td>
+                            </tr>`;
+            })
+            let body = document.getElementById('_tablebody');
+            body.innerHTML = htmlcampaigns;
+        }
+
+    }
+</script>
 
 @endsection

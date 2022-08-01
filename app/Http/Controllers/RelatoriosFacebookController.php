@@ -42,6 +42,7 @@ class RelatoriosFacebookController extends Controller
 
         $id = $request->user_fb_id;
         $fbuser = FacebookUser::find($id);
+        $access_token = $fbuser->access_token;
         $breadcrumblinks = [
             [
                 "active"=>false,
@@ -54,7 +55,30 @@ class RelatoriosFacebookController extends Controller
                 "route"=>null // name of the route
             ]
         ];
-        return view('containers.relatorios.facebook.adaccounts',compact("fbuser",'breadcrumblinks'));
+        $campaigns = array();
+
+        /* $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
+
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger()); */
+
+        $contas = $fbuser->ads_accounts ;
+
+        foreach($contas as $conta) {
+            //$fields = ['name','objective','id'];
+            //$params = array('effective_status' => array('ACTIVE','PAUSED'));
+            //$datos = (new AdAccount($conta['act_account_id']))->getCampaigns($fields,$params)->getResponse()->getContent();
+            print("name: " . $conta["name"]. " <br/>");
+            //if(count($datos['data'])>0){
+              //  array_push($campaigns,$datos['data']);
+            //}
+
+        }
+
+        //dd($campaigns);
+
+        //return view('containers.relatorios.facebook.adaccounts',compact("fbuser",'breadcrumblinks','campaigns'));
 
     }
 

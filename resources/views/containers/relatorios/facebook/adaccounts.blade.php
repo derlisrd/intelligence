@@ -34,7 +34,15 @@
                         </tr>
                     </thead>
                     <tbody id="_tablebody">
-
+                        <tr id="_loading" class="d-none" ><td align="center" colspan="4"><h4>Carregando...</h4></td></tr>
+                        @foreach ($campaigns as $campaign)
+                        <tr>
+                            <td>{{ $campaign['name'] }}</td>
+                            <td>{{ $campaign['objective'] }}</td>
+                            <td>{{ $campaign['id'] }}</td>
+                            <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['id']]) }}" class="btn btn-primary">Visoes</a></td>
+                        </tr>
+                    @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
@@ -53,11 +61,13 @@
 </div>
 
 <script>
+    const id = e => document.getElementById(e);
     async function changeAccount(e){
         let act_account_id = e.value;
         let fbuser_id = {{ $fbuser->id }}
 
         if(act_account_id){
+            id('_loading').classList.remove("d-none")
             param = act_account_id;
             let res = await fetch("/relatorios/facebook/api/campaigns/"+param+"/"+fbuser_id)
             let data = await res.json();
@@ -71,10 +81,10 @@
                                 <td><a href="/relatorios/facebook/${fbuser_id}/${e.id}/insights" class="btn btn-primary">Visoes</a></td>
                             </tr>`;
             })
-            let body = document.getElementById('_tablebody');
-            body.innerHTML = htmlcampaigns;
-        }
+            id('_tablebody').innerHTML = htmlcampaigns;
 
+        }
+        id('_loading').classList.add("d-none")
     }
 </script>
 

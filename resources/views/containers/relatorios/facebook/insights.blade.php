@@ -8,9 +8,29 @@
 
 
 <div class="row">
+    <form method="get" action="">
+
+        <div class="col-md-4 col-4 ">
+            <label for="desde">Desde: </label>
+            <input type="date" id="desde" name="ate" class=" form-control" />
+        </div>
+
+        <div class="col-md-4 col-4 ">
+            <label for="ate">Ate: </label>
+            <input type="date" id="ate" name="ate" class=" form-control" />
+        </div>
+        <div class="col-md-4 col-4 p-4">
+            <button type="submit" class="btn btn-primary p-2">Filtrar</button>
+        </div>
+        @csrf
+    </form>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Metricas de campanha</h5>
+
+
+
             <div class="table-responsive">
                 <table id="zero_config" class="table table-striped table-bordered">
                     <thead>

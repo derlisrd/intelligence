@@ -149,8 +149,9 @@ class RelatoriosFacebookController extends Controller
             [
                 "active"=>false,
                 "title"=>"Campanhas",
-                "route"=> 'relatorios.facebook.campaigns', // name of the route
-                "routeparams"=>[$fbuser_id,$insights[0]['account_id']]
+                "route"=>null
+                //"route"=> 'relatorios.facebook.campaigns', // name of the route
+                /* "routeparams"=>null */
             ],
             [
                 "active"=>true,

@@ -68,7 +68,7 @@
                                 <td>${e.name }</td>
                                 <td>${e.objective}</td>
                                 <td>${e.id}</td>
-                                <td><a href="#" class="btn btn-primary">Visoes</a></td>
+                                <td><a href="/relatorios/facebook/${fbuser_id}/${e.id}/insights" class="btn btn-primary">Visoes</a></td>
                             </tr>`;
             })
             let body = document.getElementById('_tablebody');

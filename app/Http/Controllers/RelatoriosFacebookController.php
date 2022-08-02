@@ -53,17 +53,20 @@ class RelatoriosFacebookController extends Controller
         foreach($contas as $conta) {
             $fields = ['name','objective','id'];
             $params = array('effective_status' => array('ACTIVE','PAUSED'));
-            $datos = (new AdAccount($conta['act_account_id']))->getCampaigns($fields,$params)->getResponse()->getContent();
+
+            $datos = (new AdAccount($conta["act_account_id"]))->getCampaigns($fields,$params)->getResponse()->getContent();
+
+
             $campaigns = [];
-            if(count($datos['data'])>0){
+             if(count($datos['data'])>0){
                 foreach($datos['data'] as $value){
 
-                    $fbcampaign = new FacebookAdCampaign();
+                    /* $fbcampaign = new FacebookAdCampaign();
                     $fbcampaign->name = $value["name"];
                     $fbcampaign->objective = $value["objective"];
                     $fbcampaign->campaign_id = $value["id"];
                     $fbcampaign->facebook_ads_account_id = $conta['id'];
-                    $fbcampaign->save();
+                    $fbcampaign->save(); */
 
                     $array = [
                         "campaign_id" => $value["id"],
@@ -75,9 +78,10 @@ class RelatoriosFacebookController extends Controller
                 }
 
             }
-            return $campaigns;
+
 
         }
+        return ($campaigns);
 
     }
 
@@ -105,8 +109,13 @@ class RelatoriosFacebookController extends Controller
 
         $fbcampaigns = $fbcampaign::all();
         $campaigns = [];
-        if(count($fbcampaigns)===0){
+        $campaigns = $this->storeCampaignByFacebookAdsAccount($id);
+
+        dd($campaigns);
+        /* if(count($fbcampaigns)===0){
            $campaigns = $this->storeCampaignByFacebookAdsAccount($id);
+
+
         }
         else{
             foreach($fbuser->ads_accounts as $value){
@@ -122,7 +131,7 @@ class RelatoriosFacebookController extends Controller
                  }
             }
 
-        }
+        } */
 
 
 

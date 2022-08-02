@@ -66,7 +66,7 @@ class RelatoriosFacebookController extends Controller
                     $fbcampaign->save();
 
                     $array = [
-                        "campaing_id" => $value["id"],
+                        "campaign_id" => $value["id"],
                         "name" =>  $value["name"],
                         "objective" => $value["objective"],
                         "account_name" => $conta["name"]

@@ -48,9 +48,9 @@ class RelatoriosFacebookController extends Controller
         $api = Api::init($app_id, $app_secret, $access_token);
         $api->setLogger(new CurlLogger());
 
-        $contas = $fbuser->ads_accounts ;
-
-        foreach($contas as $conta) {
+        $contas = $fbuser->ads_accounts;
+        dd($contas);
+        /* foreach($contas as $conta) {
             $fields = ['name','objective','id'];
             $params = array('effective_status' => array('ACTIVE','PAUSED'));
             $datos = (new AdAccount($conta['act_account_id']))->getCampaigns($fields,$params)->getResponse()->getContent();
@@ -77,7 +77,7 @@ class RelatoriosFacebookController extends Controller
             }
             return $campaigns;
 
-        }
+        } */
 
     }
 

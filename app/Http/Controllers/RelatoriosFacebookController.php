@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FacebookAdCampaign;
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookBusinessAccount;
 use App\Models\FacebookUser;
@@ -15,6 +16,8 @@ use FacebookAds\Object\Fields\AdSetFields;
 use FacebookAds\Object\Fields\CampaignFields;
 use FacebookAds\Object\Fields\AdsInsightsFields;
 use Laravel\Ui\Presets\React;
+
+
 
 use FacebookAds\Object\AdCampaign;
 
@@ -35,12 +38,54 @@ class RelatoriosFacebookController extends Controller
     }
 
 
+    public function storeCampaignByFacebookAdsAccount($id){
+        $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
 
+        $fbuser = FacebookUser::find($id);
+        $access_token = $fbuser->access_token;
+
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+
+        $contas = $fbuser->ads_accounts ;
+
+        foreach($contas as $conta) {
+            $fields = ['name','objective','id'];
+            $params = array('effective_status' => array('ACTIVE','PAUSED'));
+            $datos = (new AdAccount($conta['act_account_id']))->getCampaigns($fields,$params)->getResponse()->getContent();
+            $campaigns = [];
+            if(count($datos['data'])>0){
+                foreach($datos['data'] as $value){
+
+                    $fbcampaign = new FacebookAdCampaign();
+                    $fbcampaign->name = $value["name"];
+                    $fbcampaign->objective = $value["objective"];
+                    $fbcampaign->campaign_id = $value["id"];
+                    $fbcampaign->facebook_ads_account_id = $conta['id'];
+                    $fbcampaign->save();
+
+                    $array = [
+                        "campaing_id" => $value["id"],
+                        "name" =>  $value["name"],
+                        "objective" => $value["objective"],
+                        "account_name" => $conta["name"]
+                    ];
+                    array_push($campaigns, $array);
+                }
+
+            }
+            return $campaigns;
+
+        }
+
+    }
 
 
     public function getAdAccountsByUserId (Request $request){
 
         $id = $request->user_fb_id;
+        $fbuserid = $id;
         $fbuser = FacebookUser::find($id);
         $access_token = $fbuser->access_token;
         $breadcrumblinks = [
@@ -55,30 +100,34 @@ class RelatoriosFacebookController extends Controller
                 "route"=>null // name of the route
             ]
         ];
-        $campaigns = array();
 
-        /* $app_id = env('FB_APP_ID');
-        $app_secret = env('FB_APP_SECRET');
+        $fbcampaign = new FacebookAdCampaign();
 
-        $api = Api::init($app_id, $app_secret, $access_token);
-        $api->setLogger(new CurlLogger()); */
-
-        $contas = $fbuser->ads_accounts ;
-
-        foreach($contas as $conta) {
-            //$fields = ['name','objective','id'];
-            //$params = array('effective_status' => array('ACTIVE','PAUSED'));
-            //$datos = (new AdAccount($conta['act_account_id']))->getCampaigns($fields,$params)->getResponse()->getContent();
-            print("name: " . $conta["name"]. " <br/>");
-            //if(count($datos['data'])>0){
-              //  array_push($campaigns,$datos['data']);
-            //}
+        $fbcampaigns = $fbcampaign::all();
+        $campaigns = [];
+        if(count($fbcampaigns)===0){
+           $campaigns = $this->storeCampaignByFacebookAdsAccount($id);
+        }
+        else{
+            foreach($fbuser->ads_accounts as $value){
+                $campanhas = FacebookAdCampaign::where(["facebook_ads_account_id"=>$value["id"]])->get();
+                 foreach($campanhas as $campan){
+                    $array = [
+                        "campaign_id" => $campan->campaign_id,
+                        "name" => $campan->name,
+                        "objective" => $campan->objective,
+                        "account_name" => $value["name"]
+                    ];
+                    array_push($campaigns, $array);
+                 }
+            }
 
         }
 
-        //dd($campaigns);
 
-        //return view('containers.relatorios.facebook.adaccounts',compact("fbuser",'breadcrumblinks','campaigns'));
+
+
+        return view('containers.relatorios.facebook.adaccounts',compact("fbuser","fbuserid",'breadcrumblinks','campaigns'));
 
     }
 
@@ -320,7 +369,7 @@ class RelatoriosFacebookController extends Controller
 
 
 
-    public function getCampaignsByAdAccountIdJson (Request $request){
+    public function apiCampaignsByAdAccountIdJson (Request $request){
 
         $act_id = "act_".$request->act_id;
         $fbuserid = $request->fbuser_id;

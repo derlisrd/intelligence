@@ -15,4 +15,10 @@ class FacebookBusinessAccount extends Model
     public function facebook_user(){
         return $this->belongsTo(FacebookUser::class,'facebook_users_id');
     }
+
+    public function facebook_adcampaign(){
+        return $this->hasMany(FacebookAdCampaign::class,'facebook_ads_account_id');
+    }
+
+
 }

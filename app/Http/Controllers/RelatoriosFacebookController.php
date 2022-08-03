@@ -124,7 +124,7 @@ class RelatoriosFacebookController extends Controller
                         "campaign_id" => $campan->campaign_id,
                         "name" => $campan->name,
                         "objective" => $campan->objective,
-                        "account_name" => $value["name"]
+                        "account_name" => $value["account_name"]
                     ];
                     array_push($campaigns, $array);
                  }
@@ -378,8 +378,55 @@ class RelatoriosFacebookController extends Controller
     public function apiSyncCampaignsByAdAccountId(Request $request){
         $fbuser_id = $request->fbuser_id;
         $facebook_users = FacebookUser::find($fbuser_id);
-        sleep(1);
-        return response()->json(array($facebook_users->adcampaigns,$facebook_users->adcampaigns));
+        $access_token = $facebook_users->access_token;
+        $adaccounts = $facebook_users->ads_accounts;
+        $adcampanhas = $facebook_users->adcampaigns;
+
+        $campaigns = [];
+         /* if(count($adcampanhas) > 0){
+            foreach($adaccounts as $adaccount){
+                $campanhas = FacebookAdsAccount::find($adaccount["id"]);
+                if(count($campanhas->adCampaigns) > 0){
+                    foreach($campanhas->adCampaigns as $data){
+                        $datos = [
+                            "id"=>$data["id"],
+                            "name"=>$data["name"],
+                            "account_name"=>$adaccount["account_name"],
+                            "objective"=>$data["objective"],
+                            "campaign_id"=>$data["campaign_id"]
+                        ];
+                        array_push($campaigns,$datos);
+                    }
+
+                }
+            }
+        }
+        else{ */
+
+            $app_id = env('FB_APP_ID');
+            $app_secret = env('FB_APP_SECRET');
+
+            $api = Api::init($app_id, $app_secret, $access_token);
+            $api->setLogger(new CurlLogger());
+
+            $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
+            //'ACTIVE' 'ADSET_PAUSED', 'IN_PROCESS','PREAPPROVED', 'PENDING_BILLING_INFO'
+            $params = array('effective_status' => ['ACTIVE','PAUSED','ARCHIVED','CAMPAIGN_PAUSED','DISAPPROVED','PENDING_REVIEW','ADSET_PAUSED']);
+            $fbaccounts = FacebookAdsAccount::all();
+            foreach($fbaccounts as $account) {
+                $act_id = $account['act_account_id'];
+                $datos = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+                print "<h1>".count($datos['data'])." =>".$account["account_name"]." ".$account['act_account_id']."</h1><br >";
+                print '<pre>';print_r($datos['data']); print '</pre>';
+
+            }
+        //}
+
+
+
+
+
+        //return response()->json($campaigns );
     }
 
     public function apiCampaignsByAdAccountId (Request $request){

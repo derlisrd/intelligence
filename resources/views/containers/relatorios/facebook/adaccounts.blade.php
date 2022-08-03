@@ -107,7 +107,7 @@
         let htmlcampaigns = "";
         campaigns.forEach(e=> {
         htmlcampaigns +=
-        `<tr><td>${e.name}</td><td>${e.name }</td><td>${e.objective}</td><td>${e.id}</td><td><a href="/relatorios/facebook/{{ $fbuserid }}/${e.campaign_id}/insights" class="btn btn-primary">Visoes</a></td></tr>`;
+        `<tr><td>${e.name}</td><td>${e.account_name }</td><td>${e.objective}</td><td>${e.id}</td><td><a href="/relatorios/facebook/{{ $fbuserid }}/${e.campaign_id}/insights" class="btn btn-primary">Visoes</a></td></tr>`;
         })
         return htmlcampaigns;
     }
@@ -117,7 +117,7 @@
         let fbuser_id = {{ $fbuser->id }}
         let res = await fetch("/relatorios/facebook/api/sinc_adcampaigns/"+fbuser_id)
         let datas = await res.json();
-        console.log(datas);
+        cargarHtml(datas);
         _cargando(false);
     }
 </script>

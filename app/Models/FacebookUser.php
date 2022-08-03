@@ -9,12 +9,16 @@ class FacebookUser extends Model
 {
     use HasFactory;
     protected $table= "facebook_users";
-
+    protected $hidden = ['updated_at','created_at'];
 
     //relacion uno a muchos
     public function ads_accounts(){
 
         return $this->hasMany(FacebookAdsAccount::class,'facebook_users_id');
 
+    }
+
+    public function adcampaigns(){
+        return $this->hasMany(FacebookAdCampaign::class,'facebook_users_id');
     }
 }

@@ -17,6 +17,7 @@ class CreateFacebookAdcampaignsTable extends Migration
             $table->id();
             $table->unsignedBigInteger("facebook_ads_account_id")->nullable();
             $table->foreign("facebook_ads_account_id")->references("id")->on("facebook_ads_accounts")->onDelete("set null");
+            $table->unsignedBigInteger("facebook_users_id")->nullable();
             $table->string("name");
             $table->string("objective");
             $table->text("campaign_id");

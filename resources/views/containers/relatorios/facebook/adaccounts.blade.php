@@ -16,6 +16,7 @@
                 <option value="{{ $account->account_id }}">{{ $account->name }}</option>
             @endforeach
         </select>
+        <a href="javascript:void(0)" onclick="sincronizarAdCampaigns()" class="btn btn-primary">Sincronizar cuentas</a>
     </div>
     <div class="card">
         <div class="card-body">
@@ -70,6 +71,16 @@
 
 <script>
 
+    function _cargando(cargando = true){
+
+        if(cargando){
+            document.getElementById("_loading").classList.remove("d-none");
+        }
+        else{
+            document.getElementById('_loading').classList.add('d-none');
+        }
+
+    }
     async function changeAccount(){
 
         let fbuser_id = {{ $fbuser->id }}
@@ -77,27 +88,37 @@
         var opt = sel.options[sel.selectedIndex];
 
         if(opt.value && opt.value!==""){
-            document.getElementById("_loading").classList.remove("d-none");
+            _cargando()
             document.getElementById('_tablebody').classList.add("d-none");
              param = opt.value;
             let res = await fetch("/relatorios/facebook/api/campaigns/"+param+"/"+fbuser_id)
             let data = await res.json();
             let campaigns = data.campaigns;
-            let htmlcampaigns = "";
-            campaigns.forEach(e=> {
-                htmlcampaigns += `<tr>
-                                <td>${opt.text}</td>
-                                <td>${e.name }</td>
-                                <td>${e.objective}</td>
-                                <td>${e.id}</td>
-                                <td><a href="/relatorios/facebook/${fbuser_id}/${e.id}/insights" class="btn btn-primary">Visoes</a></td>
-                            </tr>`;
-            })
+            let htmlcampaigns = cargarHtml(campaigns);
+
             document.getElementById('_tablebody').classList.remove('d-none');
             document.getElementById('_tablebody').innerHTML = htmlcampaigns;
-            document.getElementById('_loading').classList.add('d-none');
+            _cargando(false);
         }
 
+    }
+
+    function cargarHtml (campaigns){
+        let htmlcampaigns = "";
+        campaigns.forEach(e=> {
+        htmlcampaigns +=
+        `<tr><td>${e.name}</td><td>${e.name }</td><td>${e.objective}</td><td>${e.id}</td><td><a href="/relatorios/facebook/{{ $fbuserid }}/${e.campaign_id}/insights" class="btn btn-primary">Visoes</a></td></tr>`;
+        })
+        return htmlcampaigns;
+    }
+
+    async function sincronizarAdCampaigns(){
+        _cargando();
+        let fbuser_id = {{ $fbuser->id }}
+        let res = await fetch("/relatorios/facebook/api/sinc_adcampaigns/"+fbuser_id)
+        let datas = await res.json();
+        console.log(datas);
+        _cargando(false);
     }
 </script>
 

@@ -109,11 +109,10 @@ class RelatoriosFacebookController extends Controller
 
         $fbcampaigns = $fbcampaign::all();
         $campaigns = [];
-        $campaigns = $this->storeCampaignByFacebookAdsAccount($id);
+        /*$campaigns = $this->storeCampaignByFacebookAdsAccount($id); */
 
-        dd($campaigns);
-        /* if(count($fbcampaigns)===0){
-           $campaigns = $this->storeCampaignByFacebookAdsAccount($id);
+        if(count($fbcampaigns)===0){
+           //$campaigns = $this->storeCampaignByFacebookAdsAccount($id);
 
 
         }
@@ -131,7 +130,7 @@ class RelatoriosFacebookController extends Controller
                  }
             }
 
-        } */
+        }
 
 
 
@@ -376,9 +375,14 @@ class RelatoriosFacebookController extends Controller
 
     }
 
+    public function apiSyncCampaignsByAdAccountId(Request $request){
+        $fbuser_id = $request->fbuser_id;
+        $facebook_users = FacebookUser::find($fbuser_id);
+        sleep(1);
+        return response()->json(array($facebook_users->adcampaigns,$facebook_users->adcampaigns));
+    }
 
-
-    public function apiCampaignsByAdAccountIdJson (Request $request){
+    public function apiCampaignsByAdAccountId (Request $request){
 
         $act_id = "act_".$request->act_id;
         $fbuserid = $request->fbuser_id;

@@ -32,8 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/relatorios/facebook/{fbuser_id}/campaigns/act_{act_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.campaigns');
     Route::get('/relatorios/facebook/{fbuser_id}/{campaign_id}/insights',[RelatoriosFacebookController::class,"getInsightsByIdCampaign"])->name('relatorios.facebook.insights.campaign');
 
-    Route::get('/relatorios/facebook/api/campaigns/{act_id}/{fbuser_id}',[RelatoriosFacebookController::class,"apiCampaignsByAdAccountIdJson"])->name('relatorios.facebook.api.campaign.by.account');
-
+    Route::get('/relatorios/facebook/api/campaigns/{act_id}/{fbuser_id}',[RelatoriosFacebookController::class,"apiCampaignsByAdAccountId"])->name('relatorios.facebook.api.campaign.by.account');
+    Route::get('/relatorios/facebook/api/sinc_adcampaigns/{fbuser_id}',[RelatoriosFacebookController::class,"apiSyncCampaignsByAdAccountId"])->name("relatorios.facebook.api.sinc_adcampaigns.by.account");
 
 
     Route::get("/conexions",[ConexionsController::class,"conexions"])->name("conexions");

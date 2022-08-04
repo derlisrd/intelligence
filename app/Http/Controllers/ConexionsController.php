@@ -84,14 +84,14 @@ class ConexionsController extends Controller
             $email = $res['email'];
             $facebook_user_id = $res['id'];
             $name = $res['name'];
-            dd($res);
-            /* $Facebook  = new FacebookUser();
+
+            $Facebook  = new FacebookUser();
             $Facebook->email = $email;
             $Facebook->name = $name;
             $Facebook->facebook_user_id = $facebook_user_id;
             $Facebook->access_token = $access_token;
             $Facebook->save();
-            return $Facebook::find($Facebook->id); */
+            return $Facebook::find($Facebook->id);
 
         } catch (\Throwable $th) {
             print 'Error: ' . $th->getMessage();
@@ -122,6 +122,7 @@ class ConexionsController extends Controller
                 "route"=>null // name of the route
             ]
         ];
+
 
         $fbuser = new FacebookUser();
         $fbusers = $fbuser->all();

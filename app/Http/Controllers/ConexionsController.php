@@ -46,13 +46,10 @@ class ConexionsController extends Controller
             $this->SaveBussinessAccounts($id);
             $userfb = $userdata;
 
-
-
-
-
         }
         return view('conexions.facebookcallback',compact('userfb'));
     }
+
 
     private function SaveBussinessAccounts($id){
 
@@ -77,21 +74,24 @@ class ConexionsController extends Controller
             }
     }
 
+
+
     private function SaveUserFacebook($access_token){
         try {
 
             $endpointme = "https://graph.facebook.com/".env('FB_API_VERSION')."/me?fields=email,id,name&access_token=$access_token";
-            $fbresponse2 = json_decode(getcurl($endpointme),true);
-            $email = $fbresponse2['email'];
-            $facebook_user_id = $fbresponse2['id'];
-            $name = $fbresponse2['name'];
-            $Facebook  = new FacebookUser();
+            $res = json_decode(getcurl($endpointme),true);
+            $email = $res['email'];
+            $facebook_user_id = $res['id'];
+            $name = $res['name'];
+            dd($res);
+            /* $Facebook  = new FacebookUser();
             $Facebook->email = $email;
             $Facebook->name = $name;
             $Facebook->facebook_user_id = $facebook_user_id;
             $Facebook->access_token = $access_token;
             $Facebook->save();
-            return $Facebook::find($Facebook->id);
+            return $Facebook::find($Facebook->id); */
 
         } catch (\Throwable $th) {
             print 'Error: ' . $th->getMessage();

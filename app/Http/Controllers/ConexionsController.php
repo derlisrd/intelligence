@@ -63,7 +63,7 @@ class ConexionsController extends Controller
                 foreach($response['data'] as $value) {
                     $fbinsert = new FacebookAdsAccount();
                     $fbinsert->facebook_users_id = $id;
-                    $fbinsert->name = $value['account_name'];
+                    $fbinsert->account_name = $value['name'];
                     $fbinsert->account_id=$value['account_id'];
                     $fbinsert->act_account_id=$value['id'];
                     $fbinsert->save();

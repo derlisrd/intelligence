@@ -20,7 +20,6 @@ class CreateFacebookAdcampaignsTable extends Migration
             $table->unsignedBigInteger("facebook_users_id")->nullable();
             $table->string("name");
             $table->string("status");
-            $table->string("name");
             $table->string("objective");
             $table->text("campaign_id");
             $table->timestamps();

@@ -443,15 +443,28 @@ class RelatoriosFacebookController extends Controller
         $api = Api::init($app_id, $app_secret, $access_token);
         $api->setLogger(new CurlLogger());
 
-        /* $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
-        $params = array('effective_status' => array('ACTIVE','PAUSED')); */
+         $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
+        $params = array('effective_status' => array('ACTIVE','PAUSED'));
 
-        //$datos = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
-        $datos = (new AdAccount($act_id))->getAdSets(['id','name','targeting','campaign_id'],[])->getResponse()->getContent();
-        $campaigns= $datos['data'];
+        $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+        $campaigns = $campaign['data'];
+        $adset = (new AdAccount($act_id))->getAdSets(['id','name','targeting','campaign_id'],[])->getResponse()->getContent();
+        $adsets= $adset['data'];
 
-        return response()->json(["act"=>$act_id,"fbuser_id"=>$fbuserid,"token"=>$access_token,"campaigns"=>$campaigns]);
+        $insights = [];
+        foreach($adsets as $a){
+            $ads = (new AdSet($a['id']))->getInsights(['impressions'],[])->getResponse()->getContent();
+             array_push($insights,$ads['data']);
+        }
 
+        $ad = (new AdAccount($act_id))->getAds(['id','name','campaign_id'],[])->getResponse()->getContent();
+        $ads = $ad['data'];
+        //return response()->json(["act"=>$act_id,"fbuser_id"=>$fbuserid,"token"=>$access_token,"campaigns"=>$campaigns]);
+
+
+
+
+        return response()->json(["campaigns"=>$campaigns,"adsets"=>$adsets,"ads"=>$ads,"insights"=>$insights]);
     }
 
 

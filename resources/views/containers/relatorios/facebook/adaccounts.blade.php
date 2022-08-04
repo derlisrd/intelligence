@@ -18,55 +18,150 @@
         </select>
         <a href="javascript:void(0)" onclick="sincronizarAdCampaigns()" class="btn btn-primary">Sincronizar cuentas</a>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">
-               Campanhas
-            </h3>
+    <div class="card p-2">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#home"
+                    role="tab"><span class="hidden-sm-up"></span> <span
+                        class="hidden-xs-down">Campanhas</span></a> </li>
+            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#profile"
+                    role="tab"><span class="hidden-sm-up"></span> <span
+                        class="hidden-xs-down">Conjunto de anuncios</span></a> </li>
+            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#messages"
+                    role="tab"><span class="hidden-sm-up"></span> <span
+                        class="hidden-xs-down">Anuncios</span></a> </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content tabcontent-border">
+            <div class="tab-pane active" id="home" role="tabpanel">
+                 <div class="table-responsive" id="_table-responsive">
+                     <h3 class="card-title p-2">
+                        Campanhas
+                     </h3>
+                     <table id="zero_config" class="table table-striped table-bordered">
+                         <thead>
+                             <tr>
+                                 <th>CONTA</th>
+                                 <th>NOME DE CAMPANHA</th>
+                                 <th>OBJETIVO</th>
+                                 <th>ID CAMPANHA</th>
+                                 <th>ACCOES</th>
+                             </tr>
+                         </thead>
+                         <tbody id="_tablebody">
+                             <div class="progress my-3 d-none" id="_loading">
+                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-cyan" style="width:100%"></div>
+                             </div>
 
-            <div class="table-responsive" id="_table-responsive">
-                <table id="zero_config" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>CONTA</th>
-                            <th>NOME DE CAMPANHA</th>
-                            <th>OBJETIVO</th>
-                            <th>ID CAMPANHA</th>
-                            <th>ACCOES</th>
-                        </tr>
-                    </thead>
-                    <tbody id="_tablebody">
-                        <div class="d-flex justify-content-center mb-5 d-none" id="_loading">
-                            <div class="spinner-grow" role="status">
-                              <span class="sr-only">Loading...</span>
+                             @foreach ($campaigns as $campaign)
+                             <tr>
+                                 <td>{{ $campaign['account_name'] }}</td>
+                                 <td>{{ $campaign['name'] }}</td>
+                                 <td>{{ $campaign['objective'] }}</td>
+                                 <td>{{ $campaign['campaign_id'] }}</td>
+                                 <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
+                             </tr>
+                         @endforeach
+                         </tbody>
+                         <tfoot>
+                             <tr>
+                                 <th>NOME</th>
+                                 <th>NOME</th>
+                                 <th>OBJETIVO</th>
+                                 <th>ID CAMPANHA</th>
+                                 <th>ACCOES</th>
+                             </tr>
+                         </tfoot>
+                     </table>
+                 </div>
+            </div>
+            <div class="tab-pane  p-20" id="profile" role="tabpanel">
+                <div class="table-responsive" id="_table-responsive">
+                    <h3 class="card-title p-2">
+                       Conjunto de anuncios
+                    </h3>
+                    <table id="zero_config" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>CONTA</th>
+                                <th>NOME DE CAMPANHA</th>
+                                <th>OBJETIVO</th>
+                                <th>ID CAMPANHA</th>
+                                <th>ACCOES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="_tablebody">
+                            <div class="progress my-3 d-none" id="_loading">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-cyan" style="width:100%"></div>
                             </div>
-                          </div>
 
-                        @foreach ($campaigns as $campaign)
-                        <tr>
-                            <td>{{ $campaign['account_name'] }}</td>
-                            <td>{{ $campaign['name'] }}</td>
-                            <td>{{ $campaign['objective'] }}</td>
-                            <td>{{ $campaign['campaign_id'] }}</td>
-                            <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>NOME</th>
-                            <th>NOME</th>
-                            <th>OBJETIVO</th>
-                            <th>ID CAMPANHA</th>
-                            <th>ACCOES</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                            @foreach ($campaigns as $campaign)
+                            <tr>
+                                <td>{{ $campaign['account_name'] }}</td>
+                                <td>{{ $campaign['name'] }}</td>
+                                <td>{{ $campaign['objective'] }}</td>
+                                <td>{{ $campaign['campaign_id'] }}</td>
+                                <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>NOME</th>
+                                <th>NOME</th>
+                                <th>OBJETIVO</th>
+                                <th>ID CAMPANHA</th>
+                                <th>ACCOES</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="messages" role="tabpanel">
+                <div class="table-responsive" id="_table-responsive">
+                    <h3 class="card-title p-2">
+                       Anuncios
+                    </h3>
+                    <table id="zero_config" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>CONTA</th>
+                                <th>NOME DE CAMPANHA</th>
+                                <th>OBJETIVO</th>
+                                <th>ID CAMPANHA</th>
+                                <th>ACCOES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="_tablebody">
+                            <div class="progress my-3 d-none" id="_loading">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-cyan" style="width:100%"></div>
+                            </div>
 
-
+                            @foreach ($campaigns as $campaign)
+                            <tr>
+                                <td>{{ $campaign['account_name'] }}</td>
+                                <td>{{ $campaign['name'] }}</td>
+                                <td>{{ $campaign['objective'] }}</td>
+                                <td>{{ $campaign['campaign_id'] }}</td>
+                                <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>NOME</th>
+                                <th>NOME</th>
+                                <th>OBJETIVO</th>
+                                <th>ID CAMPANHA</th>
+                                <th>ACCOES</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <script>

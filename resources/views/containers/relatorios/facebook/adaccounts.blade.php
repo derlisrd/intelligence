@@ -13,7 +13,7 @@
         <select  class="form-select form-select-lg mb-3" id="_accounts" onchange="changeAccount()">
             <option value="" selected>Seleccionar</option>
             @foreach ($fbuser->ads_accounts as $account)
-                <option value="{{ $account->account_id }}">{{ $account->name }}</option>
+                <option value="{{ $account->account_id }}">{{ $account->account_name }}</option>
             @endforeach
         </select>
         <a href="javascript:void(0)" onclick="sincronizarAdCampaigns()" class="btn btn-primary">Sincronizar cuentas</a>
@@ -94,10 +94,15 @@
             let res = await fetch("/relatorios/facebook/api/campaigns/"+param+"/"+fbuser_id)
             let data = await res.json();
             let campaigns = data.campaigns;
-            let htmlcampaigns = cargarHtml(campaigns);
+            console.log(data)
+            let html = "";
+            /* campaigns.forEach(e=> {
+                html +=
+                `<tr><td>${opt.text}</td><td>${e.name }</td><td>${e.objective}</td><td>${e.id}</td><td><a href="/relatorios/facebook/{{ $fbuserid }}/${e.id}/insights" class="btn btn-primary">Visoes</a></td></tr>`;
+            }) */
 
             document.getElementById('_tablebody').classList.remove('d-none');
-            document.getElementById('_tablebody').innerHTML = htmlcampaigns;
+            document.getElementById('_tablebody').innerHTML = html;
             _cargando(false);
         }
 
@@ -105,10 +110,7 @@
 
     function cargarHtml (campaigns){
         let htmlcampaigns = "";
-        campaigns.forEach(e=> {
-        htmlcampaigns +=
-        `<tr><td>${e.name}</td><td>${e.account_name }</td><td>${e.objective}</td><td>${e.id}</td><td><a href="/relatorios/facebook/{{ $fbuserid }}/${e.campaign_id}/insights" class="btn btn-primary">Visoes</a></td></tr>`;
-        })
+
         return htmlcampaigns;
     }
 

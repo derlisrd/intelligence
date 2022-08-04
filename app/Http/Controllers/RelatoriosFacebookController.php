@@ -443,10 +443,11 @@ class RelatoriosFacebookController extends Controller
         $api = Api::init($app_id, $app_secret, $access_token);
         $api->setLogger(new CurlLogger());
 
-        $fields = ['name','objective','id'];
-        $params = array('effective_status' => array('ACTIVE','PAUSED'));
-        $datos = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+        /* $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
+        $params = array('effective_status' => array('ACTIVE','PAUSED')); */
 
+        //$datos = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+        $datos = (new AdAccount($act_id))->getAdSets(['id','name','targeting','campaign_id'],[])->getResponse()->getContent();
         $campaigns= $datos['data'];
 
         return response()->json(["act"=>$act_id,"fbuser_id"=>$fbuserid,"token"=>$access_token,"campaigns"=>$campaigns]);

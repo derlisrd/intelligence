@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiFacebookController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConexionsController;
 use App\Http\Controllers\RelatoriosController;
@@ -39,6 +40,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/conexions",[ConexionsController::class,"conexions"])->name("conexions");
     Route::get("/conexions/facebook",[ConexionsController::class,"facebook"])->name("conexions.facebook");
     Route::get("/conexions/facebook/callback",[ConexionsController::class,"facebookcallback"])->name("conexions.facebook.callback");
+
+
+
+    Route::get("/api/facebook/campaigns/{fbuserid}",[ApiFacebookController::class,"getCampaigns"])->name("api.facebook.getCampaigns");
 
 
 });

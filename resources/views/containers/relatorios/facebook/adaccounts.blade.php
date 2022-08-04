@@ -50,7 +50,7 @@
                          </thead>
                          <tbody id="_tablebody">
                              <div class="progress my-3 d-none" id="_loading">
-                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-cyan" style="width:100%"></div>
+                                 <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%"></div>
                              </div>
 
                              @foreach ($campaigns as $campaign)
@@ -165,6 +165,19 @@
 </div>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", async function(e) {
+    _cargando();
+    let fbuserid = {{ $fbuser->id }};
+
+    let res = await fetch("/api/facebook/campaigns/"+fbuserid);
+    let data = await res.json();
+
+    console.log(data);
+    _cargando(false);
+})
+
+
 
     function _cargando(cargando = true){
 

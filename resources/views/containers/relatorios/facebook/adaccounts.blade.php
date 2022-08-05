@@ -10,13 +10,22 @@
 <div class="row">
     <div class="col-12 col-sm-4 m-3">
         <label for="_accounts">Contas de anuncios</label>
-        <select  class="form-select form-select-lg mb-3" id="_accounts" onchange="changeAccount()">
+        <select  class="form-select form-select-lg mb-3" id="_accounts" onchange="getCampaignsByAccountId()">
             <option value="" selected>Seleccionar</option>
             @foreach ($fbuser->ads_accounts as $account)
                 <option value="{{ $account->account_id }}">{{ $account->account_name }}</option>
             @endforeach
         </select>
-        <a href="javascript:void(0)" onclick="sincronizarAdCampaigns()" class="btn btn-primary">Sincronizar cuentas</a>
+    </div>
+    <div class="col-12 col-sm-4 m-3 d-flex">
+        <div class="m-2">
+            <label for="_since" class="form-label">Desde</label>
+            <input type="date" name="since" id="_since" class="form-control"  />
+        </div>
+        <div class="m-2">
+            <label for="_since" class="form-label">Ate</label>
+            <input type="date" name="since" id="_since" class="form-control"  />
+        </div>
     </div>
     <div class="card p-2">
         <!-- Nav tabs -->
@@ -125,7 +134,7 @@
                     <table id="zero_config" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>CONTA</th>
+                                <th>Nome da conta</th>
                                 <th>NOME DE CAMPANHA</th>
                                 <th>OBJETIVO</th>
                                 <th>ID CAMPANHA</th>
@@ -138,14 +147,14 @@
                             </div>
 
                             @foreach ($campaigns as $campaign)
-                            <tr>
-                                <td>{{ $campaign['account_name'] }}</td>
-                                <td>{{ $campaign['name'] }}</td>
-                                <td>{{ $campaign['objective'] }}</td>
-                                <td>{{ $campaign['campaign_id'] }}</td>
-                                <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
-                            </tr>
-                        @endforeach
+                                <tr>
+                                    <td>{{ $campaign['account_name'] }}</td>
+                                    <td>{{ $campaign['name'] }}</td>
+                                    <td>{{ $campaign['objective'] }}</td>
+                                    <td>{{ $campaign['campaign_id'] }}</td>
+                                    <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
@@ -168,16 +177,23 @@
 
 document.addEventListener("DOMContentLoaded", async function(e) {
     _cargando();
-    let fbuserid = {{ $fbuser->id }};
+   /*  let fbuserid = {{ $fbuser->id }};
 
     let res = await fetch("/api/facebook/campaigns/"+fbuserid);
     let data = await res.json();
 
-    console.log(data);
+    console.log(data); */
     _cargando(false);
 })
 
-
+    async function getCampaignsByAccountId() {
+        let fbuser_id = {{ $fbuser->id }}
+        let sel = document.getElementById("_accounts");
+        var opt = sel.options[sel.selectedIndex];
+        let res = await fetch("/api/facebook/campaigns/act_"+opt.value+"/"+fbuser_id)
+        let json = await res.json();
+        console.log(json);
+     }
 
     function _cargando(cargando = true){
 

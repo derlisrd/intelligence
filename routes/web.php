@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get("/api/facebook/campaigns/{fbuserid}",[ApiFacebookController::class,"getCampaigns"])->name("api.facebook.getCampaigns");
+    Route::get("/api/facebook/campaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"getCampaignsByAdAccountId"])->name("api.facebook.getCampaigns.by.account.id");
+
 
 
 });

@@ -8,25 +8,42 @@
 
 
 <div class="row">
-    <div class="col-12 col-sm-4 m-3">
+    <div class="col-sm d-flex align-items-center flex-column mt-2">
         <label for="_accounts">Contas de anuncios</label>
-        <select  class="form-select form-select-lg mb-3" id="_accounts" onchange="getCampaignsByAccountId()">
+        <select  class="form-select form-select-lg" id="_accounts" >
             <option value="" selected>Seleccionar</option>
             @foreach ($fbuser->ads_accounts as $account)
                 <option value="{{ $account->account_id }}">{{ $account->account_name }}</option>
             @endforeach
         </select>
     </div>
-    <div class="col-12 col-sm-4 m-3 d-flex">
-        <div class="m-2">
+    <div class="col-sm d-flex align-items-center mt-2">
+        <div class="">
             <label for="_since" class="form-label">Desde</label>
-            <input type="date" name="since" id="_since" class="form-control"  />
+            <input type="date" name="since" id="_since" class="form-control form-control-lg"  />
         </div>
-        <div class="m-2">
+        <div class="">
             <label for="_since" class="form-label">Ate</label>
-            <input type="date" name="since" id="_since" class="form-control"  />
+            <input type="date" name="since" id="_since" class="form-control form-control-lg"  />
         </div>
     </div>
+</div>
+
+
+
+
+
+<div class="d-flex flex-row">
+    <div class="m-2">
+        <a href="javascript:void(0)" onclick="getCampaignsByAccountId()" class="btn btn-primary btn-lg">Filtrar</a>
+    </div>
+    <div class="m-2">
+        <a href="javascript:void(0)" onclick="SincronizarCampaigns()" class="btn btn-primary btn-lg">Sincronizar campanhas</a>
+    </div>
+</div>
+
+
+<div class="row">
     <div class="card p-2">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
@@ -36,7 +53,7 @@
             <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#profile"
                     role="tab"><span class="hidden-sm-up"></span> <span
                         class="hidden-xs-down">Conjunto de anuncios</span></a> </li>
-            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#messages"
+            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#messages"onchange=""
                     role="tab"><span class="hidden-sm-up"></span> <span
                         class="hidden-xs-down">Anuncios</span></a> </li>
         </ul>
@@ -51,10 +68,13 @@
                          <thead>
                              <tr>
                                  <th>CONTA</th>
-                                 <th>NOME DE CAMPANHA</th>
-                                 <th>OBJETIVO</th>
-                                 <th>ID CAMPANHA</th>
-                                 <th>ACCOES</th>
+                                 <th>CAMPANHA</th>
+                                 <th>CUSTO</th>
+                                 <th>IMPRESSOES</th>
+                                 <th>CLICKS</th>
+                                 <th>CPM</th>
+                                 <th>CPC</th>
+                                 <th>DATA DE CRIAÇAO</th>
                              </tr>
                          </thead>
                          <tbody id="_tablebody">
@@ -62,23 +82,18 @@
                                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%"></div>
                              </div>
 
-                             @foreach ($campaigns as $campaign)
-                             <tr>
-                                 <td>{{ $campaign['account_name'] }}</td>
-                                 <td>{{ $campaign['name'] }}</td>
-                                 <td>{{ $campaign['objective'] }}</td>
-                                 <td>{{ $campaign['campaign_id'] }}</td>
-                                 <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
-                             </tr>
-                         @endforeach
+
                          </tbody>
                          <tfoot>
                              <tr>
-                                 <th>NOME</th>
-                                 <th>NOME</th>
-                                 <th>OBJETIVO</th>
-                                 <th>ID CAMPANHA</th>
-                                 <th>ACCOES</th>
+                                <th>CONTA</th>
+                                <th>CAMPANHA</th>
+                                <th>CUSTO</th>
+                                <th>IMPRESSOES</th>
+                                <th>CLICKS</th>
+                                <th>CPM</th>
+                                <th>CPC</th>
+                                <th>DATA DE CRIAÇAO</th>
                              </tr>
                          </tfoot>
                      </table>
@@ -186,14 +201,64 @@ document.addEventListener("DOMContentLoaded", async function(e) {
     _cargando(false);
 })
 
+
+
+
+
+    async function SincronizarCampaigns() {
+        let fbuser_id = {{ $fbuser->id }}
+        let sel = document.getElementById("_accounts");
+        var opt = sel.options[sel.selectedIndex];
+        _cargando();
+        let res = await fetch("/api/facebook/sincronizarcampaigns/act_"+opt.value+"/"+fbuser_id)
+        let json = await res.json();
+        let html = "";
+        json.data.forEach(e=> {
+            html +=
+                `<tr>
+                    <td>${e.account_name}</td>
+                    <td>${e.campaign_name}</td>
+                    <td>${e.spend}</td>
+                    <td>${e.impressions}</td>
+                    <td>${e.clicks}</td>
+                    <td>${e.cpm}</td>
+                    <td>${e.cpc}</td>
+                    <td>${e.created_time}</td>
+                </tr>`;
+            })
+        _cargando(false);
+        document.getElementById('_tablebody').innerHTML = html;
+
+    }
+
+
     async function getCampaignsByAccountId() {
         let fbuser_id = {{ $fbuser->id }}
         let sel = document.getElementById("_accounts");
         var opt = sel.options[sel.selectedIndex];
+        _cargando();
         let res = await fetch("/api/facebook/campaigns/act_"+opt.value+"/"+fbuser_id)
         let json = await res.json();
-        console.log(json);
+        let html = "";
+        json.data.forEach(e=> {
+            html +=
+                `<tr>
+                    <td>${e.account_name}</td>
+                    <td>${e.campaign_name}</td>
+                    <td>${e.spend}</td>
+                    <td>${e.impressions}</td>
+                    <td>${e.clicks}</td>
+                    <td>${e.cpm}</td>
+                    <td>${e.cpc}</td>
+                    <td>${e.created_time}</td>
+                </tr>`;
+            })
+        _cargando(false);
+        document.getElementById('_tablebody').innerHTML = html;
      }
+
+
+
 
     function _cargando(cargando = true){
 
@@ -205,6 +270,8 @@ document.addEventListener("DOMContentLoaded", async function(e) {
         }
 
     }
+
+
     async function changeAccount(){
 
         let fbuser_id = {{ $fbuser->id }}
@@ -234,7 +301,6 @@ document.addEventListener("DOMContentLoaded", async function(e) {
 
     function cargarHtml (campaigns){
         let htmlcampaigns = "";
-
         return htmlcampaigns;
     }
 

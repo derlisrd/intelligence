@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FacebookAdCampaign;
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookBusinessAccount;
+use App\Models\FacebookLastCampaign;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
 use FacebookAds\Object\AdSet;
@@ -60,7 +61,87 @@ class ApiFacebookController extends Controller
 
 
 
+    public function SincronizarCampaignByAccountId(Request $request){
 
+        $fbuserid = $request->fbuserid;
+        $fbuser = FacebookUser::find($fbuserid);
+        $access_token = $fbuser->access_token;
+        $act_id = "act_".$request->act_id;
+
+        $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+        $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
+        $params = ['effective_status' => array('ACTIVE','PAUSED'),];
+        $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+        $campaigns = $campaign['data'];
+
+        $insightfields = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+        $insightparams = [];
+
+        $insights = [];
+
+        foreach($campaigns as $campaign){
+            $id = $campaign['id'];
+            $account_id = $campaign['account_id'];
+            $last = FacebookLastCampaign::where('campaign_id', $id)->where('account_id', $account_id)->get();
+            $count = $last->count();
+            $datas = (new Campaign($id))->getInsights($insightfields,$insightparams)->getResponse()->getContent();
+            foreach($datas['data'] as $dato)
+            {
+                $datosnuevos = [
+                    'account_currency' => $dato['account_currency'],
+                    'account_name' => $dato['account_name'],
+                    'account_id' => $dato['account_id'],
+                    'campaign_id' => $dato['campaign_id'],
+                    'campaign_name' => $dato['campaign_name'],
+                    'clicks' => $dato['clicks'],
+                    'cpc' => $dato['cpc'],
+                    'cpm'=> $dato['cpm'],
+                    'created_time' => $dato['created_time'],
+                    'ctr' => $dato['ctr'],
+                    'date_start' => $dato['date_start'],
+                    'date_stop' => $dato['date_stop'],
+                    'impressions' => $dato['impressions'],
+                    'objective' => $dato['objective'],
+                    'reach' => $dato['reach'],
+                    'spend' => $dato['spend']
+                ];
+                if($count>0){
+                    FacebookLastCampaign::where('campaign_id', $dato['campaign_id'])->where('account_id', $dato['account_id'])->update($datosnuevos);
+                }
+                else{
+                    //FacebookLastCampaign::create($datosnuevos);
+                    $save = new FacebookLastCampaign();
+                    $save->account_currency = $dato['account_currency'];
+                    $save->account_name = $dato['account_name'];
+                    $save->account_id = $dato['account_id'];
+                    $save->campaign_id = $dato['campaign_id'];
+                    $save->campaign_name = $dato['campaign_name'];
+                    $save->clicks = $dato['clicks'];
+                    $save->cpc = $dato['cpc'];
+                    $save->cpm = $dato['cpm'];
+                    $save->created_time = $dato['created_time'];
+                    $save->ctr = $dato['ctr'];
+                    $save->date_start = $dato['date_start'];
+                    $save->date_stop = $dato['date_stop'];
+                    $save->impressions = $dato['impressions'];
+                    $save->objective = $dato['objective'];
+                    $save->reach = $dato['reach'];
+                    $save->spend = $dato['spend'];
+                    $save->save();
+                }
+                array_push($insights,$dato);
+            }
+
+
+
+        }
+
+
+        return response()->json(["data"=>$insights]);
+    }
 
 
 
@@ -74,37 +155,10 @@ class ApiFacebookController extends Controller
         $campaigns = [];
         $insights = [];
 
-        $app_id = env('FB_APP_ID');
-        $app_secret = env('FB_APP_SECRET');
-        $api = Api::init($app_id, $app_secret, $access_token);
-        $api->setLogger(new CurlLogger());
-        $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
-        $params = ['effective_status' => array('ACTIVE','PAUSED'),];
-        $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
-        $campaigns = $campaign['data'];
-
-        $insightfields = ['ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+        $LastCampaigns = FacebookLastCampaign::where("account_id", $request->act_id)->get();
 
 
-
-        $insightparams = [];
-        if(isset($_GET['since']) && isset($_GET['until'])){
-            $since = $_GET['since']; $until = $_GET['until'];
-            $insightparams = ['time_range'=>array('since'=>$since,'until'=>$until)];
-        }
-
-
-
-        foreach($campaigns as $field) {
-            $datas = (new Campaign($field['id']))->getInsights($insightfields,$insightparams)->getResponse()->getContent();
-            foreach($datas['data'] as $dato){
-                array_push($insights,$dato);
-            }
-
-        }
-
-
-        return response()->json(["insights"=>$insights]);
+        return response()->json(["data"=>$LastCampaigns]);
     }
 
 
@@ -158,3 +212,39 @@ class ApiFacebookController extends Controller
         return response()->json(["campaigns"=>$campaigns,"adsets"=>$adsets,"ads"=>$ads,"insights"=>$insights]);
     }
 }
+
+
+
+/*
+        $app_id = env('FB_APP_ID');
+        $app_secret = env('FB_APP_SECRET');
+        $api = Api::init($app_id, $app_secret, $access_token);
+        $api->setLogger(new CurlLogger());
+        $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
+        $params = ['effective_status' => array('ACTIVE','PAUSED'),];
+        $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+        $campaigns = $campaign['data'];
+
+        $insightfields = ['reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+        $insightparams = [];
+        if(isset($_GET['since']) && isset($_GET['until'])){
+            $since = $_GET['since']; $until = $_GET['until'];
+            $insightparams = ['time_range'=>array('since'=>$since,'until'=>$until)];
+        }
+        foreach($campaigns as $field) {
+            $datas = (new Campaign($field['id']))->getInsights($insightfields,$insightparams)->getResponse()->getContent();
+            foreach($datas['data'] as $dato){
+                array_push($insights,$dato);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+*/

@@ -27,7 +27,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/home",[ViewsController::class,"home"])->name("home");
     Route::get("/dashboard",[ViewsController::class,"dashboard"])->name("dashboard");
 
-
     Route::get("/relatorios/facebook",[RelatoriosFacebookController::class,"getFacebookUsers"])->name("relatorios.facebook.users");
     Route::get('/relatorios/facebook/adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getAdAccountsByUserId"])->name('relatorios.facebook.adaccounts');
     Route::get('/relatorios/facebook/{fbuser_id}/campaigns/act_{act_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.campaigns');
@@ -42,11 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/conexions/facebook/callback",[ConexionsController::class,"facebookcallback"])->name("conexions.facebook.callback");
 
 
-
     Route::get("/api/facebook/campaigns/{fbuserid}",[ApiFacebookController::class,"getCampaigns"])->name("api.facebook.getCampaigns");
     Route::get("/api/facebook/campaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"getCampaignsByAdAccountId"])->name("api.facebook.getCampaigns.by.account.id");
-
-
+    Route::get("/api/facebook/sincronizarcampaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"SincronizarCampaignByAccountId"]);
 
 });
 

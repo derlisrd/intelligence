@@ -67,14 +67,14 @@
                      <table id="zero_config" class="table table-striped table-bordered">
                          <thead>
                              <tr>
-                                 <th>CONTA</th>
-                                 <th>CAMPANHA</th>
-                                 <th>CUSTO</th>
-                                 <th>IMPRESSOES</th>
-                                 <th>CLICKS</th>
-                                 <th>CPM</th>
-                                 <th>CPC</th>
-                                 <th>DATA DE CRIAÇAO</th>
+                                 <th><b>CONTA</b></th>
+                                 <th><b>CAMPANHA</b></th>
+                                 <th><b>CUSTO</b></th>
+                                 <th><b>IMPRESSOES</b></th>
+                                 <th><b>CLICKS</b></th>
+                                 <th><b>CPM</b></th>
+                                 <th><b>CPC</b></th>
+                                 <th><b>DATA DE CRIAÇAO</b></th>
                              </tr>
                          </thead>
                          <tbody id="_tablebody">
@@ -86,102 +86,24 @@
                          </tbody>
                          <tfoot>
                              <tr>
-                                <th>CONTA</th>
-                                <th>CAMPANHA</th>
-                                <th>CUSTO</th>
-                                <th>IMPRESSOES</th>
-                                <th>CLICKS</th>
-                                <th>CPM</th>
-                                <th>CPC</th>
-                                <th>DATA DE CRIAÇAO</th>
+                                <th><b>CONTA</b></th>
+                                 <th><b>CAMPANHA</b></th>
+                                 <th><b>CUSTO</b></th>
+                                 <th><b>IMPRESSOES</b></th>
+                                 <th><b>CLICKS</b></th>
+                                 <th><b>CPM</b></th>
+                                 <th><b>CPC</b></th>
+                                 <th><b>DATA DE CRIAÇAO</b></th>
                              </tr>
                          </tfoot>
                      </table>
                  </div>
             </div>
             <div class="tab-pane  p-20" id="profile" role="tabpanel">
-                <div class="table-responsive" id="_table-responsive">
-                    <h3 class="card-title p-2">
-                       Conjunto de anuncios
-                    </h3>
-                    <table id="zero_config" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>CONTA</th>
-                                <th>NOME DE CAMPANHA</th>
-                                <th>OBJETIVO</th>
-                                <th>ID CAMPANHA</th>
-                                <th>ACCOES</th>
-                            </tr>
-                        </thead>
-                        <tbody id="_tablebody">
-                            <div class="progress my-3 d-none" id="_loading">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-cyan" style="width:100%"></div>
-                            </div>
-
-                            @foreach ($campaigns as $campaign)
-                            <tr>
-                                <td>{{ $campaign['account_name'] }}</td>
-                                <td>{{ $campaign['name'] }}</td>
-                                <td>{{ $campaign['objective'] }}</td>
-                                <td>{{ $campaign['campaign_id'] }}</td>
-                                <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>NOME</th>
-                                <th>NOME</th>
-                                <th>OBJETIVO</th>
-                                <th>ID CAMPANHA</th>
-                                <th>ACCOES</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                <h4 class="text-center p-3">Coming soon</h4>
             </div>
             <div class="tab-pane p-20" id="messages" role="tabpanel">
-                <div class="table-responsive" id="_table-responsive">
-                    <h3 class="card-title p-2">
-                       Anuncios
-                    </h3>
-                    <table id="zero_config" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Nome da conta</th>
-                                <th>NOME DE CAMPANHA</th>
-                                <th>OBJETIVO</th>
-                                <th>ID CAMPANHA</th>
-                                <th>ACCOES</th>
-                            </tr>
-                        </thead>
-                        <tbody id="_tablebody">
-                            <div class="progress my-3 d-none" id="_loading">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-cyan" style="width:100%"></div>
-                            </div>
-
-                            @foreach ($campaigns as $campaign)
-                                <tr>
-                                    <td>{{ $campaign['account_name'] }}</td>
-                                    <td>{{ $campaign['name'] }}</td>
-                                    <td>{{ $campaign['objective'] }}</td>
-                                    <td>{{ $campaign['campaign_id'] }}</td>
-                                    <td><a href="{{ route('relatorios.facebook.insights.campaign',[$fbuserid,$campaign['campaign_id']]) }}" class="btn btn-primary">Visoes</a></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>NOME</th>
-                                <th>NOME</th>
-                                <th>OBJETIVO</th>
-                                <th>ID CAMPANHA</th>
-                                <th>ACCOES</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                <h4 class="text-center p-3">Coming soon</h4>
             </div>
         </div>
     </div>

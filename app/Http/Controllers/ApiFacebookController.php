@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cotacao;
 use App\Models\FacebookAdCampaign;
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookBusinessAccount;
@@ -54,14 +55,72 @@ class ApiFacebookController extends Controller
         return response()->json(["campaigns"=>$campaigns]);
     }
 
+        public function getDolar(){
+
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.apilayer.com/fixer/latest?symbols=BRL&base=USD",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: text/plain",
+                "apikey: ".env('API_DOLAR')
+            ),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $values = (json_decode($response,true));
+
+
+            $cotacao = Cotacao::find(1);
+            $cotacao->valor = $values['rates']['BRL'];
+            $cotacao->save();
+        }
 
 
 
+        public function SincronizarCampaignByAccountId(){
+            $users = FacebookUser::all();
+
+            foreach($users as $user){
+                $access_token = $user['access_token'];
+                $facebook_user_id = $user['facebook_user_id'];
+                $app_id = env('FB_APP_ID');
+                $app_secret = env('FB_APP_SECRET');
+                $api = Api::init($app_id, $app_secret, $access_token);
+                $api->setLogger(new CurlLogger());
+                $id = $user['id'];
+                $accounts = FacebookAdsAccount::where("facebook_users_id",$id)->get();
+                echo "<pre>";
+                foreach($accounts as $account) {
+                    $act_id = $account['act_account_id'];
+                    $fields = ['campaign','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign'];
+                    $params = ['effective_status' => array('ACTIVE','PAUSED')];
+                    $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
+                    $campaigns = $campaign['data'];
+                    foreach($campaigns as $campaign) {
+                        $idcampaign = $campaign['id'];
+                        $getAds = (new Campaign($idcampaign))->getAds(['targeting','id','name'],['breakdowns'=>['country']])->getResponse()->getContent();
+                        foreach($getAds['data'] as $value){
+                            print_r($value);
+                        }
+                    }
+                }
+                echo "</pre>";
+            }
+
+        }
 
 
 
-
-    public function SincronizarCampaignByAccountId(Request $request){
+    /* public function SincronizarCampaignByAccountId(Request $request){
 
         $fbuserid = $request->fbuserid;
         $fbuser = FacebookUser::find($fbuserid);
@@ -72,16 +131,36 @@ class ApiFacebookController extends Controller
         $app_secret = env('FB_APP_SECRET');
         $api = Api::init($app_id, $app_secret, $access_token);
         $api->setLogger(new CurlLogger());
-        $fields = ['name','objective','id','status','start_time','stop_time','account_id'];
-        $params = ['effective_status' => array('ACTIVE','PAUSED'),];
+        $fields = ['campaign','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign'];
+        $params = [
+            'effective_status' => array('ACTIVE','PAUSED'),
+            'time_range' => '{"since":"2022-08-01","until":"2022-08-04"}',
+            'breakdowns'=>''
+        ];
         $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
         $campaigns = $campaign['data'];
+
 
         $insightfields = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
         $insightparams = [];
 
         $insights = [];
 
+        $campos = ['country','account_id','campaign_id','effective_status','name']; $parametros = ['breakdowns'=>array('country')];
+        $getAds = (new AdAccount($act_id))->getAdSets($campos,$parametros)->getResponse()->getContent();
+        echo "<pre>";
+        foreach($campaigns as $campaign) {
+            $id = $campaign['id'];
+            $getAds = (new Campaign($id))->getAds(['targeting'],['breakdowns'=>['country']])->getResponse()->getContent();
+            foreach($getAds['data'] as $value){
+                print_r($value['targeting']['geo_locations']['countries']);
+            }
+
+        }
+        echo "</pre>";
+
+
+        return;
         foreach($campaigns as $campaign){
             $id = $campaign['id'];
             $account_id = $campaign['account_id'];
@@ -141,7 +220,7 @@ class ApiFacebookController extends Controller
 
 
         return response()->json(["data"=>$insights]);
-    }
+    } */
 
 
 

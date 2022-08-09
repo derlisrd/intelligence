@@ -13,8 +13,14 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    protected $commands = [
+        Commands\CronCampanhas::class
+    ];
     protected function schedule(Schedule $schedule)
     {
+        //
+        $schedule->command('getcampaigns:cron')->everyMinute();
+        //$schedule->command('getcampaigns:cron')->everyFifteenMinutes();
         // $schedule->command('inspire')->hourly();
     }
 

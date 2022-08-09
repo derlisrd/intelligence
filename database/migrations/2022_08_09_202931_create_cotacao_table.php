@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFacebookAdsTable extends Migration
+class CreateCotacaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateFacebookAdsTable extends Migration
      */
     public function up()
     {
-        Schema::create('facebook_ads', function (Blueprint $table) {
+        Schema::create('cotacao', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
+            $table->string("base");
+            $table->string("rate");
+            $table->float("valor");
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateFacebookAdsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facebook_ads');
+        Schema::dropIfExists('cotacao');
     }
 }

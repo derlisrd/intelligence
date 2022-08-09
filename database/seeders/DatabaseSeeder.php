@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('join1234'),
             'type_user'=>1
         ]);
+        DB::table('cotacao')->insert([
+            'base' => 'USS',
+            'rate' => 'BRL',
+            'valor' => 5,
+        ]);
         // \App\Models\User::factory(10)->create();
     }
 }

@@ -16,6 +16,7 @@ class CreateFacebookLastCampaignsTable extends Migration
         Schema::create('facebook_last_campaigns', function (Blueprint $table) {
             $table->id();
             $table->string("account_currency")->nullable();
+            $table->string("country")->nullable();
             $table->unsignedBigInteger("account_id")->nullable();
             $table->string("account_name");
             $table->string("campaign_id");

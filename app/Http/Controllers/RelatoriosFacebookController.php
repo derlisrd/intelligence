@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cotacao;
 use App\Models\FacebookAdCampaign;
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookBusinessAccount;
@@ -88,6 +89,10 @@ class RelatoriosFacebookController extends Controller
 
     public function getAdAccountsByUserId (Request $request){
 
+
+        $dolar = Cotacao::find(1)->first();
+        $valordolarreal = $dolar->valor;
+
         $id = $request->user_fb_id;
         $fbuserid = $id;
         $fbuser = FacebookUser::find($id);
@@ -135,7 +140,7 @@ class RelatoriosFacebookController extends Controller
 
 
 
-        return view('containers.relatorios.facebook.adaccounts',compact("fbuser","fbuserid",'breadcrumblinks','campaigns'));
+        return view('containers.relatorios.facebook.adaccounts',compact("fbuser","fbuserid",'breadcrumblinks','campaigns','valordolarreal'));
 
     }
 

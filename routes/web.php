@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiFacebookController;
+use App\Http\Controllers\ApiGamController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConexionsController;
 use App\Http\Controllers\RelatoriosController;
@@ -45,10 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/api/facebook/campaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"getCampaignsByAdAccountId"])->name("api.facebook.getCampaigns.by.account.id");
     Route::get("/api/facebook/sincronizarcampaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"SincronizarCampaignByAccountId"]);
 
+    Route::get("/api/facebook/allcampaigns",[ApiFacebookController::class,"getAllCampaigns"])->name("api.all.facebook.getCampaigns");
 
-    Route::get("/api/facebook/sincronizarcampaigns",[ApiFacebookController::class,"SincronizarCampaigns"]);
+    # ese aqui faz o sincronizar campanhas
+    //Route::get("/api/facebook/sincronizarcampaigns",[ApiFacebookController::class,"SincronizarCampaigns"]);
     //Route::get("/api/dolar",[ApiFacebookController::class,"getDolar"]);
-
+    Route::get("/api/gam/sincronizarcampaigns",[ApiGamController::class,"SincronizarCampaigns"]);
 
 });
 

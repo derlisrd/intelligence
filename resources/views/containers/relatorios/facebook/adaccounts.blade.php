@@ -37,9 +37,6 @@
     <div class="m-2">
         <a href="javascript:void(0)" onclick="getCampaignsByAccountId()" class="btn btn-primary btn-lg">Filtrar</a>
     </div>
-    <div class="m-2">
-        <a href="javascript:void(0)" onclick="SincronizarCampaigns()" class="btn btn-primary btn-lg">Sincronizar campanhas</a>
-    </div>
 </div>
 
 
@@ -69,7 +66,9 @@
                              <tr>
                                  <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
+                                 <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
+                                 <th><b>CUSTO USS</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
@@ -88,7 +87,9 @@
                              <tr>
                                 <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
+                                 <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
+                                 <th><b>CUSTO USS</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
@@ -112,62 +113,29 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", async function(e) {
-    _cargando();
-   /*  let fbuserid = {{ $fbuser->id }};
-
-    let res = await fetch("/api/facebook/campaigns/"+fbuserid);
-    let data = await res.json();
-
-    console.log(data); */
-    _cargando(false);
-})
-
-
-
-
-
-    async function SincronizarCampaigns() {
-        let fbuser_id = {{ $fbuser->id }}
-        let sel = document.getElementById("_accounts");
-        var opt = sel.options[sel.selectedIndex];
-        _cargando();
-        let res = await fetch("/api/facebook/sincronizarcampaigns/act_"+opt.value+"/"+fbuser_id)
-        let json = await res.json();
-        let html = "";
-        json.data.forEach(e=> {
-            html +=
-                `<tr>
-                    <td>${e.account_name}</td>
-                    <td>${e.campaign_name}</td>
-                    <td>${e.spend}</td>
-                    <td>${e.impressions}</td>
-                    <td>${e.clicks}</td>
-                    <td>${e.cpm}</td>
-                    <td>${e.cpc}</td>
-                    <td>${e.created_time}</td>
-                </tr>`;
-            })
-        _cargando(false);
-        document.getElementById('_tablebody').innerHTML = html;
-
-    }
 
 
     async function getCampaignsByAccountId() {
         let fbuser_id = {{ $fbuser->id }}
+        let valordolar = parseFloat( {{ $valordolarreal; }})
+        const calcular = m => ((Math.round((parseFloat(m)/valordolar) * 100) / 100).toFixed(2) )
         let sel = document.getElementById("_accounts");
         var opt = sel.options[sel.selectedIndex];
+        let url = opt.value === "" ? "{{ route('api.all.facebook.getCampaigns') }}" : "/api/facebook/campaigns/act_"+opt.value+"/"+fbuser_id
         _cargando();
-        let res = await fetch("/api/facebook/campaigns/act_"+opt.value+"/"+fbuser_id)
+        let res = await fetch(url)
         let json = await res.json();
         let html = "";
         json.data.forEach(e=> {
             html +=
                 `<tr>
-                    <td>${e.account_name}</td>
+                    <td>
+                        <b>${e.account_name}</b>
+                    </td>
                     <td>${e.campaign_name}</td>
-                    <td>${e.spend}</td>
+                    <td><b>${e.country}</b></td>
+                    <td>${e.spend} <b>${e.account_currency}</b></td>
+                    <td>${calcular(e.spend)} USS</td>
                     <td>${e.impressions}</td>
                     <td>${e.clicks}</td>
                     <td>${e.cpm}</td>
@@ -183,57 +151,10 @@ document.addEventListener("DOMContentLoaded", async function(e) {
 
 
     function _cargando(cargando = true){
-
-        if(cargando){
-            document.getElementById("_loading").classList.remove("d-none");
-        }
-        else{
-            document.getElementById('_loading').classList.add('d-none');
-        }
-
+        cargando ? document.getElementById("_loading").classList.remove("d-none") :  document.getElementById('_loading').classList.add('d-none');
     }
 
 
-    async function changeAccount(){
-
-        let fbuser_id = {{ $fbuser->id }}
-        let sel = document.getElementById("_accounts");
-        var opt = sel.options[sel.selectedIndex];
-
-        if(opt.value && opt.value!==""){
-            _cargando()
-            document.getElementById('_tablebody').classList.add("d-none");
-             param = opt.value;
-            let res = await fetch("/relatorios/facebook/api/campaigns/"+param+"/"+fbuser_id)
-            let data = await res.json();
-            let campaigns = data.campaigns;
-            console.log(data)
-            let html = "";
-            /* campaigns.forEach(e=> {
-                html +=
-                `<tr><td>${opt.text}</td><td>${e.name }</td><td>${e.objective}</td><td>${e.id}</td><td><a href="/relatorios/facebook/{{ $fbuserid }}/${e.id}/insights" class="btn btn-primary">Visoes</a></td></tr>`;
-            }) */
-
-            document.getElementById('_tablebody').classList.remove('d-none');
-            document.getElementById('_tablebody').innerHTML = html;
-            _cargando(false);
-        }
-
-    }
-
-    function cargarHtml (campaigns){
-        let htmlcampaigns = "";
-        return htmlcampaigns;
-    }
-
-    async function sincronizarAdCampaigns(){
-        _cargando();
-        let fbuser_id = {{ $fbuser->id }}
-        let res = await fetch("/relatorios/facebook/api/sinc_adcampaigns/"+fbuser_id)
-        let datas = await res.json();
-        cargarHtml(datas);
-        _cargando(false);
-    }
 </script>
 
 @endsection

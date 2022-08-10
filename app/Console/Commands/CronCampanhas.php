@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\CountryCode;
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookUser;
 use Illuminate\Console\Command;
@@ -51,14 +52,12 @@ class CronCampanhas extends Command
         $users = FacebookUser::all();
         foreach($users as $user){
             $access_token = $user['access_token'];
-            $facebook_user_id = $user['facebook_user_id'];
             $app_id = env('FB_APP_ID');
             $app_secret = env('FB_APP_SECRET');
             $api = Api::init($app_id, $app_secret, $access_token);
             $api->setLogger(new CurlLogger());
             $id = $user['id'];
             $accounts = FacebookAdsAccount::where("facebook_users_id",$id)->get();
-
             foreach($accounts as $account) {
                 $act_id = $account['act_account_id'];
                 $account_id = $account['account_id'];
@@ -76,6 +75,10 @@ class CronCampanhas extends Command
                         foreach($dados as $dato){
                             $last = FacebookLastCampaign::where('campaign_id', $idcampaign)->where('account_id', $account_id)->get();
                             $count = $last->count();
+
+                            $countries = CountryCode::where("country_code",$dato['country'])->get();
+                            $countrycode = $countries->first();
+
                             $datosnuevos = [
                                 'account_currency' => $dato['account_currency'],
                                 'account_name' => $dato['account_name'],
@@ -93,38 +96,13 @@ class CronCampanhas extends Command
                                 'objective' => $dato['objective'],
                                 'reach' => $dato['reach'],
                                 'spend' => $dato['spend'],
-                                'country' => $dato['country']
+                                'country' => $countrycode['name']
                             ];
-                            if($count>0){
-                                FacebookLastCampaign::where('campaign_id', $dato['campaign_id'])->where('account_id', $dato['account_id'])->update($datosnuevos);
-                            }
-                            else{
-                                $save = new FacebookLastCampaign();
-                                //FacebookLastCampaign::create($datosnuevos);
-                                $save->account_currency = $dato['account_currency'];
-                                $save->account_name = $dato['account_name'];
-                                $save->account_id = $dato['account_id'];
-                                $save->campaign_id = $dato['campaign_id'];
-                                $save->campaign_name = $dato['campaign_name'];
-                                $save->clicks = $dato['clicks'];
-                                $save->cpc = isset($dato['cpc']) ? $dato['cpc'] : null;
-                                $save->cpm = $dato['cpm'];
-                                $save->created_time = $dato['created_time'];
-                                $save->ctr = $dato['ctr'];
-                                $save->date_start = $dato['date_start'];
-                                $save->date_stop = $dato['date_stop'];
-                                $save->impressions = $dato['impressions'];
-                                $save->objective = $dato['objective'];
-                                $save->reach = $dato['reach'];
-                                $save->spend = $dato['spend'];
-                                $save->country = $dato['country'];
-                                $save->save();
-                            }
+                            $count>0 ? FacebookLastCampaign::where('campaign_id', $dato['campaign_id'])->where('account_id', $dato['account_id'])->update($datosnuevos) : FacebookLastCampaign::create($datosnuevos);
                         }
                     }
                 }
             }
-
         }
     }
 }

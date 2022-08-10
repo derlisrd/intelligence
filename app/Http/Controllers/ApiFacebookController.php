@@ -19,6 +19,14 @@ use FacebookAds\Object\Campaign;
 class ApiFacebookController extends Controller
 {
 
+
+    public function getAllCampaigns(){
+        $LastCampaigns = FacebookLastCampaign::all();
+        return response()->json(["data"=>$LastCampaigns]);
+    }
+
+
+
     // ACA TRAE LAS CAMPANHAS DE TODOS LAS CUENTAS
     public function getCampaigns(Request $request){
         $fbuserid = $request->fbuserid;
@@ -53,7 +61,7 @@ class ApiFacebookController extends Controller
 
 
     public function SincronizarCampaigns(){
-        /* $users = FacebookUser::all();
+         $users = FacebookUser::all();
         foreach($users as $user){
             $access_token = $user['access_token'];
             $facebook_user_id = $user['facebook_user_id'];
@@ -73,15 +81,17 @@ class ApiFacebookController extends Controller
                 $campaigns = $campaign['data'];
                 foreach($campaigns as $campaign) {
                     $idcampaign = $campaign['id'];
-                    $insightfields = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
 
-                    $insight = (new Campaign($idcampaign))->getInsights($insightfields,['date_preset' => 'maximum','breakdowns'=>['country']])->getResponse()->getContent();;
+                    $insightfields = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+                    $insightparams = ['date_preset' => 'maximum','breakdowns'=>['country']];
+                    $insight = (new Campaign($idcampaign))->getInsights($insightfields,$insightparams)->getResponse()->getContent();;
                     $dados = $insight['data'];
                     if(count($dados) > 0){
                         foreach($dados as $dato){
                             $last = FacebookLastCampaign::where('campaign_id', $idcampaign)->where('account_id', $account_id)->get();
                             $count = $last->count();
-                            $datosnuevos = [
+                             $datosnuevos = [
+                                'status' => $campaign['status'],
                                 'account_currency' => $dato['account_currency'],
                                 'account_name' => $dato['account_name'],
                                 'account_id' => $dato['account_id'],
@@ -106,6 +116,7 @@ class ApiFacebookController extends Controller
                             else{
                                 $save = new FacebookLastCampaign();
                                 //FacebookLastCampaign::create($datosnuevos);
+                                $save->status = $campaign['status'];
                                 $save->account_currency = $dato['account_currency'];
                                 $save->account_name = $dato['account_name'];
                                 $save->account_id = $dato['account_id'];
@@ -130,7 +141,7 @@ class ApiFacebookController extends Controller
                 }
             }
 
-        } */
+        }
     }
 
 
@@ -252,10 +263,7 @@ class ApiFacebookController extends Controller
     public function getCampaignsByAdAccountId (Request $request){
         $fbuserid = $request->fbuserid;
         $fbuser = FacebookUser::find($fbuserid);
-        $access_token = $fbuser->access_token;
-        $act_id = "act_".$request->act_id;
-        $campaigns = [];
-        $insights = [];
+
 
         $LastCampaigns = FacebookLastCampaign::where("account_id", $request->act_id)->get();
 

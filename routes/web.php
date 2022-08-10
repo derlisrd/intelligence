@@ -46,7 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/api/facebook/sincronizarcampaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"SincronizarCampaignByAccountId"]);
 
 
-    Route::get("/api/dolar",[ApiFacebookController::class,"getDolar"]);
+    Route::get("/api/facebook/sincronizarcampaigns",[ApiFacebookController::class,"SincronizarCampaigns"]);
+    //Route::get("/api/dolar",[ApiFacebookController::class,"getDolar"]);
 
 
 });

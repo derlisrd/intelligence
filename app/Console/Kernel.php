@@ -14,12 +14,14 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected $commands = [
-        Commands\CronCampanhas::class
+        Commands\CronCampanhas::class,
+        Commands\CotacaoCron::class,
     ];
     protected function schedule(Schedule $schedule)
     {
         //
-        $schedule->command('getcampaigns:cron')->everyMinute();
+        $schedule->command('cotacao:cron')->twiceDaily(1, 13);
+        $schedule->command('getcampaigns:cron')->everyFifteenMinutes();
         //$schedule->command('getcampaigns:cron')->everyFifteenMinutes();
         // $schedule->command('inspire')->hourly();
     }

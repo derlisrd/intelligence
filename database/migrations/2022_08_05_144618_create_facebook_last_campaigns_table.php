@@ -22,7 +22,7 @@ class CreateFacebookLastCampaignsTable extends Migration
             $table->string("campaign_id");
             $table->text("campaign_name");
             $table->bigInteger("clicks");
-            $table->float("cpc");
+            $table->float("cpc")->nullable();
             $table->float("cpm");
             $table->date("created_time")->nullable();
             $table->float("ctr");

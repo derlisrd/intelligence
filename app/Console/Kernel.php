@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
     {
         //
         $schedule->command('cotacao:cron')->twiceDaily(1, 13);
-        $schedule->command('getcampaigns:cron')->everyFifteenMinutes();
+        $schedule->command('getcampaigns:cron')->hourly();
         //$schedule->command('getcampaigns:cron')->everyFifteenMinutes();
         // $schedule->command('inspire')->hourly();
     }

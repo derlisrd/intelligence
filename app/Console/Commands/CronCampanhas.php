@@ -97,7 +97,32 @@ class CronCampanhas extends Command
                                 'spend' => $dato['spend'],
                                 'country' => $countrycode['name']
                             ];
-                            $count>0 ? FacebookLastCampaign::where('campaign_id', $dato['campaign_id'])->where('account_id', $dato['account_id'])->update($datosnuevos) : FacebookLastCampaign::create($datosnuevos);
+                            if($count>0){
+                                FacebookLastCampaign::where('campaign_id', $dato['campaign_id'])->where('account_id', $dato['account_id'])->update($datosnuevos);
+                            }
+                            else{
+                                $save = new FacebookLastCampaign();
+                                //FacebookLastCampaign::create($datosnuevos);
+                                $save->status = $campaign['status'];
+                                $save->account_currency = $dato['account_currency'];
+                                $save->account_name = $dato['account_name'];
+                                $save->account_id = $dato['account_id'];
+                                $save->campaign_id = $dato['campaign_id'];
+                                $save->campaign_name = $dato['campaign_name'];
+                                $save->clicks = $dato['clicks'];
+                                $save->cpc = isset($dato['cpc']) ? $dato['cpc'] : null;
+                                $save->cpm = $dato['cpm'];
+                                $save->created_time = $dato['created_time'];
+                                $save->ctr = $dato['ctr'];
+                                $save->date_start = $dato['date_start'];
+                                $save->date_stop = $dato['date_stop'];
+                                $save->impressions = $dato['impressions'];
+                                $save->objective = $dato['objective'];
+                                $save->reach = $dato['reach'];
+                                $save->spend = $dato['spend'];
+                                $save->country = $dato['country'];
+                                $save->save();
+                            }
                         }
                     }
                 }

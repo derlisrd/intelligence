@@ -75,8 +75,8 @@ class CronCampanhas extends Command
                             $last = FacebookLastCampaign::where('campaign_id', $idcampaign)->where('account_id', $account_id)->get();
                             $count = $last->count();
 
-                            $countries = CountryCode::where("country_code",$dato['country'])->get();
-                            $countrycode = $countries->first();
+                            //$countries = CountryCode::where("country_code",$dato['country'])->get();
+                            //$countrycode = $countries->first();
 
                             $datosnuevos = [
                                 'account_currency' => $dato['account_currency'],
@@ -95,7 +95,7 @@ class CronCampanhas extends Command
                                 'objective' => $dato['objective'],
                                 'reach' => $dato['reach'],
                                 'spend' => $dato['spend'],
-                                'country' => $countrycode['name']
+                                'country' =>$dato['country']
                             ];
                             if($count>0){
                                 FacebookLastCampaign::where('campaign_id', $dato['campaign_id'])->where('account_id', $dato['account_id'])->update($datosnuevos);

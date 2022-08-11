@@ -68,7 +68,7 @@
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
-                                 <th><b>CUSTO USS</b></th>
+                                 <th><b>USS</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
@@ -89,7 +89,7 @@
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
-                                 <th><b>CUSTO USS</b></th>
+                                 <th><b>USS</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
@@ -118,6 +118,7 @@
     async function getCampaignsByAccountId() {
         let fbuser_id = {{ $fbuser->id }}
         let valordolar = parseFloat( {{ $valordolarreal; }})
+        const dosdecimales = n => ( Math.round((parseFloat(n)) * 100) / 100).toFixed(2)
         const calcular = m => ((Math.round((parseFloat(m)/valordolar) * 100) / 100).toFixed(2) )
         let sel = document.getElementById("_accounts");
         var opt = sel.options[sel.selectedIndex];
@@ -134,11 +135,11 @@
                     </td>
                     <td>${e.campaign_name}</td>
                     <td><b>${e.country}</b></td>
-                    <td>${e.spend} <b>${e.account_currency}</b></td>
+                    <td>${dosdecimales(e.spend)} <b>${e.account_currency}</b></td>
                     <td>${calcular(e.spend)} USS</td>
                     <td>${e.impressions}</td>
                     <td>${e.clicks}</td>
-                    <td>${e.cpm}</td>
+                    <td>${dosdecimales(e.cpm)}</td>
                     <td>${e.cpc}</td>
                     <td>${e.created_time}</td>
                 </tr>`;

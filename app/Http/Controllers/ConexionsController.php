@@ -107,13 +107,11 @@ class ConexionsController extends Controller
             $params = array(
                 "client_id" => env("FB_APP_ID"),
                 "redirect_uri" => env("FB_APP_CALLBACK"),
-                //"redirect_uri" => url('conexions/facebook/callback'),
                 "state" => "active",
                 "scope"=>"email,ads_management,ads_read,attribution_read,business_management,pages_manage_ads,read_insights"
-
             );
 
-          $urllogin = $endpoint."?". http_build_query($params);
+        $urllogin = $endpoint."?". http_build_query($params);
 
         $breadcrumblinks = [
             [
@@ -123,20 +121,13 @@ class ConexionsController extends Controller
             ]
         ];
 
-
         $fbuser = new FacebookUser();
         $fbusers = $fbuser->all();
-
 
         return view('conexions.facebook',compact('breadcrumblinks','urllogin','fbusers'));
     }
 
 
-
-
-    public function connect_facebook(){
-
-    }
 
 
 }

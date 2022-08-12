@@ -13,12 +13,6 @@
             <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#home"
                     role="tab"><span class="hidden-sm-up"></span> <span
                         class="hidden-xs-down">Campanhas</span></a> </li>
-            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#profile"
-                    role="tab"><span class="hidden-sm-up"></span> <span
-                        class="hidden-xs-down">Conjunto de anuncios</span></a> </li>
-            <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#messages"onchange=""
-                    role="tab"><span class="hidden-sm-up"></span> <span
-                        class="hidden-xs-down">Anuncios</span></a> </li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content tabcontent-border">
@@ -76,12 +70,14 @@
                      </table>
                  </div>
             </div>
-            <div class="tab-pane  p-20" id="profile" role="tabpanel">
-                <h4 class="text-center p-3">Coming soon</h4>
+
+
+
+            <div class="d-flex justify-content-center">
+                {{$campaigns->links() }}
             </div>
-            <div class="tab-pane p-20" id="messages" role="tabpanel">
-                <h4 class="text-center p-3">Coming soon</h4>
-            </div>
+
+
         </div>
     </div>
 

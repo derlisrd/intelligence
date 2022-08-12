@@ -9,7 +9,7 @@ class RelatoriosGoogleController extends Controller
 {
 
     public function getCampaigns(){
-        $campaigns = GoogleGamCampaigns::limit(30)->offset(30)->orderBy("id", "desc")->get();
+        $campaigns = GoogleGamCampaigns::orderBy('id', 'DESC')->paginate(50);
         return view ('containers.relatorios.google.campaigns',compact('campaigns'));
     }
 }

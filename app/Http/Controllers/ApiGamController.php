@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\GoogleGamCampaigns;
 use Illuminate\Http\Request;
 
 class ApiGamController extends Controller
@@ -23,6 +25,40 @@ class ApiGamController extends Controller
             $response = curl_exec($curl);
             curl_close($curl);
             $values = (json_decode($response,true));
-            print_r($values);
+            foreach($values as $value){
+
+                $datosnuevos = [
+                    "date"=>$value['DATE'],
+                    "domain"=>$value['DOMAIN'],
+                    "country"=>$value['COUNTRY'],
+                    "name"=>$value['CUSTOM_CRITERIA_NAME'],
+                    "value"=>$value['CUSTOM_CRITERIA_VALUE'],
+                    "impressions"=>$value['AD_EXCHANGE_LINE_ITEM_LEVEL_IMPRESSIONS'],
+                    "clicks"=>$value['AD_EXCHANGE_LINE_ITEM_LEVEL_CLICKS'],
+                    "ctr"=>$value['AD_EXCHANGE_LINE_ITEM_LEVEL_CTR'],
+                    "receita"=>$value['AD_EXCHANGE_LINE_ITEM_LEVEL_REVENUE'],
+                    "cpm"=>$value['AD_EXCHANGE_LINE_ITEM_LEVEL_AVERAGE_ECPM'],
+                    "impressions_rate"=>$value['AD_EXCHANGE_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS_RATE'],
+                ];
+
+                $last = GoogleGamCampaigns::where('domain', $value['DOMAIN'])
+                ->where('name', $value['CUSTOM_CRITERIA_NAME'])
+                ->where('value', $value['CUSTOM_CRITERIA_VALUE'])
+                ->where('country', $value['COUNTRY'])
+                ->get();
+                $count = $last->count();
+
+
+                if($count>0){
+                    $get = $last->first();
+                    $id = $get->id;
+                    GoogleGamCampaigns::where('id',$id)->update($datosnuevos);
+                }
+                else{
+                    GoogleGamCampaigns::create($datosnuevos);
+                }
+
+
+            }
     }
 }

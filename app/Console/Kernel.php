@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CronCampanhas::class,
+        Commands\GamCampaingsCron::class,
         Commands\CotacaoCron::class,
     ];
     protected function schedule(Schedule $schedule)
@@ -22,6 +24,7 @@ class Kernel extends ConsoleKernel
         //
         $schedule->command('cotacao:cron')->twiceDaily(1, 13);
         $schedule->command('getcampaigns:cron')->hourly();
+        $schedule->command('gamcampains:cron')->hourly();
         //$schedule->command('getcampaigns:cron')->everyFifteenMinutes();
         // $schedule->command('inspire')->hourly();
     }

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 class ApiFacebookController extends Controller
 {
 
-
     public function getAllCampaigns(){
         $LastCampaigns = FacebookLastCampaign::all();
         return response()->json(["data"=>$LastCampaigns]);

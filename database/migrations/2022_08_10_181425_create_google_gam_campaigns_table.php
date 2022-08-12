@@ -25,6 +25,7 @@ class CreateGoogleGamCampaignsTable extends Migration
             $table->string("name");
             $table->string('value');
             $table->string("country");
+            $table->float("impressions_rate")->nullable();
             $table->timestamps();
         });
     }

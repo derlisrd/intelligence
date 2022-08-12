@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\FacebookUser;
-use FacebookAds\Object\AdSet;
-use FacebookAds\Api;
-use FacebookAds\Logger\CurlLogger;
-use FacebookAds\Object\AdAccount;
-use FacebookAds\Object\Fields\CampaignFields;
-use Illuminate\Http\Request;
+
 
 class RelatoriosController extends Controller
 {
 
-
+    // show users profiles
     public function facebook(){
 
         $fbuser = new FacebookUser();

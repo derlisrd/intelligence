@@ -3,25 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cotacao;
-use App\Models\FacebookAdCampaign;
-use App\Models\FacebookAdsAccount;
-use App\Models\FacebookBusinessAccount;
-use App\Models\FacebookLastCampaign;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
-use FacebookAds\Object\AdSet;
-use FacebookAds\Api;
-use FacebookAds\Logger\CurlLogger;
-use FacebookAds\Object\AdAccount;
-use FacebookAds\Object\Campaign;
-use FacebookAds\Object\Fields\AdSetFields;
-use FacebookAds\Object\Fields\CampaignFields;
-use FacebookAds\Object\Fields\AdsInsightsFields;
-use Laravel\Ui\Presets\React;
 
-
-
-use FacebookAds\Object\AdCampaign;
 
 class RelatoriosFacebookController extends Controller
 {

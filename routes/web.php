@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
 
-Route::get("/google",[ApiGamController::class,"SincronizarCampaigns"]);
+
 
 
 

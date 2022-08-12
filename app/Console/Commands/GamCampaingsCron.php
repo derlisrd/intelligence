@@ -55,7 +55,6 @@ class GamCampaingsCron extends Command
             curl_close($curl);
             $values = (json_decode($response,true));
             foreach($values as $value){
-
                 $datosnuevos = [
                     "date"=>$value['DATE'],
                     "domain"=>$value['DOMAIN'],

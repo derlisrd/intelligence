@@ -32,6 +32,9 @@
                                 <li class="sidebar-item"><a href={{ route('conexions.facebook') }} class="sidebar-link"><i class="fab fa-facebook-square"></i>
                                     <span class="hide-menu"> Conectar facebook</span></a>
                                 </li>
+                                <li class="sidebar-item"><a href={{ route('facebook.adaccounts') }} class="sidebar-link"><i class="fab fa-facebook-square"></i>
+                                    <span class="hide-menu">Facebook Ads Accounts</span></a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

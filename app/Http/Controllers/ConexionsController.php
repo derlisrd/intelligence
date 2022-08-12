@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookUser;
+use Illuminate\Http\Request;
 
 class ConexionsController extends Controller
 {
+
 
 
     public function facebook()
@@ -103,5 +105,17 @@ class ConexionsController extends Controller
         }
     }
 
+
+
+    //show facebook ad accounts
+    public function getFacebookAdAccounts(){
+        $adAccounts = FacebookAdsAccount::all();
+        return view('conexions.facebookAdAccounts',compact("adAccounts"));
+    }
+
+    public function destroyFacebookAdAccount(Request $request){
+        FacebookAdsAccount::destroy($request->id);
+        return back();
+    }
 
 }

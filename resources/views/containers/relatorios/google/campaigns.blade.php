@@ -30,34 +30,46 @@
                      <table id="zero_config" class="table table-striped table-bordered">
                          <thead>
                              <tr>
-                                 <th><b>CONTA</b></th>
-                                 <th><b>CAMPANHA</b></th>
+                                 <th><b>DOMAIN</b></th>
+                                 <th><b>NOME</b></th>
+                                 <th><b>VALUE</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>RECEITA</b></th>
-                                 <th><b>USS</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
-                                 <th><b>CPC</b></th>
+                                 <th><b>CTR</b></th>
                                  <th><b>DATA DE CRIAÇAO</b></th>
                              </tr>
                          </thead>
                          <tbody id="_tablebody">
-
-
+                            @foreach ($campaigns as $campaign)
+                            <tr>
+                                <td><b>{{ $campaign->domain }}</b></td>
+                                 <td><b>{{ $campaign->name }}</b></td>
+                                 <td><b>{{ $campaign->value }}</b></td>
+                                 <td><b>{{ $campaign->country }}</b></td>
+                                 <td><b>{{ $campaign->receita }}</b></td>
+                                 <td><b>{{ $campaign->impressions }}</b></td>
+                                 <td><b>{{ $campaign->clicks }}</b></td>
+                                 <td><b>{{ $campaign->cpm }}</b></td>
+                                 <td><b>{{ $campaign->ctr }}</b></td>
+                                 <td><b>{{ $campaign->date }}</b></td>
+                             </tr>
+                            @endforeach
 
                          </tbody>
                          <tfoot>
                              <tr>
-                                <th><b>CONTA</b></th>
-                                 <th><b>CAMPANHA</b></th>
+                                <th><b>DOMAIN</b></th>
+                                 <th><b>NOME</b></th>
+                                 <th><b>VALUE</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>RECEITA</b></th>
-                                 <th><b>USS</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
-                                 <th><b>CPC</b></th>
+                                 <th><b>CTR</b></th>
                                  <th><b>DATA DE CRIAÇAO</b></th>
                              </tr>
                          </tfoot>

@@ -17,7 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/relatorios/facebook",[RelatoriosFacebookController::class,"getFacebookUsers"])->name("relatorios.facebook.users");
     Route::get('/relatorios/facebook/adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.adaccounts');
 
-    Route::get('/relatorios/google',[RelatoriosGoogleController::class,"getCampaigns"])->name("relatorios.google.gam");
+    Route::get('/relatorios/google/{start?}/{end?}',[RelatoriosGoogleController::class,"getCampaigns"])->name("relatorios.google.gam");
 
     Route::get("/conexions/facebook",[ConexionsController::class,"facebook"])->name("conexions.facebook");
     Route::get("/conexions/facebook/callback",[ConexionsController::class,"facebookcallback"])->name("conexions.facebook.callback");

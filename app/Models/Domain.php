@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CountryCode extends Model
+class Domain extends Model
 {
     use HasFactory;
-    protected $table = 'country_codes';
-    protected $fillable=['name','country_code'];
+    protected $table = 'domains';
+    protected $fillable=['domain'];
     protected $hidden = ['updated_at','created_at'];
 }

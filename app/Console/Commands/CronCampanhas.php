@@ -74,7 +74,8 @@ class CronCampanhas extends Command
                         foreach($dados as $dato){
                             $last = FacebookLastCampaign::where('campaign_id', $idcampaign)->where('account_id', $account_id)->get();
                             $count = $last->count();
-
+                            $country = CountryCode::where('country_code', $dato['country'])->get();
+                            $pais = $country->first();
                             $datosnuevos = [
                                 'account_currency' => $dato['account_currency'],
                                 'account_name' => $dato['account_name'],
@@ -92,7 +93,7 @@ class CronCampanhas extends Command
                                 'objective' => $dato['objective'],
                                 'reach' => $dato['reach'],
                                 'spend' => $dato['spend'],
-                                'country' =>$dato['country'],
+                                'country' =>$pais->name,
                                 'status'=>$campaign['status']
                             ];
                             if($count>0){

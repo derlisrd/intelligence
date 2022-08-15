@@ -20,7 +20,12 @@ class ReceitasController extends Controller
     public function campaigns(Request $request){
 
         $domain = $request->domain;
-        $datas = GoogleGamCampaigns::where("domain",$domain)->where("name","utm_campaign")->orderBy('id', 'DESC')->get();
+        $gam = GoogleGamCampaigns::where("domain",$domain)->where("name","utm_campaign")->orderBy('id', 'DESC')->get();
+
+        $datas = [];
+
+
+
 
         return response()->json(["datas"=>$datas]);
 

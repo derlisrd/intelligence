@@ -76,6 +76,11 @@ class CronCampanhas extends Command
                             $count = $last->count();
                             $country = CountryCode::where('country_code', $dato['country'])->get();
                             $pais = $country->first();
+
+                                if($pais){
+                                    $pais = $pais->name;
+                                }
+
                             $datosnuevos = [
                                 'account_currency' => $dato['account_currency'],
                                 'account_name' => $dato['account_name'],

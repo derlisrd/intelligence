@@ -5,6 +5,8 @@ use App\Http\Controllers\ConexionsController;
 use App\Http\Controllers\ReceitasController;
 use App\Http\Controllers\RelatoriosFacebookController;
 use App\Http\Controllers\RelatoriosGoogleController;
+use App\Models\CountryCode;
+use App\Models\FacebookLastCampaign;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[LoginController::class,"login"])->name("auth.login");
@@ -43,8 +45,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/api/receitas/{domain}",[ReceitasController::class,"campaigns"]);
 
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
+
+
+
 });
 
+Route::get("/prueba",function(){
+ $fb = FacebookLastCampaign::all();
+ foreach($fb as $f){
+   if(isset($f['country'])) {
+    $name =  $f['country'];
+    $country = CountryCode::where('country_code', $name)->get();
+    $pais = $country->first();
+    if($pais){
+        echo $pais->name."<br />";
+    }
+   }
+
+ }
+
+});
 
 
 

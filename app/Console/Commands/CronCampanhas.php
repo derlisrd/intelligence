@@ -92,7 +92,8 @@ class CronCampanhas extends Command
                                 'objective' => $dato['objective'],
                                 'reach' => $dato['reach'],
                                 'spend' => $dato['spend'],
-                                'country' =>$dato['country']
+                                'country' =>$dato['country'],
+                                'status'=>$campaign['status']
                             ];
                             if($count>0){
                                 $get = $last->first();
@@ -102,7 +103,6 @@ class CronCampanhas extends Command
                             }
                             else{
                                 FacebookLastCampaign::create($datosnuevos);
-
                             }
                         }
                     }

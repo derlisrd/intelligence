@@ -8,12 +8,41 @@
 
 <div class="row">
     <div class="card p-2">
+
+        <div class="card-body">
+        <form action="{{ route('gam.filter') }}" method="GET">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Dominio</label>
+                    <input type="text" name="domain" autocomplete="off" class="form-control form-control-lg" value="{{ $domain ?? '' }}">
+                </div>
+                <div class="col-md-3">
+                    <label>Nome</label>
+                    <input type="text" name="name" autocomplete="off" class="form-control form-control-lg" value="{{ $name ?? '' }}">
+                </div>
+
+                <div class="col-md-3">
+                    <label>Pais</label>
+                    <input type="text" name="country" autocomplete="off" class="form-control form-control-lg" value="{{ $country ?? '' }}">
+                </div>
+                <div class="col-md-12 text-right mt-2">
+                    <button class="btn btn-primary btn-lg" type="submit">Buscar</button>
+                </div>
+
+            </div>
+        </form>
+        </div>
+
+
+
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#home"
                     role="tab"><span class="hidden-sm-up"></span> <span
                         class="hidden-xs-down">Campanhas</span></a> </li>
         </ul>
+
+
         <!-- Tab panes -->
         <div class="tab-content tabcontent-border">
             <div class="tab-pane active" id="home" role="tabpanel">
@@ -24,7 +53,7 @@
                      <table id="zero_config" class="table table-striped table-bordered">
                          <thead>
                              <tr>
-                                 <th><b>DOMAIN</b></th>
+                                 <th><b>DOMINIO</b></th>
                                  <th><b>NOME</b></th>
                                  <th><b>VALUE</b></th>
                                  <th><b>PAIS</b></th>
@@ -55,7 +84,7 @@
                          </tbody>
                          <tfoot>
                              <tr>
-                                <th><b>DOMAIN</b></th>
+                                <th><b>DOMINIO</b></th>
                                  <th><b>NOME</b></th>
                                  <th><b>VALUE</b></th>
                                  <th><b>PAIS</b></th>

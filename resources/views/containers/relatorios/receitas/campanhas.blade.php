@@ -26,13 +26,49 @@
 </form>
 </div>
 
-@endsection
-<script>
-    async function filtrar(){
-        let domain = document.getElementById('domain').value;
+<div class="row">
+   <div class="card p-2">
+    <div class="card-body">
+        <div class="table-responsive" id="_table-responsive">
+            <h3 class="card-title p-2">
+               Campanhas
+            </h3>
+            <table id="zero_config" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>DOMINIO</th>
+                        <th>CAMPANHA</th>
+                        <th>CUSTO FB</th>
+                        <th>RECEITA GOOGLE</th>
+                        <th>BALANÇO</th>
+                    </tr>
+                </thead>
+                <tbody id="_tablebody">
+                   @foreach ($campaigns as $campaign)
+                   <tr>
 
-        let res = await fetch(`/api/receitas/${domain}`);
-        let data = await res.json();
-        console.log(data)
-    }
-</script>
+                    </tr>
+                   @endforeach
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>DOMINIO</th>
+                        <th>CAMPANHA</th>
+                        <th>CUSTO FB</th>
+                        <th>RECEITA GOOGLE</th>
+                        <th>BALANÇO</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+   </div>
+</div>
+
+
+
+
+
+@endsection
+

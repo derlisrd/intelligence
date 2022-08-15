@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
     //RELATORIOS DE RECEITAS
     Route::get('relatorios/receitas',[ReceitasController::class,"index"])->name('receitas');
+    Route::post('relatorios/receitas',[ReceitasController::class,"campaigns"])->name('receitas.campaigns');
 
     //CONEXIONES DE FACEBOOK
     Route::get('/conexions/facebookadaccounts',[ConexionsController::class,"getFacebookAdAccounts"])->name("facebook.adaccounts");
@@ -42,29 +43,37 @@ Route::middleware(['auth'])->group(function () {
     Route::delete("/api/facebook/destroyadaccount/{id}",[ApiFacebookController::class,"destroyAdAccount"]);
 
     //API ASINCRONOS DE RECEITAS
-    Route::get("/api/receitas/{domain}",[ReceitasController::class,"campaigns"]);
+    //Route::get("/api/receitas/{domain}",[ReceitasController::class,"campaigns"]);
 
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
 
+    Route::get("/prueba",function(){
+        $fb = FacebookLastCampaign::all();
+        foreach($fb as $f){
+          if(isset($f['country'])) {
+           $name =  $f['country'];
+           $id = $f['id'];
+           $country = CountryCode::where('country_code', $name)->get();
+           $pais = $country->first();
+           if($pais){
+               FacebookLastCampaign::where('id',$id)->update(["country"=>$pais->name]);
+           }
+          }
+        }
+       });
 
 });
 
-Route::get("/prueba",function(){
- $fb = FacebookLastCampaign::all();
- foreach($fb as $f){
-   if(isset($f['country'])) {
-    $name =  $f['country'];
-    $country = CountryCode::where('country_code', $name)->get();
-    $pais = $country->first();
-    if($pais){
-        echo $pais->name."<br />";
-    }
-   }
 
- }
 
-});
+
+
+
+
+
+
+
 
 
 

@@ -6,10 +6,12 @@
 
 @section("container")
 <div class="row">
+<form action="{{ route('receitas.campaigns') }}" method="post">
+    @csrf
     <div class="col-12 d-flex align-items-center flex-row mt-2">
         <div class="p-2 mx-2">
             <label for="domain">Dominios</label>
-        <select  class="form-select form-select-lg" id="domain" >
+        <select  class="form-select form-select-lg" id="domain" name="domain" >
             <option value="" selected>Seleccionar</option>
             @foreach ($domains as $val)
                 <option value="{{ $val->domain }}">{{ $val->domain }}</option>
@@ -17,11 +19,11 @@
         </select>
         </div>
         <div class="p-2 mt-4 mx-2">
-            <input type="text" name="pais" class="form-control form-control-lg" placeholder="Pais" />
+            <input type="text" name="country" class="form-control form-control-lg" placeholder="Pais" />
         </div>
-        <button class="btn btn-primary btn-lg mt-4" onclick="filtrar()">Filtrar</button>
+        <button class="btn btn-primary btn-lg mt-4" type="submit">Filtrar</button>
     </div>
-
+</form>
 </div>
 
 @endsection

@@ -2,6 +2,7 @@
 use App\Http\Controllers\ApiFacebookController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConexionsController;
+use App\Http\Controllers\ReceitasController;
 use App\Http\Controllers\RelatoriosFacebookController;
 use App\Http\Controllers\RelatoriosGoogleController;
 use Illuminate\Support\Facades\Route;
@@ -12,13 +13,15 @@ Route::view("/","auth.login")->name("login");
 Route::view("/login","auth.login")->name("login.view");
 
 Route::middleware(['auth'])->group(function () {
-    Route::view('/home','containers.dashboard')->name("home") ;
+    Route::view('/home','containers.home')->name("home") ;
 
     Route::get("/relatorios/facebook",[RelatoriosFacebookController::class,"getFacebookUsers"])->name("relatorios.facebook.users");
     Route::get('/relatorios/facebook/adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.adaccounts');
 
     Route::get('/relatorios/google',[RelatoriosGoogleController::class,"getCampaigns"])->name("relatorios.google.gam");
     Route::get('/relatorios/google/filters',[RelatoriosGoogleController::class,"filter"])->name("gam.filter");
+
+    Route::get('relatorios/receitas',[ReceitasController::class,"index"])->name('receitas');
 
     Route::get('/conexions/facebookadaccounts',[ConexionsController::class,"getFacebookAdAccounts"])->name("facebook.adaccounts");
     Route::get('/conexions/facebookadaccounts/destroy/{id}',[ConexionsController::class,"destroyFacebookAdAccount"])->name("facebook.adaccount.destroy");

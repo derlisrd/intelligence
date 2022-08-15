@@ -18,16 +18,12 @@ class RelatoriosFacebookController extends Controller
                 "title"=>"Contas de facebook",
                 "route"=>null // name of the route
             ],
-
         ];
         return view('containers.relatorios.facebook.users',compact("fbusers","breadcrumblinks"));
     }
 
 
-
-
     public function getCampaignsByAdAccountId (Request $request){
-
 
         $dolar = Cotacao::find(1)->first();
         $valordolarreal = $dolar->valor;

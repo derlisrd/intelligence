@@ -13,7 +13,7 @@
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
    <!-- CSRF Token -->
-   <meta name="csrf-token" content="{{ csrf_token() }}">
+   <meta name="csrf-token" content="{{ csrf_token() }}" />
    <title>@yield("title","Intelligence")</title>
 
     @include("layouts.css")

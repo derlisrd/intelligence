@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ApiGamController extends Controller
 {
     public function SincronizarCampaigns(){
-
+/*
         $curl = curl_init();
         curl_setopt_array(
             $curl, [
@@ -59,6 +59,6 @@ class ApiGamController extends Controller
                 }
 
 
-            }
+            } */
     }
 }

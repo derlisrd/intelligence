@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\FacebookAdsAccount;
 use App\Models\FacebookLastCampaign;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
@@ -19,6 +21,14 @@ class ApiFacebookController extends Controller
 
         $LastCampaigns = FacebookLastCampaign::where("account_id", $request->act_id)->get();
         return response()->json(["data"=>$LastCampaigns]);
+    }
+
+    public function destroyAdAccount(Request $request){
+
+        $id = $request->id;
+        FacebookAdsAccount::where('id',$id)->delete();
+        return response()->json(["response"=>true]);
+
     }
 
 }

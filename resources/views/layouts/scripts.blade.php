@@ -21,3 +21,4 @@
 <script src="{{ asset('assets/libs/flot/jquery.flot.crosshair.js') }}"></script>
 <script src="{{ asset('assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
 <script src="{{ asset('assets/dist/js/pages/chart/chart-page-init.js') }}"></script>
+<script src="{{ asset('assets/sweet/sweetalert2.all.min.js') }}"></script>

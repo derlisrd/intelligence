@@ -48,20 +48,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
 
-    Route::get("/prueba",function(){
-        $fb = FacebookLastCampaign::all();
-        foreach($fb as $f){
-          if(isset($f['country'])) {
-           $name =  $f['country'];
-           $id = $f['id'];
-           $country = CountryCode::where('country_code', $name)->get();
-           $pais = $country->first();
-           if($pais){
-               FacebookLastCampaign::where('id',$id)->update(["country"=>$pais->name]);
-           }
-          }
-        }
-       });
 
 });
 

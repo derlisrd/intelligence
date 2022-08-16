@@ -10,7 +10,7 @@ class ConexionsController extends Controller
 {
 
 
-
+    // view
     public function facebook()
     {
         $endpoint = "https://facebook.com/" . env('FB_API_VERSION') . "/dialog/oauth";
@@ -21,17 +21,14 @@ class ConexionsController extends Controller
             "scope" => "email,ads_management,ads_read,attribution_read,business_management,pages_manage_ads,read_insights"
         ];
         $urllogin = $endpoint . "?" . http_build_query($params);
-        $breadcrumblinks = [
-            [
-                "active" => true,
-                "title" => "Conexions",
-                "route" => null // name of the route
-            ]
-        ];
+        $breadcrumblinks = [["active" => true,"title" => "Conexions","route" => null]];
         $fbuser = new FacebookUser();
         $fbusers = $fbuser->all();
         return view('conexions.facebook', compact('breadcrumblinks', 'urllogin', 'fbusers'));
     }
+
+
+
 
 
 
@@ -59,6 +56,10 @@ class ConexionsController extends Controller
 
 
 
+
+
+
+
     private function SaveUserFacebook($access_token)
     {
         try {
@@ -68,18 +69,30 @@ class ConexionsController extends Controller
             $facebook_user_id = $res['id'];
             $name = $res['name'];
 
-            $Facebook  = new FacebookUser();
-            $Facebook->email = $email;
-            $Facebook->name = $name;
-            $Facebook->facebook_user_id = $facebook_user_id;
-            $Facebook->access_token = $access_token;
-            $Facebook->save();
-            return $Facebook::find($Facebook->id);
+            $fb = FacebookUser::where('email', $email)->get();
+            $datos = [
+                "name" => $name,"email" => $email,"facebook_user_id" => $facebook_user_id,"access_token" => $access_token
+            ];
+            if(($fb->count())>0){
+                $fbu = $fb->first();
+                FacebookUser::where('id',$fbu->id)->update($datos);
+                return $fbu;
+            }
+            else{
+               $userdata = FacebookUser::create($datos);
+                return $userdata;
+            }
+
+
         } catch (\Throwable $th) {
             print 'Error: ' . $th->getMessage();
             die();
         }
     }
+
+
+
+
 
 
     // saving facebook bussiness accounts

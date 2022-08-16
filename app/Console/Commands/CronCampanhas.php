@@ -7,8 +7,6 @@ use App\Models\FacebookAdsAccount;
 use App\Models\FacebookUser;
 use Illuminate\Console\Command;
 use App\Models\FacebookLastCampaign;
-use Illuminate\Http\Request;
-use FacebookAds\Object\AdSet;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\AdAccount;

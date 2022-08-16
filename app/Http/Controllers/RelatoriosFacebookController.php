@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cotacao;
+use App\Models\FacebookAdsAccount;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
 
+use FacebookAds\Api;
+use FacebookAds\Logger\CurlLogger;
+use FacebookAds\Object\AdAccount;
+use FacebookAds\Object\Campaign;
+use App\Models\FacebookLastCampaign;
+use App\Models\CountryCode;
+use FacebookAds\Object\Ad;
 
 class RelatoriosFacebookController extends Controller
 {
@@ -21,6 +29,10 @@ class RelatoriosFacebookController extends Controller
         ];
         return view('containers.relatorios.facebook.users',compact("fbusers","breadcrumblinks"));
     }
+
+
+
+
 
 
     public function getCampaignsByAdAccountId (Request $request){
@@ -47,15 +59,10 @@ class RelatoriosFacebookController extends Controller
 
         $accounts = $fbuser->ads_accounts;
         $campaigns = [];
-        /*
-        foreach($accounts as $dato){
-            $campanha = FacebookLastCampaign::where("account_id",$dato['account_id'])->get();
-        } */
-
-
         return view('containers.relatorios.facebook.adaccounts',compact("fbuser","fbuserid",'breadcrumblinks','campaigns','valordolarreal'));
 
     }
+
 
 
 

@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+    Route::get('/last/facebook',[RelatoriosFacebookController::class,"last_facebook"]);
+
+
 });
 
 

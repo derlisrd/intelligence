@@ -2,7 +2,7 @@
 
 @section("title","Contas de Ads Facebook")
 
-@section("breadcrumb","Conectar con facebook")
+@section("breadcrumb","Contas de Ads Facebook")
 
 @section("container")
 

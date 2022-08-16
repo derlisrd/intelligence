@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/last/facebook',[RelatoriosFacebookController::class,"last_facebook"]);
+    Route::get('/last',[RelatoriosFacebookController::class,"last"]);
 
 
 });

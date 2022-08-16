@@ -14,6 +14,7 @@ use FacebookAds\Object\Campaign;
 use App\Models\FacebookLastCampaign;
 use App\Models\CountryCode;
 use FacebookAds\Object\Ad;
+use FacebookAds\Object\AdsInsights;
 
 class RelatoriosFacebookController extends Controller
 {
@@ -66,7 +67,44 @@ class RelatoriosFacebookController extends Controller
 
 
 
+    public function last(){
+        //$adaccounts = FacebookAdsAccount::all();
+        $access_token = 'EAAKwf8KXPLgBACmXBjK7U7rPkFofKIZBHcWidebZA2tpsjK5n8MH04Gzpsc9BRzUHOvZAoEeRCfcyvrgVloTBnIZCrNDjCOSZAX44rvvm2wo8zwJ2c5QgE923x8qH8JIbznl5DaGZB5klEpHYYBM1F4tSyfZABX86VAVHwu3XNR7WFiw2ZCZCYB2goYHQmgNavQzQ0SJrdXxYZBqEjYeWEiB3RwqAcRtbX5cEoKMxjaLLNcAZDZD';
 
+        $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
+        $api->setLogger(new CurlLogger());
+        $id = "act_1112020715864027";
+        $fields = ['targeting','country','campaign','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign'];
+        $params = ['effective_status' => ['ACTIVE'],'breakdowns'=>['country','targeting']];
+
+
+        $c = (new AdAccount($id))
+        ->getAdSets(['name','targeting{geo_locations{countries}}','campaign_id','start_time','stop_time','status','insights{cpm}'],
+        //->getCampaigns(['name','targeting'],
+        ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country']])
+        ->getResponse()->getContent();
+
+
+        $f = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+
+        echo "<pre>";
+
+         foreach ($c['data'] as $v) {
+            $countries = (new Campaign($v['campaign_id']))->getInsights($f,['breakdowns'=>['country'],"limit"=>200])
+            ->getResponse()->getContent();
+
+            foreach($countries['data'] as $b){
+                $country = CountryCode::where('country_code',$b['country'])->get();
+                                    $pais = $country->first();
+                                    if($pais){
+                                       $nomedopais = $pais->name;
+                                    }
+
+                echo $b['campaign_id']." ".$b['campaign_name']." => ".$nomedopais."<br />";
+            }
+        }
+        echo "</pre>";
+    }
 
 
 }

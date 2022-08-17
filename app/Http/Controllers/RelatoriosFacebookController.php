@@ -68,42 +68,90 @@ class RelatoriosFacebookController extends Controller
 
 
     public function last(){
-        //$adaccounts = FacebookAdsAccount::all();
-        $access_token = 'EAAKwf8KXPLgBACmXBjK7U7rPkFofKIZBHcWidebZA2tpsjK5n8MH04Gzpsc9BRzUHOvZAoEeRCfcyvrgVloTBnIZCrNDjCOSZAX44rvvm2wo8zwJ2c5QgE923x8qH8JIbznl5DaGZB5klEpHYYBM1F4tSyfZABX86VAVHwu3XNR7WFiw2ZCZCYB2goYHQmgNavQzQ0SJrdXxYZBqEjYeWEiB3RwqAcRtbX5cEoKMxjaLLNcAZDZD';
+        $users = FacebookUser::all();
+        foreach($users as $user){
+            $access_token = $user['access_token'];
+            $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
+            $api->setLogger(new CurlLogger());
+            $id = $user['id'];
+            $accounts = FacebookAdsAccount::where("facebook_users_id",$id)->get();
+            foreach($accounts as $account) {
+                $act_id = $account['act_account_id'];
+                $account_id = $account['account_id'];
+                $account_name = $account['account_name'];
+                $c = (new AdAccount($act_id))
+                ->getAdSets(['targeting{geo_locations{countries}}','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign','account_name'],
+                ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'effective_status' => array('ACTIVE','PAUSED')])
+                ->getResponse()->getContent();
 
-        $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
-        $api->setLogger(new CurlLogger());
-        $id = "act_1112020715864027";
-        $fields = ['targeting','country','campaign','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign'];
-        $params = ['effective_status' => ['ACTIVE'],'breakdowns'=>['country','targeting']];
 
 
-        $c = (new AdAccount($id))
-        ->getAdSets(['name','targeting{geo_locations{countries}}','campaign_id','start_time','stop_time','status','insights{cpm}'],
-        //->getCampaigns(['name','targeting'],
-        ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country']])
-        ->getResponse()->getContent();
+                $campaign = $c['data'];
 
 
-        $f = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+                echo "<pre>";
+                $f = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+                $b = ['breakdowns'=>['country'],"limit"=>200];
+                if(count($campaign) > 0){
+                    foreach($campaign as $v){
+                        print_r($v);
+                        $status = $v['status'];
+                        $campaign_name = $v['name'];
+                        $idcampaign = $v['id'];
+                        $insight = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();
+                        $dados = $insight['data'];
 
-        echo "<pre>";
+                        if(count($dados) > 0){
+                            foreach($dados as $dato){
+                                $nomedopais = null;
+                                if(isset($dato['country'])) {
+                                    $consultapais = $dato['country'];
+                                }
 
-         foreach ($c['data'] as $v) {
-            $countries = (new Campaign($v['campaign_id']))->getInsights($f,['breakdowns'=>['country'],"limit"=>200])
-            ->getResponse()->getContent();
 
-            foreach($countries['data'] as $b){
-                $country = CountryCode::where('country_code',$b['country'])->get();
-                                    $pais = $country->first();
-                                    if($pais){
-                                       $nomedopais = $pais->name;
-                                    }
 
-                echo $b['campaign_id']." ".$b['campaign_name']." => ".$nomedopais."<br />";
+                                $last = FacebookLastCampaign::where('campaign_id', $idcampaign)
+                                ->where('account_id', $account_id)
+                                ->where('country', $nomedopais)
+                                ->get();
+                                $count = $last->count();
+
+
+                                $datosnuevos = [
+                                    'account_currency' => $dato['account_currency'],
+                                    'account_name' => $dato['account_name'],
+                                    'account_id' => $dato['account_id'],
+                                    'campaign_id' => $dato['campaign_id'],
+                                    'campaign_name' => $campaign_name,
+                                    'clicks' => $dato['clicks'],
+                                    'cpc' => isset($dato['cpc']) ? $dato['cpc'] : null,
+                                    'cpm'=> $dato['cpm'],
+                                    'created_time' => $dato['created_time'],
+                                    'ctr' => $dato['ctr'],
+                                    'date_start' => $dato['date_start'],
+                                    'date_stop' => $dato['date_stop'],
+                                    'impressions' => $dato['impressions'],
+                                    'objective' => $dato['objective'],
+                                    'reach' => $dato['reach'],
+                                    'spend' => $dato['spend'],
+                                    'country' =>$nomedopais,
+                                    'status'=>$status
+                                ];
+                                if($count>0){
+                                    $get = $last->first();
+                                    $id = $get->id;
+                                    FacebookLastCampaign::where('id',$id)->update($datosnuevos);
+                                }
+                                else{
+                                    FacebookLastCampaign::create($datosnuevos);
+                                }
+                            }
+                        }
+                    }
+                }
+                echo "</pre>";
             }
         }
-        echo "</pre>";
     }
 
 

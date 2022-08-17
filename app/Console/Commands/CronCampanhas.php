@@ -58,28 +58,38 @@ class CronCampanhas extends Command
             foreach($accounts as $account) {
                 $act_id = $account['act_account_id'];
                 $account_id = $account['account_id'];
-                $fields = ['campaign','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign'];
-                $params = ['effective_status' => array('ACTIVE','PAUSED')];
-                $campaign = (new AdAccount($act_id))->getCampaigns($fields,$params)->getResponse()->getContent();
-                $campaigns = $campaign['data'];
-                foreach($campaigns as $campaign) {
-                    $idcampaign = $campaign['id'];
-                    $insightfields = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+                $c = (new AdAccount($act_id))
+                ->getAdSets(['targeting{geo_locations{countries}}','campaign','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign'],
+                ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'effective_status' => array('ACTIVE','PAUSED')])
+                ->getResponse()->getContent();
 
-                    $insight = (new Campaign($idcampaign))->getInsights($insightfields,['date_preset' => 'maximum','breakdowns'=>['country']])->getResponse()->getContent();;
+
+                $f = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
+                $b = ['breakdowns'=>['country'],"limit"=>200];
+                $campaign = $c['data'];
+                foreach($campaign as $v){
+                    $idcampaign = $v['campaign_id'];
+                    $insight = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();
                     $dados = $insight['data'];
+
                     if(count($dados) > 0){
                         foreach($dados as $dato){
-                            $last = FacebookLastCampaign::where('campaign_id', $idcampaign)->where('account_id', $account_id)->get();
-                            $count = $last->count();
                             $nomedopais = null;
-                                if(isset($dato['country'])) {
-                                    $country = CountryCode::where('country_code',$dato['country'])->get();
-                                    $pais = $country->first();
-                                    if($pais){
-                                       $nomedopais = $pais->name;
-                                    }
+                            if(isset($dato['country'])) {
+                                $country_code = CountryCode::where('country_code',$dato['country'])->get();
+                                $country = $country_code->first();
+                                if($country){
+                                   $nomedopais = $country->name;
                                 }
+                            }
+
+
+                            $last = FacebookLastCampaign::where('campaign_id', $idcampaign)
+                            ->where('account_id', $account_id)
+                            ->where('country', $nomedopais)
+                            ->get();
+                            $count = $last->count();
+
 
                             $datosnuevos = [
                                 'account_currency' => $dato['account_currency'],
@@ -116,4 +126,9 @@ class CronCampanhas extends Command
             }
         }
     }
+
+
+
+
+
 }

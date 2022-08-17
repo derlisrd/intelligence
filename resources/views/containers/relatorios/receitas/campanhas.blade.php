@@ -36,28 +36,29 @@
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>DOMINIO</th>
-                        <th>CAMPANHA</th>
-                        <th>CUSTO FB</th>
-                        <th>RECEITA GOOGLE</th>
-                        <th>BALANÇO</th>
+                        <th>PAIS</th>
+                        <th>NAME</th>
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
                    @foreach ($campaigns as $campaign)
                    <tr>
-
+                        <td>{{ $campaign->id }}</td>
+                        <td>{{ $campaign->domain }}</td>
+                        <td>{{ $campaign->country }}</td>
+                        <td>{{ $campaign->name }}</td>
                     </tr>
                    @endforeach
 
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th>ID</th>
                         <th>DOMINIO</th>
-                        <th>CAMPANHA</th>
-                        <th>CUSTO FB</th>
-                        <th>RECEITA GOOGLE</th>
-                        <th>BALANÇO</th>
+                        <th>PAIS</th>
+                        <th>NAME</th>
                     </tr>
                 </tfoot>
             </table>

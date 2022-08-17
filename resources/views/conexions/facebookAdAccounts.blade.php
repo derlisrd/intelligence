@@ -1,23 +1,23 @@
 @extends("layouts.app")
 
-@section("title","Contas de Ads Facebook")
+@section("title","Contas de anuncio")
 
-@section("breadcrumb","Contas de Ads Facebook")
+@section("breadcrumb","Contas de anuncio")
 
 @section("container")
+
 
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Usuarios ja conectados: </h5>
+            <h5 class="card-title">Contas de anuncio: </h5>
             <div class="table-responsive">
                 <table id="zero_config" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th><b>USUARIO DE FACEBOOK</b></th>
-                            <th><b>NOME</b></th>
-                            <th><b>ID DA CONTA</b></th>
-                            <th><b>Opçoes</b></th>
+                            <th>Usuario de facebook</th>
+                            <th>Conta de anuncio</th>
+                            <th>Opçoes</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,31 +25,29 @@
                             <tr id="_user_{{ $user->id }}">
                                 <td>{{ $user->facebook_user->name }}</td>
                                 <td><b>{{ $user->account_name }}</b></td>
-                                <td>{{ $user->account_id }}</td>
                                 <td>
-                                    <a href="javascript:void(0)" onclick="ask({{ $user->id }})"  class="text-danger">
+                                    <a href="javascript:void(0)" onclick="ask({{ $user->id }})"  class="btn btn-danger">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                     <tfoot>
                         <tr>
                             <tr>
-                                <th><b>USUARIO DE FACEBOOK</b></th>
-                            <th><b>NOME</b></th>
-                            <th><b>ID DA CONTA</b></th>
-                            <th><b>Opçoes</b></th>
+                                <th>Usuario de facebook</th>
+                                <th>Conta de anuncio</th>
+                                <th>Opçoes</th>
                             </tr>
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+        </div>
     </div>
 </div>
 
-@endsection
 <script>
     function ask(id){
         Swal.fire({
@@ -74,6 +72,6 @@
                 }
             })
 
-
     }
 </script>
+@endsection

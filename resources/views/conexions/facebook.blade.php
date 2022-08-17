@@ -14,7 +14,7 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Usuarios ja conectados: </h5>
+            <h5 class="card-title">Usuarios de facebook: </h5>
             <div class="table-responsive">
                 <table id="zero_config" class="table table-striped table-bordered">
                     <thead>
@@ -50,6 +50,8 @@
                         </tr>
                     </tfoot>
                 </table>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

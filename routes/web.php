@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('relatorios/receitas',[ReceitasController::class,"index"])->name('receitas');
     Route::post('relatorios/receitas',[ReceitasController::class,"campaigns"])->name('receitas.campaigns');
 
+
+
     //CONEXIONES DE FACEBOOK
     Route::get('/conexions/facebookadaccounts',[ConexionsController::class,"getFacebookAdAccounts"])->name("facebook.adaccounts");
     Route::get('/conexions/facebookadaccounts/destroy/{id}',[ConexionsController::class,"destroyFacebookAdAccount"])->name("facebook.adaccount.destroy");
@@ -48,8 +50,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
 
-
-    Route::get('/last',[RelatoriosFacebookController::class,"last"]);
 
 
 });

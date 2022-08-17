@@ -12,7 +12,13 @@ class ReceitasController extends Controller
 
 
     public function index(){
-        $data = ["domains"=>Domain::all(),"campaigns"=>[],"countries"=>CountryCode::all()];
+        $data = [
+            "domains"=>Domain::all(),"campaigns"=>[],
+            "countries"=>CountryCode::all(),
+            "domain"=>"",
+            "country"=>""
+        ];
+
         return view('containers.relatorios.receitas.campanhas',$data);
     }
 
@@ -37,6 +43,7 @@ class ReceitasController extends Controller
 
         $datas = [
             "domains"=>Domain::all(),
+            "countries"=>CountryCode::all(),
             "campaigns"=>$gam->where("name","utm_campaign")->orderBy('id', 'DESC')->paginate(250),
             "domain"=>$domain,
             "country"=>$country

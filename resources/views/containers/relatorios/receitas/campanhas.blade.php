@@ -71,6 +71,7 @@
                     <tr>
                         <th>ID</th>
                         <th>DOMINIO</th>
+                        <th>GASTO DO FB</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>

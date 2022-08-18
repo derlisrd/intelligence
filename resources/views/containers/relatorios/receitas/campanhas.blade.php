@@ -48,6 +48,7 @@
                     <tr>
                         <th>ID</th>
                         <th>DOMINIO</th>
+                        <th>GASTO DO FB</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>
@@ -58,6 +59,7 @@
                    <tr>
                         <td>{{ $campaign['campaign_id'] }}</td>
                         <td>{{ $campaign['domain'] }}</td>
+                        <td>{{ $campaign['spend'] }}</td>
                         <td>{{ $campaign['country'] }}</td>
                         <td>{{ $campaign['name'] }}</td>
                         <td>{{ $campaign['value'] }}</td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CountryCode;
 use App\Models\Domain;
+use App\Models\FacebookLastCampaign;
 use App\Models\GoogleGamCampaigns;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,12 @@ class ReceitasController extends Controller
 
     public function index(){
         $data = [
-            "domains"=>Domain::all(),"campaigns"=>[],
-            "countries"=>CountryCode::all(),
+            "domains"=>Domain::orderBy('domain')->get(),"campaigns"=>[],
+            "countries"=>CountryCode::all()->sortBy("name"),
             "domain"=>"",
-            "country"=>""
+            "country"=>"",
+            "value"=>"",
+            "reports"=>[],
         ];
 
         return view('containers.relatorios.receitas.campanhas',$data);
@@ -30,7 +33,7 @@ class ReceitasController extends Controller
 
         $domain = $request->domain;
         $country = $request->country;
-
+        $value = $request->value;
 
 
         if ($domain) {
@@ -41,12 +44,50 @@ class ReceitasController extends Controller
         }
         $gam->where('name','=','utm_campaign');
 
+
+        $campanhas = $gam->where("name","utm_campaign")->orderBy('id', 'DESC')->paginate(250);
+        $reports = [];
+        $idcampaign = "0";
+
+        foreach($campanhas as $campan){
+            $dominio = $campan->domain;
+            $keyvalue = $campan->value;
+            $fb = FacebookLastCampaign::query();
+            if ($country) {
+                $fb->where('country','=',$country);
+            }
+            if ($value) {
+                $fb->where('campaign_name','LIKE', '%'.$keyvalue.'%');
+            }
+            $last = $fb->where('campaign_name', 'LIKE', '%'.$dominio.'%')->get();
+
+            foreach($last as $r){
+                if($idcampaign !== $r->campaign_id){
+                    array_push($reports,[
+                        "id"=>$campan->id,
+                        "name"=>$r->campaign_name,
+                        "domain" => $dominio,
+                        "campaign_id" => $r->campaign_id,
+                        "value"=>$keyvalue,
+                        "spend"=>$r->spend,
+                        "country"=>$r->country
+                    ]);
+                }
+                $idcampaign = $r->campaign_id;
+            }
+
+        }
+
+
+
         $datas = [
-            "domains"=>Domain::all(),
-            "countries"=>CountryCode::all(),
+            "domains"=>Domain::orderBy('domain')->get(),
+            "countries"=>CountryCode::all()->sortBy("name"),
             "campaigns"=>$gam->where("name","utm_campaign")->orderBy('id', 'DESC')->paginate(250),
             "domain"=>$domain,
-            "country"=>$country
+            "country"=>$country,
+            "value"=>$value,
+            "reports"=>$reports
         ];
 
 

@@ -27,6 +27,10 @@
                 @endforeach
             </select>
         </div>
+        <div class="p-2 mx-2">
+            <label for="country">Chave de valor</label>
+            <input  class="form-control input-lg" id="value" value="{{ $value ?? '' }}" name="value" />
+        </div>
         <button class="btn btn-primary btn-lg mt-4" type="submit">Filtrar</button>
     </div>
 </form>
@@ -45,18 +49,18 @@
                         <th>ID</th>
                         <th>DOMINIO</th>
                         <th>PAIS</th>
-                        <th>NAME</th>
+                        <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
-                   @foreach ($campaigns as $campaign)
+                   @foreach ($reports as $campaign)
                    <tr>
-                        <td>{{ $campaign->id }}</td>
-                        <td>{{ $campaign->domain }}</td>
-                        <td>{{ $campaign->country }}</td>
-                        <td>{{ $campaign->name }}</td>
-                        <td>{{ $campaign->value }}</td>
+                        <td>{{ $campaign['campaign_id'] }}</td>
+                        <td>{{ $campaign['domain'] }}</td>
+                        <td>{{ $campaign['country'] }}</td>
+                        <td>{{ $campaign['name'] }}</td>
+                        <td>{{ $campaign['value'] }}</td>
                     </tr>
                    @endforeach
 
@@ -66,7 +70,7 @@
                         <th>ID</th>
                         <th>DOMINIO</th>
                         <th>PAIS</th>
-                        <th>NAME</th>
+                        <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>
                     </tr>
                 </tfoot>

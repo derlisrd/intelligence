@@ -120,7 +120,7 @@ class Testes extends Controller
                                 }
                                 else{
                                     //FacebookLastCampaign::create($datosnuevos);
-                                    echo "<br> NOVO INSERT O ID =".$idcampaign;
+                                    echo "<br> NOVO INSERT O ID =".$idcampaign. " PAIS=".$nomedopais;;
                                 }
                             }
                         }

@@ -5,6 +5,7 @@ use App\Http\Controllers\ConexionsController;
 use App\Http\Controllers\ReceitasController;
 use App\Http\Controllers\RelatoriosFacebookController;
 use App\Http\Controllers\RelatoriosGoogleController;
+use App\Http\Controllers\Testes;
 use App\Models\CountryCode;
 use App\Models\FacebookLastCampaign;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
-
+    Route::get("fb",[Testes::class,"handle"]);
 
 
 });

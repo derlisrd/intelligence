@@ -1,68 +1,60 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Http\Controllers;
 
 use App\Models\CountryCode;
 use App\Models\FacebookAdsAccount;
-use App\Models\FacebookUser;
-use Illuminate\Console\Command;
 use App\Models\FacebookLastCampaign;
+use App\Models\FacebookUser;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
 use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Campaign;
+use Illuminate\Http\Request;
 
-
-
-class CronCampanhas extends Command
+class Testes extends Controller
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'getcampaigns:cron';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
-    {
-        $users = FacebookUser::all();
-        foreach($users as $user){
-            $access_token = $user['access_token'];
+    public function contas ($user){
+        $access_token = $user['access_token'];
             $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
             $api->setLogger(new CurlLogger());
             $id = $user['id'];
             $accounts = FacebookAdsAccount::where("facebook_users_id",$id)->get();
+            return $accounts;
+    }
+
+
+
+    public function AdAccount($account_id){
+        return (new AdAccount($account_id))
+                ->getAdSets(
+                ['targeting{geo_locations{countries}}','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign','account_name'],
+                ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'effective_status' => ['ACTIVE','PAUSED']]
+                )
+                ->getResponse()->getContent();
+    }
+
+
+
+
+
+
+
+
+    public function handle()
+    {
+        $users = FacebookUser::all();
+        foreach($users as $user){
+
+            $accounts = $this->contas($user);
 
             foreach($accounts as $account) {
                 $act_id = $account['act_account_id'];
                 $account_id = $account['account_id'];
                 $account_name = $account['account_name'];
-                $c = (new AdAccount($act_id))
-                ->getAdSets(['targeting{geo_locations{countries}}','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign','account_name'],
-                ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'effective_status' => array('ACTIVE','PAUSED')])
-                ->getResponse()->getContent();
+
+                $c = $this->AdAccount($act_id);
 
                 $campaign = $c['data'];
 
@@ -71,7 +63,6 @@ class CronCampanhas extends Command
 
                 if(count($campaign) > 0){
                     foreach($campaign as $v){
-
                         $status = $v['status'];
                         $campaign_name = $v['name'];
                         $idcampaign = $v['id'];
@@ -82,6 +73,8 @@ class CronCampanhas extends Command
                             foreach($dados as $dato){
                                 $nomedopais = null;
 
+
+
                                 if(isset($dato['country'])) {
                                     $country_code = CountryCode::where('country_code',$dato['country'])->get();
                                     $country = $country_code->first();
@@ -91,21 +84,14 @@ class CronCampanhas extends Command
                                 }
 
 
-                                $last = FacebookLastCampaign::where('campaign_id', $idcampaign)
-                                ->where('account_id', $account_id)
-                                ->where('country', $nomedopais)
+
+                                $last = FacebookLastCampaign::
+                                where([
+                                    ['country', '=', $nomedopais],
+                                    ['campaign_id', '=', $idcampaign]
+                                ])
                                 ->get();
                                 $count = $last->count();
-
-
-
-                                $last = FacebookLastCampaign::where('campaign_id', $idcampaign)
-                                ->where('account_id', $account_id)
-                                ->where('country', $nomedopais)
-                                ->get();
-                                $count = $last->count();
-
-
                                 $datosnuevos = [
                                     'account_currency' => $dato['account_currency'],
                                     'account_name' => $dato['account_name'],
@@ -129,10 +115,12 @@ class CronCampanhas extends Command
                                 if($count>0){
                                     $get = $last->first();
                                     $id = $get->id;
-                                    FacebookLastCampaign::where('id',$id)->update($datosnuevos);
+                                    echo "<br> UPDATE O ID =".$idcampaign . " PAIS=".$nomedopais;
+                                    //FacebookLastCampaign::where('id',$id)->update($datosnuevos);
                                 }
                                 else{
-                                    FacebookLastCampaign::create($datosnuevos);
+                                    //FacebookLastCampaign::create($datosnuevos);
+                                    echo "<br> NOVO INSERT O ID =".$idcampaign;
                                 }
                             }
                         }
@@ -143,9 +131,5 @@ class CronCampanhas extends Command
         }
 
     }
-
-
-
-
 
 }

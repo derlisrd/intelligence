@@ -66,7 +66,7 @@ class ReceitasController extends Controller
                 $fb->where('country','=',$country);
             }
             if ($value) {
-                $fb->where('campaign_name','LIKE', '%'.$keyvalue.'%');
+                $fb->where('campaign_name','LIKE', '%#'.$keyvalue.'%');
             }
 
 

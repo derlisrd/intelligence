@@ -46,9 +46,11 @@
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
+
                         <th>DOMINIO</th>
-                        <th>GASTO DO FB</th>
+                        <th>GASTO DO FB EM REAL</th>
+                        <th>GASTO DO FB EM USS</th>
+                        <th>RECEITA GAM</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>
@@ -57,9 +59,11 @@
                 <tbody id="_tablebody">
                    @foreach ($reports as $campaign)
                    <tr>
-                        <td>{{ $campaign['campaign_id'] }}</td>
+
                         <td>{{ $campaign['domain'] }}</td>
                         <td>{{ $campaign['spend'] }}</td>
+                        <td>{{ $campaign['spend_uss'] }}</td>
+                        <td>{{ $campaign['receita_gam'] }}</td>
                         <td>{{ $campaign['country'] }}</td>
                         <td>{{ $campaign['name'] }}</td>
                         <td>{{ $campaign['value'] }}</td>
@@ -69,9 +73,10 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+
                         <th>DOMINIO</th>
-                        <th>GASTO DO FB</th>
+                        <th>GASTO DO FB EM REAL</th>
+                        <th>GASTO DO FB EM USS</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>

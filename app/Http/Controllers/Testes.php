@@ -16,7 +16,7 @@ class Testes extends Controller
 {
 
     public function contas ($user){
-        $access_token = $user['access_token'];
+            $access_token = $user['access_token'];
             $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
             $api->setLogger(new CurlLogger());
             $id = $user['id'];

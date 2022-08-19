@@ -28,10 +28,16 @@ class Testes extends Controller
 
     public function AdAccount($account_id){
         return (new AdAccount($account_id))
-                ->getAdSets(
-                ['targeting{geo_locations{countries}}','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign','account_name'],
+                 /* ->getAdSets(
+                ['targeting{geo_locations{countries}}','insights','name','objective','id','status','start_time','stop_time','account_id','special_ad_category_country','created_time','effective_status','source_campaign','account_name','campaign_id'],
                 ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'effective_status' => ['ACTIVE','PAUSED']]
-                )
+                ) */
+                /* ->getAdSets(
+                    ['targeting{geo_locations{countries}}','account_name','campaign_name','campaign_id','account_id','account_name'],
+                    ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'effective_status' => ['ACTIVE','PAUSED']]
+                    ) */
+                ->getCampaigns(['id','name','status','start_time','stop_time','account_id','targeting','account_name'],
+                ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'date_preset'=>'last_90d'])
                 ->getResponse()->getContent();
     }
 
@@ -45,14 +51,15 @@ class Testes extends Controller
     public function handle()
     {
         $users = FacebookUser::all();
+
         foreach($users as $user){
 
             $accounts = $this->contas($user);
 
             foreach($accounts as $account) {
                 $act_id = $account['act_account_id'];
-                $account_id = $account['account_id'];
-                $account_name = $account['account_name'];
+                //$account_id = $account['account_id'];
+                //$account_name = $account['account_name'];
 
                 $c = $this->AdAccount($act_id);
 
@@ -61,19 +68,22 @@ class Testes extends Controller
                 $f = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
                 $b = ['breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s'];
 
+
+
                 if(count($campaign) > 0){
-                    foreach($campaign as $v){
+                     foreach($campaign as $v){
                         $status = $v['status'];
                         $campaign_name = $v['name'];
                         $idcampaign = $v['id'];
+                        //$idcampaign = $v['campaign_id'];
                         $insight = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();
                         $dados = $insight['data'];
 
-                        if(count($dados) > 0){
+                         if(count($dados) > 0){
                             foreach($dados as $dato){
                                 $nomedopais = null;
 
-
+                                print_r($dato);
 
                                 if(isset($dato['country'])) {
                                     $country_code = CountryCode::where('country_code',$dato['country'])->get();
@@ -92,6 +102,7 @@ class Testes extends Controller
                                 ])
                                 ->get();
                                 $count = $last->count();
+
                                 $datosnuevos = [
                                     'account_currency' => $dato['account_currency'],
                                     'account_name' => $dato['account_name'],
@@ -115,12 +126,12 @@ class Testes extends Controller
                                 if($count>0){
                                     $get = $last->first();
                                     $id = $get->id;
-                                    echo "<br> UPDATE O ID =".$idcampaign . " PAIS=".$nomedopais;
+                                    //echo "<br> UPDATE O ID =".$idcampaign . " PAIS=".$nomedopais;
                                     FacebookLastCampaign::where('id',$id)->update($datosnuevos);
                                 }
                                 else{
                                     FacebookLastCampaign::create($datosnuevos);
-                                    echo "<br> NOVO INSERT O ID =".$idcampaign. " PAIS=".$nomedopais;;
+                                    //echo "<br> NOVO INSERT O ID =".$idcampaign. " PAIS=".$nomedopais;;
                                 }
                             }
                         }
@@ -129,6 +140,8 @@ class Testes extends Controller
 
             }
         }
+
+
 
     }
 

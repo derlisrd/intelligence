@@ -59,7 +59,7 @@ class Testes extends Controller
                 $campaign = $c['data'];
 
                 $f = ['dda_results','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id'];
-                $b = ['breakdowns'=>['country'],"limit"=>200];
+                $b = ['breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s'];
 
                 if(count($campaign) > 0){
                     foreach($campaign as $v){

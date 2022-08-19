@@ -116,10 +116,10 @@ class Testes extends Controller
                                     $get = $last->first();
                                     $id = $get->id;
                                     echo "<br> UPDATE O ID =".$idcampaign . " PAIS=".$nomedopais;
-                                    //FacebookLastCampaign::where('id',$id)->update($datosnuevos);
+                                    FacebookLastCampaign::where('id',$id)->update($datosnuevos);
                                 }
                                 else{
-                                    //FacebookLastCampaign::create($datosnuevos);
+                                    FacebookLastCampaign::create($datosnuevos);
                                     echo "<br> NOVO INSERT O ID =".$idcampaign. " PAIS=".$nomedopais;;
                                 }
                             }

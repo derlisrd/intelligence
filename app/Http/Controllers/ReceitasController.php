@@ -31,80 +31,73 @@ class ReceitasController extends Controller
 
         $dolar = Cotacao::find(1);
         $dolar = $dolar->valor;
-        $gam = GoogleGamCampaigns::query();
+
+        $fbc = FacebookLastCampaign::query();
 
         $domain = $request->domain;
         $country = $request->country;
         $value = $request->value;
 
-
-        if ($domain) {
-            $gam->where('domain','=',$domain);
+        if($domain){
+            $fbc->where('campaign_name','LIKE','%'.$domain.'%');
         }
-        if ($country) {
-            $gam->where('country','=',$country);
+        if($country){
+            $fbc->where('country','=',$country);
         }
-        if ($value) {
-            $gam->where('value','LIKE',$value.'%');
+        if($value){
+            $fbc->where('campaign_name','LIKE','%'.$value.'%');
         }
-        $gam->where('name','=','utm_campaign');
+
+        $facebook = ($fbc->get()->toArray());
+        $report = [];
+
+        foreach($facebook as $row){
+            $keyvalue = $row['campaign_name'];
+            $pais = $row['country'];
+            $arr = explode('#',$keyvalue);
+            preg_match_all('!\d+!', $arr[1], $matches);
+            $valuefb = ($matches[0][0]);
 
 
-        $campanhas = $gam->where("name","utm_campaign")->orderBy('id', 'DESC')->paginate(250);
-        $reports = [];
-        $idcampaign = "0";
-
-
-
-        foreach($campanhas as $campan){
-            $dominio = $campan->domain;
-            $keyvalue = $campan->value;
-            $receita_gam = $campan->receita;
-            $impressions_gam = $campan->impressions;
-            $fb = FacebookLastCampaign::query();
-            if ($country) {
-                $fb->where('country','=',$country);
+            $gam = GoogleGamCampaigns::where([
+                ["domain","=",$domain],
+                ["name","=",'utm_campaign'],
+                ["value","LIKE",'%'.$valuefb.'%'],
+                ["country","=",$pais]
+            ])->get();
+            $count = $gam->count();
+            $fbp = ($gam->first());
+            if($count>0){
+                $narray= [
+                    "spend"=>$row['spend'],
+                    "domain"=>$fbp->domain,
+                    "receita"=>$fbp->receita,
+                    "campaign_name"=>$row['campaign_name'],
+                    "key_value"=>$fbp->value,
+                    "country"=>$fbp->country
+                ];
+                array_push($report,$narray);
             }
-            if ($value) {
-                $fb->where('campaign_name','LIKE', '%#'.$keyvalue.'%');
-            }
+            //echo "count:$count campaign:". $keyvalue . " value:$valuefb  pais:$pais $fbp <br/>";
 
-
-            $last = $fb->where('campaign_name', 'LIKE', '%'.$dominio.'%')->get();
-
-            foreach($last as $r){
-                if($idcampaign !== $r->campaign_id){
-                    array_push($reports,[
-                        "id"=>$campan->id,
-                        "impressions_gam"=>$impressions_gam,
-                        "name"=>$r->campaign_name,
-                        "receita_gam"=>$receita_gam,
-                        "spend_uss"=>round($r->spend/$dolar,2),
-                        "domain" => $dominio,
-                        "campaign_id" => $r->campaign_id,
-                        "value"=>$keyvalue,
-                        "spend"=>$r->spend,
-                        "country"=>$r->country
-                    ]);
-                }
-                $idcampaign = $r->campaign_id;
-            }
+            //echo "keyvalue $keyvalue valuefb $valuefb receita do dominio =" . $fbp->domain . " receita=". $fbp->receita." <br/>";
         }
 
 
-        $datas = [
-            "domains"=>Domain::orderBy('domain')->get(),
+
+
+        $data = [
+            "domains"=>Domain::orderBy('domain')->get(),"campaigns"=>[],
             "countries"=>CountryCode::all()->sortBy("name"),
-            "campaigns"=>$gam->where("name","utm_campaign")->orderBy('id', 'DESC')->paginate(250),
             "domain"=>$domain,
             "country"=>$country,
             "value"=>$value,
-            "reports"=>$reports
+            "reports"=>$report,
         ];
 
 
-        return view('containers.relatorios.receitas.campanhas',$datas);
 
+        return view('containers.relatorios.receitas.campanhas',$data);
     }
 
 }

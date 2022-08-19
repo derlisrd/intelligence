@@ -46,7 +46,6 @@
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-
                         <th>DOMINIO</th>
                         <th>GASTO DO FB EM REAL</th>
                         <th>GASTO DO FB EM USS</th>
@@ -57,26 +56,25 @@
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
-                   @foreach ($reports as $campaign)
+                   @foreach ($reports as $c)
                    <tr>
-
-                        <td>{{ $campaign['domain'] }}</td>
-                        <td>{{ $campaign['spend'] }}</td>
-                        <td>{{ $campaign['spend_uss'] }}</td>
-                        <td>{{ $campaign['receita_gam'] }}</td>
-                        <td>{{ $campaign['country'] }}</td>
-                        <td>{{ $campaign['name'] }}</td>
-                        <td>{{ $campaign['value'] }}</td>
+                        <th>{{ $c['domain'] }}</th>
+                        <th>{{ $c['spend'] }}</th>
+                        <th>GASTO DO FB EM USS</th>
+                        <th>{{ $c['receita'] }}</th>
+                        <th>{{ $c['country'] }}</th>
+                        <th>{{ $c['campaign_name'] }}</th>
+                        <th>{{ $c['key_value'] }}</th>
                     </tr>
                    @endforeach
 
                 </tbody>
                 <tfoot>
                     <tr>
-
                         <th>DOMINIO</th>
                         <th>GASTO DO FB EM REAL</th>
                         <th>GASTO DO FB EM USS</th>
+                        <th>RECEITA GAM</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>
                         <th>CHAVE</th>

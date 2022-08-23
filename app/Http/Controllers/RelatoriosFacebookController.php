@@ -38,8 +38,10 @@ class RelatoriosFacebookController extends Controller
         $fbuserid = $request->user_fb_id;
         $fbuser = FacebookUser::find($fbuserid);
         $accounts = $fbuser->ads_accounts;
+        $account_id = "";
+        $country = "";
         $campaigns = [];
-        return view('containers.relatorios.facebook.campaigns',compact("fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
+        return view('containers.relatorios.facebook.campaigns',compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
     }
 
 
@@ -70,34 +72,62 @@ class RelatoriosFacebookController extends Controller
 
 
 
+        $arr = [];
         if(!$country){
-            $arr = [];
             $impressions = 0;
             $spend = 0;
-            $status  = 0;
             $clicks = 0;
             $cpm  = 0;
-
+            $i = (-1);
             $idcampaign = null;
             foreach($campaigns as $c){
 
                 if($idcampaign == $c['campaign_id']){
                     $impressions +=  $c['impressions'];
                     $spend += $c['spend'];
-                    $status  += $c['status'];
                     $clicks += $c['clicks'];
                     $cpm  += $c['cpm'];
+                    $arr[$i] = array(
+                        "campaign_name" => $c['campaign_name'],
+                        "account_name"=>$c['account_name'],
+                        "campaign_id" => $c['campaign_id'],
+                        "impressions" => $impressions,
+                        "spend" => $spend,
+                        "status"=>$c['status'],
+                        "country"=>"",
+                        "clicks"=>$clicks,
+                        "cpm"=>$cpm,
+                        "cpc"=>"",
+                        "date_start"=>$c['date_start'],
+                    );
                 }
                 else{
                     $impressions = $c['impressions'];
                     $spend = $c['spend'];
-                    $status  = $c['status'];
                     $clicks = $c['clicks'];
                     $cpm  = $c['cpm'];
+                    array_push($arr, array(
+                        "campaign_name" => $c['campaign_name'],
+                        "account_name"=>$c['account_name'],
+                        "campaign_id" => $c['campaign_id'],
+                        "impressions" => $impressions,
+                        "spend" => $spend,
+                        "status"=>$c['status'],
+                        "country"=>"",
+                        "clicks"=>$clicks,
+                        "cpm"=>$cpm,
+                        "cpc"=>"",
+                        "date_start"=>$c['date_start'],
+                    ));
+                    $i++;
                 }
-                $idcampaign = $c['idcampaign'];
+                $idcampaign = $c['campaign_id'];
 
             }
+        }
+
+        if(count($arr)>0){
+            $campaigns = $arr;
         }
 
 

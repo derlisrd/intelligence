@@ -87,18 +87,18 @@
                          <tbody id="_tablebody">
                              @foreach ($campaigns as $campaign)
                                 <tr>
-                                    <th><b>{{ $campaign->campaign_id }}</b></th>
-                                    <th><b>{{ $campaign->account_name }}</b></th>
-                                    <th><b>{{ $campaign->campaign_name }}</b></th>
-                                    <th><b>{{ $campaign->country }}</b></th>
-                                    <th><b>{{ $campaign->spend }}</b></th>
+                                    <th><b>{{ $campaign['campaign_id'] }}</b></th>
+                                    <th><b>{{ $campaign['account_name'] }}</b></th>
+                                    <th><b>{{ $campaign['campaign_name'] }}</b></th>
+                                    <th><b>{{ $campaign['country'] }}</b></th>
+                                    <th><b>{{ $campaign['spend'] }}</b></th>
 
-                                    <th><b>{{ $campaign->impressions }}</b></th>
-                                    <th><b>{{ $campaign->status }}</b></th>
-                                    <th><b>{{ $campaign->clicks }}</b></th>
-                                    <th><b>{{ $campaign->cpm }}</b></th>
-                                    <th><b>{{ $campaign->cpc }}</b></th>
-                                    <th><b>{{ $campaign->date_start }}</b></th>
+                                    <th><b>{{ $campaign['impressions'] }}</b></th>
+                                    <th><b>{{ $campaign['status'] }}</b></th>
+                                    <th><b>{{ $campaign['clicks'] }}</b></th>
+                                    <th><b>{{ $campaign['cpm'] }}</b></th>
+                                    <th><b>{{ $campaign['cpc'] }}</b></th>
+                                    <th><b>{{ $campaign['date_start'] }}</b></th>
                                 </tr>
                              @endforeach
                          </tbody>

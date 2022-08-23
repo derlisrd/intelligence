@@ -5,26 +5,24 @@
 @section("currentpage","facebook")
 
 @section("container")
-
-
 <form method="post" action={{ route('relatorios.getCampaigns',$fbuserid) }}>
     @csrf
     <div class="row">
         <div class="col-sm d-flex align-items-center flex-column mt-2">
             <label for="_accounts">Contas de anuncios</label>
-            <select  class="form-select form-select-lg" id="_accounts" >
-                <option value="" selected>Seleccionar conta</option>
-                @foreach ($fbuser->ads_accounts as $account)
-                    <option value="{{ $account->account_id }}">{{ $account->account_name }}</option>
+            <select  class="form-select form-select-lg" name="account_id" id="_accounts" >
+                <option value="">Seleccionar conta</option>
+                @foreach ($fbuser->ads_accounts as $v)
+                    <option value="{{ $v->account_id }}" @if($v->account_id==$account_id) selected @endif >{{ $v->account_name }}</option>
                 @endforeach
             </select>
         </div>
         <div class="col-sm d-flex align-items-center flex-column mt-2">
             <label for="_country">País</label>
-            <select  class="form-select form-select-lg" id="_country" >
-                <option value="" selected>Seleccionar pais</option>
-                @foreach ($paises as $pais)
-                    <option value="{{ $pais->name }}">{{ $pais->name }}</option>
+            <select  class="form-select form-select-lg" name="country" id="_country" >
+                <option value="" >Seleccionar pais</option>
+                @foreach ($paises as $p)
+                    <option value="{{ $p->name }}" @if($p->name==$country) selected @endif>{{ $p->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -35,7 +33,7 @@
             </div>
             <div class="">
                 <label for="_since" class="form-label">Ate</label>
-                <input type="date" name="since" id="_since" class="form-control form-control-lg"  />
+                <input type="date" name="to" id="_ate" class="form-control form-control-lg"  />
             </div>
         </div>
     </div>
@@ -72,12 +70,14 @@
                      <table id="zero_config" class="table table-striped table-bordered">
                          <thead>
                              <tr>
+                                <th><b>ID</b></th>
                                  <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
-                                 <th><b>USS</b></th>
+
                                  <th><b>IMPRESSOES</b></th>
+                                 <th><b>STATUS</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
@@ -85,20 +85,33 @@
                              </tr>
                          </thead>
                          <tbody id="_tablebody">
-                             <div class="progress my-3 d-none" id="_loading">
-                                 <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%"></div>
-                             </div>
+                             @foreach ($campaigns as $campaign)
+                                <tr>
+                                    <th><b>{{ $campaign->campaign_id }}</b></th>
+                                    <th><b>{{ $campaign->account_name }}</b></th>
+                                    <th><b>{{ $campaign->campaign_name }}</b></th>
+                                    <th><b>{{ $campaign->country }}</b></th>
+                                    <th><b>{{ $campaign->spend }}</b></th>
 
-
+                                    <th><b>{{ $campaign->impressions }}</b></th>
+                                    <th><b>{{ $campaign->status }}</b></th>
+                                    <th><b>{{ $campaign->clicks }}</b></th>
+                                    <th><b>{{ $campaign->cpm }}</b></th>
+                                    <th><b>{{ $campaign->cpc }}</b></th>
+                                    <th><b>{{ $campaign->date_start }}</b></th>
+                                </tr>
+                             @endforeach
                          </tbody>
                          <tfoot>
                              <tr>
+                                <th><b>ID</b></th>
                                 <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
-                                 <th><b>USS</b></th>
+
                                  <th><b>IMPRESSOES</b></th>
+                                 <th><b>STATUS</b></th>
                                  <th><b>CLICKS</b></th>
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
@@ -119,46 +132,5 @@
 
 </div>
 
-<script>
-    async function getCampaignsByAccountId() {
-        let fbuser_id = {{ $fbuser->id }}
-        let valordolar = parseFloat( {{ $valordolarreal; }})
-        const dosdecimales = n => ( Math.round((parseFloat(n)) * 100) / 100).toFixed(2)
-        const calcular = m => ((Math.round((parseFloat(m)/valordolar) * 100) / 100).toFixed(2) )
-        let sel = document.getElementById("_accounts");
-        var opt = sel.options[sel.selectedIndex];
-        let url = opt.value === "" ? "{{ route('api.all.facebook.getCampaigns') }}" : "/api/facebook/campaigns/act_"+opt.value+"/"+fbuser_id
-        _cargando();
-        let res = await fetch(url)
-        let json = await res.json();
-        let html = "";
-        json.data.forEach(e=> {
-            html +=
-                `<tr>
-                    <td>
-                        <b>${e.account_name}</b>
-                    </td>
-                    <td>${e.campaign_name}</td>
-                    <td><b>${e.country}</b></td>
-                    <td>${dosdecimales(e.spend)} <b>${e.account_currency}</b></td>
-                    <td>${calcular(e.spend)} USS</td>
-                    <td>${e.impressions}</td>
-                    <td>${e.clicks}</td>
-                    <td>${dosdecimales(e.cpm)}</td>
-                    <td>${e.cpc}</td>
-                    <td>${e.created_time}</td>
-                </tr>`;
-            })
-        _cargando(false);
-        document.getElementById('_tablebody').innerHTML = html;
-     }
-
-
-    function _cargando(cargando = true){
-        cargando ? document.getElementById("_loading").classList.remove("d-none") :  document.getElementById('_loading').classList.add('d-none');
-    }
-
-
-</script>
 
 @endsection

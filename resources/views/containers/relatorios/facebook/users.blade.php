@@ -23,7 +23,7 @@
                     <tbody>
                         @foreach ($fbusers as $user)
                             <tr>
-                                <td><b><a href="{{ route('relatorios.facebook.adaccounts',$user->id) }}"> {{ $user->name }}</a></b></td>
+                                <td><b><a href="{{ route('view.relatorios.getCampaigns',$user->id) }}"> {{ $user->name }}</a></b></td>
                                 <td><b>{{ $user->email }}</b></td>
                                 <td><b>{{ $user->facebook_user_id}}</b></td>
                             </tr>

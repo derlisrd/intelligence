@@ -6,9 +6,12 @@
 
 <div class="row">
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card p-4 border bg-success rounded-8">
+        <div class="card card-hover p-4 border bg-success rounded-8">
             <div class="card-block">
-              <h4 class="card-title text-center text-white text-uppercase ">Google AM</h4>
+                <h4 class="card-title text-center text-white text-uppercase ">
+                    <i class="me-2 mdi mdi-google"></i>
+                    Google AM
+                </h4>
               <h6 class="card-subtitle text-white text-center">Receita geral </h6>
               <h1 class="text-center text-white"> 1230 Rs.</h1>
             </div>
@@ -18,9 +21,12 @@
 
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card p-4 border bg-info rounded-8">
+        <div class="card card-hover p-4 border bg-info rounded-8">
             <div class="card-block">
-              <h4 class="card-title text-center font-weight-bold text-white text-uppercase ">Facebook</h4>
+              <h4 class="card-title text-center font-weight-receitabold text-white text-uppercase ">
+                <i class="me-2 mdi mdi-facebook-box"></i>
+                Facebook
+              </h4>
               <h6 class="card-subtitle text-white text-center">Custos de campanhas</h6>
               <h1 class="text-center text-white"> 1230 Rs.</h1>
             </div>
@@ -28,21 +34,27 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card p-4 border bg-dark rounded-8">
+        <div class="card card-hover p-4 border bg-dark rounded-8">
             <div class="card-block">
-              <h4 class="card-title text-center font-weight-bold text-white text-uppercase ">Contas</h4>
+                <h4 class="card-title text-center text-white text-uppercase ">
+                    <i class="fas fa-user-circle"></i>
+                    Contas
+                </h4>
               <h6 class="card-subtitle text-white text-center">Contas de facebook</h6>
-              <h1 class="text-center text-white">10</h1>
+              <h1 class="text-center text-white">{{ $contas_fb ?? '0' }}</h1>
             </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card p-4 border bg-danger rounded-8">
+        <div class="card card-hover p-4 border bg-danger rounded-8">
             <div class="card-block">
-              <h4 class="card-title text-center font-weight-bold text-white text-uppercase ">Dominios</h4>
+                <h4 class="card-title text-center text-white text-uppercase ">
+                    <i class="me-2 mdi mdi-domain"></i>
+                    Dominios
+                </h4>
               <h6 class="card-subtitle text-white text-center">Cant. dominios atuais</h6>
-              <h1 class="text-center text-white">33</h1>
+              <h1 class="text-center text-white">{{ $contas_dominios ?? '0' }}</h1>
             </div>
         </div>
     </div>
@@ -50,50 +62,51 @@
 
     <div class="col-12">
         <div class="card p-4 rounded-8">
-            <div class="table-responsive">
-                <h5 class="card-title p-2 text-info text-uppercase">
-                   Ultimas campanhas facebook
-                </h5>
-                <table class="table table-striped table-bordered">
+            <div class="table-responsive" id="_table-responsive">
+                <h3 class="card-title p-2">
+                   Ultimas campanhas
+                </h3>
+                <table id="zero_config" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th><b>Conta</b></th>
                             <th><b>Campanha</b></th>
+                            <th><b>Dominio</b></th>
+                            <th><b>Key</b></th>
                             <th><b>Pais</b></th>
-                            <th><b>Custo</b></th>
-                            <th><b>Impressoes</b></th>
-                            <th><b>Clicks</b></th>
-                            <th><b>Data</b></th>
+                            <th><b>Custo facebook</b></th>
+                            <th><b>Receita</b></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($fbcampaigns as $fb )
-                        <tr>
-                            <td>{{ $fb->account_name }} </td>
-                            <td>{{ $fb->campaign_name }}</td>
-                            <td>{{ $fb->country }} </td>
-                            <td>{{ $fb->spend }} </td>
-                            <td>{{ $fb->impressions }} </td>
-                            <td>{{ $fb->clicks }} </td>
-                            <td>{{ $fb->date_start }}</td> </td>
-                        <tr>
-                        @endforeach
+                    <tbody id="_tablebody">
+                       @foreach ($campaigns as $c)
+                       <tr>
+                           <td>{{ $c['campaign_name'] }}</td>
+                           <td>{{ $c['domain'] }}</td>
+                           <td>{{ $c['key_value'] }}</td>
+                           <td>{{ $c['country'] }}</td>
+                           <td>{{ $c['spend'] }}</td>
+                           <td>{{ $c['receita'] }}</td>
+                        </tr>
+                       @endforeach
+
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th><b>Conta</b></th>
-                            <th><b>Campanha</b></th>
-                            <th><b>Pais</b></th>
-                            <th><b>Custo</b></th>
-                            <th><b>Impressoes</b></th>
-                            <th><b>Clicks</b></th>
-                            <th><b>Data</b></th>
+                           <th><b>Campanha</b></th>
+                           <th><b>Dominio</b></th>
+                           <th><b>Key</b></th>
+                           <th><b>Pais</b></th>
+                           <th><b>Custo facebook</b></th>
+                           <th><b>Receita</b></th>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
     </div>
+
+
+
 
 </div>
 

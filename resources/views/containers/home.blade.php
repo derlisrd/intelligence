@@ -74,7 +74,8 @@
     </div>
 
     <div class="col-12">
-        <form>
+        <form method="post" action="{{ route('home_filter') }}">
+            @csrf
         <div class="row p-2 m-2">
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="form-group">

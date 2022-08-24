@@ -11,9 +11,18 @@ use Illuminate\Http\Request;
 
 class ViewController extends Controller
 {
-    public function home(){
+    public function home(Request $request){
 
-        $facebook = FacebookLastCampaign::orderBy('id', 'DESC')->take(100)->get();
+        $data_inicial = $request->data_inicial;
+        $data_final = $request->data_final;
+
+        if($data_final && $data_inicial){
+            $facebook = FacebookLastCampaign::whereBetween('date_start', [$data_inicial, $data_final]);
+        }
+        else{
+            $facebook = FacebookLastCampaign::orderBy('id', 'DESC')->take(100)->get();
+        }
+
         $contas_dominios = Domain::all();
         $contas_fb = FacebookAdsAccount::all();
         $dolar = Cotacao::find(1);
@@ -44,6 +53,9 @@ class ViewController extends Controller
                     "spend"=>$row['spend'],
                     "domain"=>$fbp->domain,
                     "receita"=>round(($fbp->receita * $valor),2),
+                    "cpm_gam"=>$fbp->cpm,
+                    "cpc_fb"=>$row['cpc'],
+                    "clicks_fb"=>$row['clicks'],
                     "impressions"=>$fbp->impressions,
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,

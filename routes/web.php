@@ -17,6 +17,7 @@ Route::view("/login","auth.login")->name("login.view");
 Route::middleware(['auth'])->group(function () {
     //views
     Route::get('/home',[ViewController::class,"home"])->name("home") ;
+    Route::post('/home',[ViewController::class,"home"])->name("home_filter") ;
 
 
     Route::prefix('relatorios/facebook')->group(function () {

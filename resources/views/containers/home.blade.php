@@ -80,13 +80,13 @@
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="form-group">
                     <label>Data inicial</label>
-                    <input type="date" name="data_inicial" class="form-control input-lg" placeholder="data" />
+                    <input value="{{ $data_inicial ?? '' }}" type="date" name="data_inicial" class="form-control input-lg" placeholder="data" />
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="form-group">
                     <label>Data final</label>
-                    <input type="date" name="data_final" class="form-control input-lg" placeholder="data" />
+                    <input value="{{ $data_final ?? '' }}" type="date" name="data_final" class="form-control input-lg" placeholder="data" />
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">

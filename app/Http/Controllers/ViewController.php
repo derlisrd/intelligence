@@ -17,7 +17,7 @@ class ViewController extends Controller
         $data_final = $request->data_final;
 
         if($data_final && $data_inicial){
-            $facebook = FacebookLastCampaign::whereBetween('date_start', [$data_inicial, $data_final]);
+            $facebook = FacebookLastCampaign::whereBetween('date_start', [$data_inicial, $data_final])->orderBy('id', 'DESC')->take(100)->get();
         }
         else{
             $facebook = FacebookLastCampaign::orderBy('id', 'DESC')->take(100)->get();
@@ -59,7 +59,8 @@ class ViewController extends Controller
                     "impressions"=>$fbp->impressions,
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
-                    "country"=>$fbp->country
+                    "country"=>$fbp->country,
+                    "date_start"=>$row['date_start'],
                 ];
                 array_push($campaigns,$narray);
                 $receita_gl += ($fbp->receita * $valor);
@@ -73,7 +74,9 @@ class ViewController extends Controller
             "contas_dominios"=>$contas_dominios->count(),
             "contas_fb"=>$contas_fb->count(),
             "receita_gl"=>round($receita_gl*$valor,2),
-            "custo_fb"=>$custo_fb
+            "custo_fb"=>$custo_fb,
+            "data_inicial"=>$data_inicial,
+            "data_final"=>$data_final
         ];
         return view('containers.home',$datas);
     }

@@ -72,6 +72,7 @@ class ReceitasController extends Controller
                     "spend"=>$row['spend'],
                     "domain"=>$fbp->domain,
                     "receita"=>$fbp->receita,
+                    "impressions"=>$fbp->impressions,
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country

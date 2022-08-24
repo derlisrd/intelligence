@@ -5,6 +5,8 @@
 
 
 <div class="row">
+
+
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card card-hover p-4 border bg-success rounded-8">
             <div class="card-block">
@@ -12,7 +14,7 @@
                     <i class="me-2 mdi mdi-google"></i>
                     Google AM
                 </h4>
-              <h6 class="card-subtitle text-white text-center">Receita ultimas campanhas </h6>
+              <h6 class="card-subtitle text-white text-center">Receita </h6>
               <h1 class="text-center text-white"> {{ $receita_gl ?? '0' }} Rs.</h1>
             </div>
         </div>
@@ -27,7 +29,7 @@
                 <i class="me-2 mdi mdi-facebook-box"></i>
                 Facebook
               </h4>
-              <h6 class="card-subtitle text-white text-center">Custos de ultimas campanhas</h6>
+              <h6 class="card-subtitle text-white text-center">Custos de campanhas</h6>
               <h1 class="text-center text-white"> {{ $custo_fb ?? '0' }} Rs.</h1>
             </div>
         </div>
@@ -58,7 +60,40 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card card-hover p-4 border bg-warning rounded-8">
+            <div class="card-block">
+                <h4 class="card-title text-center text-white text-uppercase ">
+                    <i class="me-2 mdi mdi-cash-usd"></i>
+                    Lucros
+                </h4>
+              <h6 class="card-subtitle text-white text-center">Cant. lucro</h6>
+              <h1 class="text-center text-white">{{ ($receita_gl - $custo_fb) }} Rs.</h1>
+            </div>
+        </div>
+    </div>
 
+    <div class="col-12">
+        <form>
+        <div class="row p-2 m-2">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <label>Data inicial</label>
+                    <input type="date" name="data_inicial" class="form-control input-lg" placeholder="data" />
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <label>Data final</label>
+                    <input type="date" name="data_final" class="form-control input-lg" placeholder="data" />
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <button class="btn btn-lg btn-outline-success mt-3" type="submit">FILTRAR</button>
+            </div>
+        </div>
+        </form>
+    </div>
 
     <div class="col-12">
         <div class="card p-4 rounded-8">
@@ -73,6 +108,7 @@
                             <th><b>Dominio</b></th>
                             <th><b>Key</b></th>
                             <th><b>Pais</b></th>
+                            <th><b>Impressoes</b></th>
                             <th><b>Custo facebook</b></th>
                             <th><b>Receita</b></th>
                         </tr>
@@ -84,6 +120,7 @@
                            <td>{{ $c['domain'] }}</td>
                            <td>{{ $c['key_value'] }}</td>
                            <td>{{ $c['country'] }}</td>
+                           <td>{{ $c['impressions'] }}</td>
                            <td>{{ $c['spend'] }}</td>
                            <td>{{ $c['receita'] }}</td>
                         </tr>
@@ -96,6 +133,7 @@
                            <th><b>Dominio</b></th>
                            <th><b>Key</b></th>
                            <th><b>Pais</b></th>
+                           <th><b>Impressoes</b></th>
                            <th><b>Custo facebook</b></th>
                            <th><b>Receita</b></th>
                         </tr>

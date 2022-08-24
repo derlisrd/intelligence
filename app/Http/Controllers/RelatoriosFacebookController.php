@@ -81,7 +81,6 @@ class RelatoriosFacebookController extends Controller
             $i = (-1);
             $idcampaign = null;
             foreach($campaigns as $c){
-
                 if($idcampaign == $c['campaign_id']){
                     $impressions +=  $c['impressions'];
                     $spend += $c['spend'];

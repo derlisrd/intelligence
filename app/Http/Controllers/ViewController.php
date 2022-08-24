@@ -44,6 +44,7 @@ class ViewController extends Controller
                     "spend"=>$row['spend'],
                     "domain"=>$fbp->domain,
                     "receita"=>round(($fbp->receita * $valor),2),
+                    "impressions"=>$fbp->impressions,
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country

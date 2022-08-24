@@ -60,7 +60,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved.
+                Deselvovido pelo caramelo con muito amor pra renovaads
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

@@ -18,6 +18,10 @@ class ViewController extends Controller
         $contas_fb = FacebookAdsAccount::all();
         $dolar = Cotacao::find(1);
         $valor = $dolar->valor;
+        $custo_fb = 0;
+        $receita_gl= 0;
+
+
 
         $campaigns = [];
         foreach($facebook as $row){
@@ -45,6 +49,8 @@ class ViewController extends Controller
                     "country"=>$fbp->country
                 ];
                 array_push($campaigns,$narray);
+                $receita_gl += ($fbp->receita * $valor);
+                $custo_fb += $row['spend'];
             }
 
         }
@@ -53,6 +59,8 @@ class ViewController extends Controller
             "campaigns"=>$campaigns,
             "contas_dominios"=>$contas_dominios->count(),
             "contas_fb"=>$contas_fb->count(),
+            "receita_gl"=>round($receita_gl*$valor,2),
+            "custo_fb"=>$custo_fb
         ];
         return view('containers.home',$datas);
     }

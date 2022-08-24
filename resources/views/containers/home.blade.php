@@ -12,8 +12,8 @@
                     <i class="me-2 mdi mdi-google"></i>
                     Google AM
                 </h4>
-              <h6 class="card-subtitle text-white text-center">Receita geral </h6>
-              <h1 class="text-center text-white"> 1230 Rs.</h1>
+              <h6 class="card-subtitle text-white text-center">Receita ultimas campanhas </h6>
+              <h1 class="text-center text-white"> {{ $receita_gl ?? '0' }} Rs.</h1>
             </div>
         </div>
     </div>
@@ -27,8 +27,8 @@
                 <i class="me-2 mdi mdi-facebook-box"></i>
                 Facebook
               </h4>
-              <h6 class="card-subtitle text-white text-center">Custos de campanhas</h6>
-              <h1 class="text-center text-white"> 1230 Rs.</h1>
+              <h6 class="card-subtitle text-white text-center">Custos de ultimas campanhas</h6>
+              <h1 class="text-center text-white"> {{ $custo_fb ?? '0' }} Rs.</h1>
             </div>
         </div>
     </div>

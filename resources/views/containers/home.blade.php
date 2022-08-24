@@ -14,7 +14,7 @@
                     Dolar
                 </h4>
               <h6 class="card-subtitle text-center">Valor de dolar no dia e</h6>
-              <h1 class="text-center">R$. {{ $dolar ?? '0' }} </h1>
+              <h3 class="text-center">R$. {{ $dolar ?? '0' }} </h3>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
                     Google AM
                 </h4>
               <h6 class="card-subtitle text-white text-center">Receita </h6>
-              <h1 class="text-center text-white">R$. {{ $receita_gl ?? '0' }} </h1>
+              <h3 class="text-center text-white">R$. {{ $receita_gl ?? '0' }} </h3>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
                 Facebook
               </h4>
               <h6 class="card-subtitle text-white text-center">Custos de campanhas</h6>
-              <h1 class="text-center text-white"> R$. {{ $custo_fb ?? '0' }}</h1>
+              <h3 class="text-center text-white"> R$. {{ $custo_fb ?? '0' }}</h3>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                     Contas
                 </h4>
               <h6 class="card-subtitle text-white text-center">Contas de facebook</h6>
-              <h1 class="text-center text-white">{{ $contas_fb ?? '0' }}</h1>
+              <h3 class="text-center text-white">{{ $contas_fb ?? '0' }}</h3>
             </div>
         </div>
     </div>
@@ -68,7 +68,7 @@
                     Dominios
                 </h4>
               <h6 class="card-subtitle text-white text-center">Cant. dominios atuais</h6>
-              <h1 class="text-center text-white">{{ $contas_dominios ?? '0' }}</h1>
+              <h3 class="text-center text-white">{{ $contas_dominios ?? '0' }}</h3>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                     Lucros
                 </h4>
               <h6 class="card-subtitle text-white text-center">Cant. lucro</h6>
-              <h1 class="text-center text-white">R$. {{ ($receita_gl - $custo_fb) }} </h1>
+              <h3 class="text-center text-white">R$. {{ ($receita_gl - $custo_fb) }} </h3>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
                     Impressions
                 </h4>
               <h6 class="card-subtitle text-white text-center">Cant. impressions</h6>
-              <h1 class="text-center text-white">{{ $impressions_fb ?? '0' }}</h1>
+              <h3 class="text-center text-white">{{ $impressions_fb ?? '0' }}</h3>
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@
                     Campanhas rodandos
                 </h4>
               <h6 class="card-subtitle text-white text-center">Cant. campanhas</h6>
-              <h1 class="text-center text-white">587</h1>
+              <h3 class="text-center text-white">587</h3>
             </div>
         </div>
     </div>

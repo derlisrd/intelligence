@@ -6,8 +6,7 @@ use App\Http\Controllers\ReceitasController;
 use App\Http\Controllers\RelatoriosFacebookController;
 use App\Http\Controllers\RelatoriosGoogleController;
 use App\Http\Controllers\Testes;
-use App\Models\CountryCode;
-use App\Models\FacebookLastCampaign;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[LoginController::class,"login"])->name("auth.login");
@@ -17,7 +16,7 @@ Route::view("/login","auth.login")->name("login.view");
 
 Route::middleware(['auth'])->group(function () {
     //views
-    Route::view('/home','containers.home')->name("home") ;
+    Route::get('/home',[ViewController::class,"home"])->name("home") ;
 
 
     Route::prefix('relatorios/facebook')->group(function () {

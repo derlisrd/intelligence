@@ -6,16 +6,28 @@
 
 <div class="row">
 
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card card-hover p-4 border bg-light rounded-8 shadow">
+            <div class="card-block">
+                <h4 class="card-title text-center text-uppercase ">
+                    <i class="me-2 mdi mdi-cash-usd"></i>
+                    Dolar
+                </h4>
+              <h6 class="card-subtitle text-center">Valor de dolar no dia e</h6>
+              <h1 class="text-center">R$. {{ $dolar ?? '0' }} </h1>
+            </div>
+        </div>
+    </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-info rounded-8">
+        <div class="card card-hover p-4 border bg-info rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="me-2 mdi mdi-google"></i>
                     Google AM
                 </h4>
               <h6 class="card-subtitle text-white text-center">Receita </h6>
-              <h1 class="text-center text-white"> {{ $receita_gl ?? '0' }} Rs.</h1>
+              <h1 class="text-center text-white">R$. {{ $receita_gl ?? '0' }} </h1>
             </div>
         </div>
     </div>
@@ -23,20 +35,20 @@
 
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-info rounded-8">
+        <div class="card card-hover p-4 border bg-info rounded-8 shadow">
             <div class="card-block">
               <h4 class="card-title text-center font-weight-receitabold text-white text-uppercase ">
                 <i class="me-2 mdi mdi-facebook-box"></i>
                 Facebook
               </h4>
               <h6 class="card-subtitle text-white text-center">Custos de campanhas</h6>
-              <h1 class="text-center text-white"> {{ $custo_fb ?? '0' }} Rs.</h1>
+              <h1 class="text-center text-white"> R$. {{ $custo_fb ?? '0' }}</h1>
             </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-dark rounded-8">
+        <div class="card card-hover p-4 border bg-dark rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="fas fa-user-circle"></i>
@@ -49,7 +61,7 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-danger rounded-8">
+        <div class="card card-hover p-4 border bg-danger rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="me-2 mdi mdi-domain"></i>
@@ -60,20 +72,20 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-success rounded-8">
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card card-hover p-4 border bg-success rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="me-2 mdi mdi-cash-usd"></i>
                     Lucros
                 </h4>
               <h6 class="card-subtitle text-white text-center">Cant. lucro</h6>
-              <h1 class="text-center text-white">{{ ($receita_gl - $custo_fb) }} Rs.</h1>
+              <h1 class="text-center text-white">R$. {{ ($receita_gl - $custo_fb) }} </h1>
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-primary rounded-8">
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card card-hover p-4 border bg-primary rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="me-2 mdi mdi-eye"></i>
@@ -84,18 +96,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-light rounded-8">
-            <div class="card-block">
-                <h4 class="card-title text-center text-uppercase ">
-                    <i class="me-2 mdi mdi-cash-usd"></i>
-                    Dolar
-                </h4>
-              <h6 class="card-subtitle text-center">Valor de dolar no dia e</h6>
-              <h1 class="text-center">{{ $dolar ?? '0' }} Rs.</h1>
-            </div>
-        </div>
-    </div>
+
 
 
     <div class="col-12">
@@ -137,9 +138,10 @@
                             <th><b>Pais</b></th>
                             <th><b>CPM gam</b></th>
                             <th><b>Impressoes fb</b></th>
-                            <th><b>Custo facebook</b></th>
-                            <th><b>Clicks facebook</b></th>
-                            <th><b>Receita</b></th>
+                            <th><b>Custo fb</b></th>
+                            <th><b>Clicks fb</b></th>
+                            <th><b>Ctr fb</b></th>
+                            <th><b>Receita gam</b></th>
                             <th><b>Lucro</b></th>
                         </tr>
                     </thead>
@@ -153,6 +155,7 @@
                            <td>{{ $c['cpm_gam'] }}</td>
                            <td>{{ $c['impressions'] }}</td>
                            <td>{{ $c['spend'] }}</td>
+                           <td>{{ $c['ctr_fb'] }}</td>
                            <td>{{ $c['clicks_fb'] }}</td>
                            <td>{{ $c['receita'] }}</td>
                            <td><b>{{ ($c['receita'] - $c['spend']) }}</b></td>
@@ -168,8 +171,9 @@
                             <th><b>Pais</b></th>
                             <th><b>CPM gam</b></th>
                             <th><b>Impressoes fb</b></th>
-                            <th><b>Custo facebook</b></th>
-                            <th><b>Clicks facebook</b></th>
+                            <th><b>Custo fb</b></th>
+                            <th><b>Clicks fb</b></th>
+                            <th><b>Ctr fb</b></th>
                             <th><b>Receita gam</b></th>
                             <th><b>Lucro</b></th>
                         </tr>

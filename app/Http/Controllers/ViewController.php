@@ -17,7 +17,7 @@ class ViewController extends Controller
         $data_final = $request->data_final;
 
         if($data_final && $data_inicial){
-            $facebook = FacebookLastCampaign::whereBetween('date_start', [$data_inicial, $data_final])->orderBy('id', 'DESC')->take(100)->get();
+            $facebook = FacebookLastCampaign::whereBetween('date_start', [$data_inicial, $data_final])->orderBy('id', 'DESC')->get();
         }
         else{
             $facebook = FacebookLastCampaign::orderBy('id', 'DESC')->take(100)->get();
@@ -37,35 +37,38 @@ class ViewController extends Controller
             $keyvalue = $row['campaign_name'];
             $pais = $row['country'];
             $arr = explode('#',$keyvalue);
-            preg_match_all('!\d+!', $arr[1], $matches);
-            $valuefb = ($matches[0][0]);
-            $domain = $arr[0];
-            $gam = GoogleGamCampaigns::where([
-                ["domain","=",$domain],
-                ["name","=",'utm_campaign'],
-                ["value","LIKE",'%'.$valuefb.'%'],
-                ["country","=",$pais]
-            ])->get();
-            $count = $gam->count();
-            $fbp = ($gam->first());
-            if($count>0){
-                $narray= [
-                    "spend"=>$row['spend'],
-                    "domain"=>$fbp->domain,
-                    "receita"=>round(($fbp->receita * $valor),2),
-                    "cpm_gam"=>$fbp->cpm,
-                    "cpc_fb"=>$row['cpc'],
-                    "clicks_fb"=>$row['clicks'],
-                    "impressions"=>$fbp->impressions,
-                    "campaign_name"=>$row['campaign_name'],
-                    "key_value"=>$fbp->value,
-                    "country"=>$fbp->country,
-                    "date_start"=>$row['date_start'],
-                ];
-                array_push($campaigns,$narray);
-                $receita_gl += ($fbp->receita * $valor);
-                $custo_fb += $row['spend'];
-                $impressions_fb += $row['impressions'];
+            if(isset($arr[1])){
+                preg_match_all('!\d+!', $arr[1], $matches);
+                $valuefb = ($matches[0][0]);
+                $domain = $arr[0];
+                $gam = GoogleGamCampaigns::where([
+                    ["domain","=",$domain],
+                    ["name","=",'utm_campaign'],
+                    ["value","LIKE",'%'.$valuefb.'%'],
+                    ["country","=",$pais]
+                ])->get();
+                $count = $gam->count();
+                $fbp = ($gam->first());
+                if($count>0){
+                    $narray= [
+                        "spend"=>$row['spend'],
+                        "domain"=>$fbp->domain,
+                        "receita"=>round(($fbp->receita * $valor),2),
+                        "cpm_gam"=>$fbp->cpm,
+                        "cpc_fb"=>$row['cpc'],
+                        "ctr_fb"=>$row['ctr'],
+                        "clicks_fb"=>$row['clicks'],
+                        "impressions"=>$fbp->impressions,
+                        "campaign_name"=>$row['campaign_name'],
+                        "key_value"=>$fbp->value,
+                        "country"=>$fbp->country,
+                        "date_start"=>$row['date_start'],
+                    ];
+                    array_push($campaigns,$narray);
+                    $receita_gl += ($fbp->receita * $valor);
+                    $custo_fb += $row['spend'];
+                    $impressions_fb += $row['impressions'];
+                }
             }
 
         }

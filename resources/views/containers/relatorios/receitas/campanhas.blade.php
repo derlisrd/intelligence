@@ -47,8 +47,7 @@
                 <thead>
                     <tr>
                         <th>DOMINIO</th>
-                        <th>GASTO DO FB EM REAL</th>
-                        <th>GASTO DO FB EM USS</th>
+                        <th>CUSTO FACEBOOK</th>
                         <th>RECEITA GAM</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>
@@ -60,8 +59,7 @@
                    <tr>
                         <th>{{ $c['domain'] }}</th>
                         <th>{{ $c['spend'] }}</th>
-                        <th>GASTO DO FB EM USS</th>
-                        <th>{{ $c['receita'] }}</th>
+                        <th>{{ round(($c['receita'])*$dolar,2) }}</th>
                         <th>{{ $c['country'] }}</th>
                         <th>{{ $c['campaign_name'] }}</th>
                         <th>{{ $c['key_value'] }}</th>
@@ -72,8 +70,7 @@
                 <tfoot>
                     <tr>
                         <th>DOMINIO</th>
-                        <th>GASTO DO FB EM REAL</th>
-                        <th>GASTO DO FB EM USS</th>
+                        <th>CUSTO FACEBOOK</th>
                         <th>RECEITA GAM</th>
                         <th>PAIS</th>
                         <th>CAMPANHA FACEBOOK</th>

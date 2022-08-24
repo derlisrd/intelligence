@@ -93,6 +93,7 @@ class ReceitasController extends Controller
             "country"=>$country,
             "value"=>$value,
             "reports"=>$report,
+            "dolar"=>$dolar
         ];
 
 

@@ -59,7 +59,7 @@ class RelatoriosFacebookController extends Controller
         $last = FacebookLastCampaign::query();
 
         if($until && $to){
-            $last->whereBetween("date_start", $until, $to);
+            $last->whereBetween("date_start", $until." 00:00:01", $to." 23:59:59");
         }
         if($account_id){
             $last->where("account_id", $account_id);

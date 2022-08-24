@@ -20,7 +20,7 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-info rounded-8 shadow">
+        <div class="card card-hover p-4 border bg-cyan rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="me-2 mdi mdi-google"></i>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-dark rounded-8 shadow">
+        <div class="card card-hover p-4 border bg-warning rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="fas fa-user-circle"></i>
@@ -96,6 +96,18 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-6 col-lg-6">
+        <div class="card card-hover p-4 border bg-dark rounded-8 shadow">
+            <div class="card-block">
+                <h4 class="card-title text-center text-white text-uppercase ">
+                    <i class="me-2 mdi mdi-eye"></i>
+                    Campanhas rodandos
+                </h4>
+              <h6 class="card-subtitle text-white text-center">Cant. campanhas</h6>
+              <h1 class="text-center text-white">587</h1>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -106,17 +118,17 @@
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="form-group">
                     <label>Data inicial</label>
-                    <input value="{{ $data_inicial ?? '' }}" type="date" name="data_inicial" class="form-control input-lg" placeholder="data" />
+                    <input value="{{ $data_inicial ?? '' }}" type="date" name="data_inicial" class="form-control form-control-lg" placeholder="data" />
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="form-group">
                     <label>Data final</label>
-                    <input value="{{ $data_final ?? '' }}" type="date" name="data_final" class="form-control input-lg" placeholder="data" />
+                    <input value="{{ $data_final ?? '' }}" type="date" name="data_final" class="form-control form-control-lg" placeholder="data" />
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <button class="btn btn-lg btn-outline-success mt-3" type="submit">FILTRAR</button>
+            <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center">
+                <button class="btn btn-lg btn-outline-success rounded-8 shadow" type="submit">FILTRAR</button>
             </div>
         </div>
         </form>

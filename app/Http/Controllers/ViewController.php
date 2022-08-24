@@ -31,7 +31,7 @@ class ViewController extends Controller
         $receita_gl= 0;
 
 
-
+        $impressions_fb = 0;
         $campaigns = [];
         foreach($facebook as $row){
             $keyvalue = $row['campaign_name'];
@@ -65,6 +65,7 @@ class ViewController extends Controller
                 array_push($campaigns,$narray);
                 $receita_gl += ($fbp->receita * $valor);
                 $custo_fb += $row['spend'];
+                $impressions_fb += $row['impressions'];
             }
 
         }
@@ -75,8 +76,10 @@ class ViewController extends Controller
             "contas_fb"=>$contas_fb->count(),
             "receita_gl"=>round($receita_gl*$valor,2),
             "custo_fb"=>$custo_fb,
+            "impressions_fb"=>$impressions_fb,
             "data_inicial"=>$data_inicial,
-            "data_final"=>$data_final
+            "data_final"=>$data_final,
+            "dolar"=>$valor
         ];
         return view('containers.home',$datas);
     }

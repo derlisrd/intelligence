@@ -58,12 +58,12 @@ class ReceitasController extends Controller
             //preg_match_all('!\d+!', $arr[1], $matches);
             //$valuefb = ($matches[0][0]);
             //["value","LIKE",'%'.$valuefb.'%'],
-            $value = $arr[0][1];
+            $valcampaign = $arr[0][1];
 
              $gam = GoogleGamCampaigns::where([
                 ["domain","=",$domain],
                 ["name","=",'utm_campaign'],
-                ["value","=",$value],
+                ["value","=",$valcampaign],
                 ["country","=",$pais]
             ])->get();
             $count = $gam->count();

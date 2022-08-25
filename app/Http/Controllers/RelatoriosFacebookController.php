@@ -53,6 +53,7 @@ class RelatoriosFacebookController extends Controller
         $account_id = "";
         $country = "";
         $campaigns = [];
+        $fbuserid = null;
         foreach($user->facebookusers as $fb){
             $fbuserid = $fb->id;
         }

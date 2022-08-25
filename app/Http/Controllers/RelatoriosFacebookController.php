@@ -60,7 +60,7 @@ class RelatoriosFacebookController extends Controller
         }
 
         $fbuser = FacebookUser::find($fbuserid);
-        if($fbuser->coun()>0){
+        if($fbuser->count()>0){
             $accounts = ($fbuser->ads_accounts);
         };
 

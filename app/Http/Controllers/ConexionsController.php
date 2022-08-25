@@ -51,15 +51,16 @@ class ConexionsController extends Controller
             $fbresponse = json_decode(getcurl($endpoint), true);
             $access_token = $fbresponse['access_token'];
 
+            print_r($fbresponse);
             //$userdata = $this->SaveUserFacebook($access_token);
             //$id = $userdata->id;
             //$this->SaveBussinessAccounts($id);
 
-            $endpoint = "https://graph.facebook.com/" . env('FB_API_VERSION') . "/" . $id . "/adaccounts?fields=name,id,account_id&limit=100&access_token=" . $access_token;
-            $response = json_decode(getcurl($endpoint), true);
-            $contas = $response['data'];
+            //$endpoint = "https://graph.facebook.com/" . env('FB_API_VERSION') . "/" . $id . "/adaccounts?fields=name,id,account_id&limit=100&access_token=" . $access_token;
+            //$response = json_decode(getcurl($endpoint), true);
+            //$contas = $response['data'];
 
-            print_r($contas);
+            //print_r($contas);
             //$userfb = $userdata;
         }
 

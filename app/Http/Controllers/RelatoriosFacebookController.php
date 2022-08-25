@@ -35,9 +35,13 @@ class RelatoriosFacebookController extends Controller
 
 
 
-    public function viewCampaign(){
+    public function viewCampaign(Request $request){
 
-        return view('containers.relatorios.facebook.campaign');
+        $campaign = FacebookLastCampaign::find($request->id);
+
+        $campaigns = FacebookLastCampaign::where('campaign_id',$campaign->campaign_id)->get();
+
+        return view('containers.relatorios.facebook.campaign',compact("campaigns"));
     }
 
 
@@ -46,8 +50,6 @@ class RelatoriosFacebookController extends Controller
 
         $id  = Auth::id();
         $user = User::find($id);
-        $paises = CountryCode::all();
-        $breadcrumblinks = [];
         $paises = CountryCode::all();
         $breadcrumblinks = [];
         $account_id = "";
@@ -60,12 +62,15 @@ class RelatoriosFacebookController extends Controller
         }
 
         $fbuser = FacebookUser::find($fbuserid);
-        if(count($fbuser)>0){
 
+        if($fbuser){
             $accounts = ($fbuser->ads_accounts);
+            return view('containers.relatorios.facebook.campaigns',
+                compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
         };
 
-        return view('containers.relatorios.facebook.campaigns',compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
+        return back();
+
     }
 
     public function viewCampaigns(Request $request){
@@ -81,21 +86,24 @@ class RelatoriosFacebookController extends Controller
     }
 
 
-    public function getCampaigns(Request $request){
+    public function postCampaigns(Request $request){
 
 
         $paises = CountryCode::all();
 
-        $fbuserid = $request->user_fb_id;
+        $fbuserid = $request->fbuserid;
         $fbuser = FacebookUser::find($fbuserid);
         $account_id = $request->account_id;
         $until = $request->until;
         $to = $request->to;
         $country = $request->country;
+
+
+
         $last = FacebookLastCampaign::query();
 
         if($until && $to){
-            $last->whereBetween("date_start", $until." 00:00:01", $to." 23:59:59");
+            $last->whereBetween("date_start", $until." 00:00:00", $to." 23:59:59");
         }
         if($account_id){
             $last->where("account_id", $account_id);
@@ -114,6 +122,7 @@ class RelatoriosFacebookController extends Controller
             $spend = 0;
             $clicks = 0;
             $cpm  = 0;
+            $cpc = 0;
             $i = (-1);
             $idcampaign = null;
             foreach($campaigns as $c){
@@ -122,7 +131,9 @@ class RelatoriosFacebookController extends Controller
                     $spend += $c['spend'];
                     $clicks += $c['clicks'];
                     $cpm  += $c['cpm'];
+                    $cpc  += $c['cpc'];
                     $arr[$i] = array(
+                        "id"=>$c['id'],
                         "campaign_name" => $c['campaign_name'],
                         "account_name"=>$c['account_name'],
                         "campaign_id" => $c['campaign_id'],
@@ -142,6 +153,7 @@ class RelatoriosFacebookController extends Controller
                     $clicks = $c['clicks'];
                     $cpm  = $c['cpm'];
                     array_push($arr, array(
+                        "id"=>$c['id'],
                         "campaign_name" => $c['campaign_name'],
                         "account_name"=>$c['account_name'],
                         "campaign_id" => $c['campaign_id'],
@@ -151,7 +163,7 @@ class RelatoriosFacebookController extends Controller
                         "country"=>"",
                         "clicks"=>$clicks,
                         "cpm"=>$cpm,
-                        "cpc"=>"",
+                        "cpc"=>$cpc,
                         "date_start"=>$c['date_start'],
                     ));
                     $i++;

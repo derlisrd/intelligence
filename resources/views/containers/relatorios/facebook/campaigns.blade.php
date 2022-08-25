@@ -5,8 +5,9 @@
 @section("currentpage","facebook")
 
 @section("container")
-<form method="post" action={{ route('relatorios.getCampaigns',$fbuserid) }}>
+<form method="post" action={{ route('relatorios.postCampaigns') }}>
     @csrf
+    <input type="hidden" name="fbuserid" value="{{ $fbuserid }}" />
     <div class="row">
         <div class="col-sm d-flex align-items-center flex-column mt-2">
             <label for="_accounts">Contas de anuncios</label>
@@ -72,7 +73,6 @@
                              <tr>
                                  <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
-                                 <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
 
                                  <th><b>IMPRESSOES</b></th>
@@ -86,23 +86,21 @@
                          <tbody id="_tablebody">
                              @foreach ($campaigns as $campaign)
                                 <tr>
-                                    <th><b>{{ $campaign['account_name'] }}</b></th>
-                                    <th><a href="{{ route('facebook.campaign',$campaign['campaign_id']) }}">{{ $campaign['campaign_name'] }}</a></th>
-                                    <th><b>{{ $campaign['country'] }}</b></th>
-                                    <th><b>{{ $campaign['spend'] }}</b></th>
-                                    <th><b>{{ $campaign['impressions'] }}</b></th>
-                                    <th><b>{{ $campaign['status'] }}</b></th>
-                                    <th><b>{{ $campaign['clicks'] }}</b></th>
-                                    <th><b>{{ $campaign['cpm'] }}</b></th>
-                                    <th><b>{{ $campaign['cpc'] }}</b></th>
-                                    <th><b>{{ $campaign['date_start'] }}</b></th>
+                                    <td><b>{{ $campaign['account_name'] }}</b></td>
+                                    <td><a href="{{ route('facebook.campaign',$campaign['id']) }}">{{ $campaign['campaign_name'] }}</a></td>
+                                    <td><b>{{ $campaign['spend'] }}</b></td>
+                                    <td><b>{{ $campaign['impressions'] }}</b></td>
+                                    <td><b>{{ $campaign['status'] }}</b></td>
+                                    <td><b>{{ $campaign['clicks'] }}</b></td>
+                                    <td><b>{{ $campaign['cpm'] }}</b></td>
+                                    <td><b>{{ $campaign['cpc'] }}</b></td>
+                                    <td><b>{{ $campaign['date_start'] }}</b></td>
                                 </tr>
                              @endforeach
                          </tbody>
                          <tfoot>
                              <tr>
                                 <th><b>CONTA</b></th>
-                                 <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
                                  <th><b>IMPRESSOES</b></th>

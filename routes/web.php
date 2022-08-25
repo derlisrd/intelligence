@@ -24,13 +24,13 @@ Route::middleware(['auth'])->group(function () {
         #Route::get("/",[RelatoriosFacebookController::class,"getFacebookUsers"])->name("relatorios.facebook.users");
         #Route::get('adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.adaccounts');
         Route::get('/',[RelatoriosFacebookController::class,"getLastCampaigns"])->name('facebook.campanhas');
+        Route::post('/',[RelatoriosFacebookController::class,"postCampaigns"])->name('relatorios.postCampaigns');
+        Route::get('campaign/{id}',[RelatoriosFacebookController::class,"viewCampaign"])->name('facebook.campaign');
 
+        //Route::post('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"getCampaigns"])->name('relatorios.getCampaigns');
 
         Route::get('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"viewCampaigns"])->name('view.relatorios.getCampaigns');
 
-
-        Route::post('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"getCampaigns"])->name('relatorios.getCampaigns');
-        Route::get('campaign/{campaign_id}',[RelatoriosFacebookController::class,"viewCampaign"])->name('facebook.campaign');
     });
 
     //relatorios do facebook

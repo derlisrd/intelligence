@@ -46,13 +46,22 @@ class RelatoriosFacebookController extends Controller
 
         $id  = Auth::id();
         $user = User::find($id);
-
+        $paises = CountryCode::all();
+        $breadcrumblinks = [];
+        $paises = CountryCode::all();
+        $breadcrumblinks = [];
+        $account_id = "";
+        $country = "";
+        $campaigns = [];
         foreach($user->facebookusers as $fb){
-            $fb_id = $fb->id;
+            $fbuserid = $fb->id;
         }
 
-        FacebookUser::find($fb_id);
+        $fbuser = FacebookUser::find($fbuserid);
 
+        $accounts = ($fbuser->ads_accounts);
+
+        return view('containers.relatorios.facebook.campaigns',compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
     }
 
     public function viewCampaigns(Request $request){

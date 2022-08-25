@@ -50,7 +50,7 @@ class ReceitasController extends Controller
 
         $facebook = ($fbc->get()->toArray());
         $report = [];
-
+        //echo "<pre>";
         foreach($facebook as $row){
             $keyvalue = $row['campaign_name'];
             $pais = $row['country'];
@@ -58,12 +58,12 @@ class ReceitasController extends Controller
             //preg_match_all('!\d+!', $arr[1], $matches);
             //$valuefb = ($matches[0][0]);
             //["value","LIKE",'%'.$valuefb.'%'],
-            $valcampaign = $arr[0][1];
-
+            $val = $arr[1];
+            //print($arr[0]) ; echo   ."<br>";
              $gam = GoogleGamCampaigns::where([
                 ["domain","=",$domain],
                 ["name","=",'utm_campaign'],
-                ["value","=",$valcampaign],
+                ["value","=",$val],
                 ["country","=",$pais]
             ])->get();
             $count = $gam->count();
@@ -72,11 +72,14 @@ class ReceitasController extends Controller
                 $narray= [
                     "spend"=>$row['spend'],
                     "domain"=>$fbp->domain,
+                    "cpm_gam"=>$fbp->cpm,
                     "receita"=>$fbp->receita,
                     "impressions"=>$fbp->impressions,
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
-                    "country"=>$fbp->country
+                    "country"=>$fbp->country,
+                    'lucro' =>($fbp->receita - $row['spend']),
+                    'porcentaje'=> ((($fbp->receita - $row['spend']))/$row['spend'])
                 ];
                 array_push($report,$narray);
             }
@@ -85,7 +88,8 @@ class ReceitasController extends Controller
             //echo "keyvalue $keyvalue valuefb $valuefb receita do dominio =" . $fbp->domain . " receita=". $fbp->receita." <br/>";
         }
 
-
+        /* echo "</pre>";
+        return; */
 
 
         $data = [

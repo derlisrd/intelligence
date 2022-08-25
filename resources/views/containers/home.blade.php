@@ -6,7 +6,7 @@
 
 <div class="row">
 
-    <div class="col-12 col-md-6 col-lg-6">
+    <div class="col-12 col-md-6 col-lg-3">
         <div class="card card-hover p-4 border bg-light rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-uppercase ">
@@ -18,8 +18,20 @@
             </div>
         </div>
     </div>
-
     <div class="col-12 col-md-6 col-lg-3">
+        <div class="card card-hover p-4 border bg-warning rounded-8 shadow">
+            <div class="card-block">
+                <h4 class="card-title text-center text-white text-uppercase ">
+                    <i class="me-2 mdi mdi-eye"></i>
+                    Campanhas
+                </h4>
+              <h6 class="card-subtitle text-white text-center">Cant. campanhas ativas</h6>
+              <h3 class="text-center text-white">{{ $campanhas_ativas ?? '0' }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-6">
         <div class="card card-hover p-4 border bg-cyan rounded-8 shadow">
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
@@ -34,7 +46,7 @@
 
 
 
-    <div class="col-12 col-md-6 col-lg-3">
+    <div class="col-12 col-md-6 col-lg-6">
         <div class="card card-hover p-4 border bg-info rounded-8 shadow">
             <div class="card-block">
               <h4 class="card-title text-center font-weight-receitabold text-white text-uppercase ">
@@ -47,31 +59,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-warning rounded-8 shadow">
-            <div class="card-block">
-                <h4 class="card-title text-center text-white text-uppercase ">
-                    <i class="fas fa-user-circle"></i>
-                    Contas
-                </h4>
-              <h6 class="card-subtitle text-white text-center">Contas de facebook</h6>
-              <h3 class="text-center text-white">{{ $contas_fb ?? '0' }}</h3>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-12 col-md-6 col-lg-3">
-        <div class="card card-hover p-4 border bg-danger rounded-8 shadow">
-            <div class="card-block">
-                <h4 class="card-title text-center text-white text-uppercase ">
-                    <i class="me-2 mdi mdi-domain"></i>
-                    Dominios
-                </h4>
-              <h6 class="card-subtitle text-white text-center">Cant. dominios atuais</h6>
-              <h3 class="text-center text-white">{{ $contas_dominios ?? '0' }}</h3>
-            </div>
-        </div>
-    </div>
     <div class="col-12 col-md-6 col-lg-6">
         <div class="card card-hover p-4 border bg-success rounded-8 shadow">
             <div class="card-block">
@@ -96,18 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-6">
-        <div class="card card-hover p-4 border bg-dark rounded-8 shadow">
-            <div class="card-block">
-                <h4 class="card-title text-center text-white text-uppercase ">
-                    <i class="me-2 mdi mdi-eye"></i>
-                    Campanhas
-                </h4>
-              <h6 class="card-subtitle text-white text-center">Cant. campanhas ativas</h6>
-              <h3 class="text-center text-white">{{ $campanhas_ativas ?? '0' }}</h3>
-            </div>
-        </div>
-    </div>
+
 
 
 

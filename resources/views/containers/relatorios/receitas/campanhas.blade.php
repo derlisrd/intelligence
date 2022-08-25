@@ -46,35 +46,44 @@
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>DOMINIO</th>
-                        <th>CUSTO FACEBOOK</th>
-                        <th>RECEITA GAM</th>
-                        <th>PAIS</th>
-                        <th>CAMPANHA FACEBOOK</th>
-                        <th>CHAVE</th>
+                        <th><b>Dominio</b></th>
+                        <th><b>Pais</b></th>
+                        <th><b>Campanha fb</b></th>
+                        <th><b>Custo fb</b></th>
+                        <th><b>Receita Gam</b></th>
+                        <th><b>Cpm Gam</b></th>
+                        <th><b>Chave</b></th>
+                        <th><b>Lucro</b></th>
+                        <th><b>Lucro % </b></th>
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
                    @foreach ($reports as $c)
                    <tr>
-                        <th>{{ $c['domain'] }}</th>
-                        <th>{{ $c['spend'] }}</th>
-                        <th>{{ round(($c['receita'])*$dolar,2) }}</th>
-                        <th>{{ $c['country'] }}</th>
-                        <th>{{ $c['campaign_name'] }}</th>
-                        <th>{{ $c['key_value'] }}</th>
+                        <td>{{ $c['domain'] }}</td>
+                        <td>{{ $c['country'] }}</td>
+                        <td>{{ $c['campaign_name'] }}</td>
+                        <td>R$. {{ $c['spend'] }}</td>
+                        <td>R$. {{ round(($c['receita'])*$dolar,2) }}</td>
+                        <td>R$. {{ $c['cpm_gam'] }}</td>
+                        <td>{{ $c['key_value'] }}</td>
+                        <td>R$. {{ $c['lucro'] }}</td>
+                        <td>{{ round( $c['porcentaje'],2) }} %</td>
                     </tr>
                    @endforeach
 
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>DOMINIO</th>
-                        <th>CUSTO FACEBOOK</th>
-                        <th>RECEITA GAM</th>
-                        <th>PAIS</th>
-                        <th>CAMPANHA FACEBOOK</th>
-                        <th>CHAVE</th>
+                        <th><b>Dominio</b></th>
+                        <th><b>Pais</b></th>
+                        <th><b>Campanha fb</b></th>
+                        <th><b>Custo fb</b></th>
+                        <th><b>Receita Gam</b></th>
+                        <th><b>Cpm Gam</b></th>
+                        <th><b>Chave</b></th>
+                        <th><b>Lucro</b></th>
+                        <th><b>Lucro % </b></th>
                     </tr>
                 </tfoot>
             </table>

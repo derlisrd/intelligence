@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ConexionsController extends Controller
 {
@@ -71,7 +72,8 @@ class ConexionsController extends Controller
 
             $fb = FacebookUser::where('email', $email)->get();
             $datos = [
-                "name" => $name,"email" => $email,"facebook_user_id" => $facebook_user_id,"access_token" => $access_token
+                "name" => $name,"email" => $email,"facebook_user_id" => $facebook_user_id,"access_token" => $access_token,
+                "user_id"=>Auth::id()
             ];
             if(($fb->count())>0){
                 $fbu = $fb->first();

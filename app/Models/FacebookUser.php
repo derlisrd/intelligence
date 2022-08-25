@@ -9,7 +9,7 @@ class FacebookUser extends Model
 {
     use HasFactory;
     protected $table= "facebook_users";
-    protected $fillable= ["email","name","facebook_user_id","access_token"];
+    protected $fillable= ["email","name","facebook_user_id","access_token","user_id"];
     protected $hidden = ['updated_at','created_at'];
 
     //relacion uno a muchos

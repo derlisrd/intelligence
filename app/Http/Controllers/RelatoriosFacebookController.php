@@ -13,8 +13,10 @@ use FacebookAds\Object\AdAccount;
 use FacebookAds\Object\Campaign;
 use App\Models\FacebookLastCampaign;
 use App\Models\CountryCode;
+use App\Models\User;
 use FacebookAds\Object\Ad;
 use FacebookAds\Object\AdsInsights;
+use Illuminate\Support\Facades\Auth;
 
 class RelatoriosFacebookController extends Controller
 {
@@ -31,10 +33,26 @@ class RelatoriosFacebookController extends Controller
         return view('containers.relatorios.facebook.users',compact("fbusers","breadcrumblinks"));
     }
 
+
+
     public function viewCampaign(){
 
-
         return view('containers.relatorios.facebook.campaign');
+    }
+
+
+
+    public function getLastCampaigns(){
+
+        $id  = Auth::id();
+        $user = User::find($id);
+
+        foreach($user->facebookusers as $fb){
+            $fb_id = $fb->id;
+        }
+
+        FacebookUser::find($fb_id);
+
     }
 
     public function viewCampaigns(Request $request){

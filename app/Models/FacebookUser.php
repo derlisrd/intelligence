@@ -22,4 +22,8 @@ class FacebookUser extends Model
     public function adcampaigns(){
         return $this->hasMany(FacebookAdCampaign::class,'facebook_users_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class,'id');
+    }
 }

@@ -18,7 +18,7 @@
                             </a>
                             <ul class="collapse  first-level">
                                 <li class="sidebar-item"><a href="{{ route('receitas') }}" class="sidebar-link"><i class="mdi mdi-google-plus"></i><span class="hide-menu"> Receitas</span></a></li>
-                                <li class="sidebar-item"><a href="{{ route('relatorios.facebook.users') }}" class="sidebar-link"><i class="mdi mdi-facebook-box"></i><span class="hide-menu"> Facebook</span></a></li>
+                                <li class="sidebar-item"><a href="{{ route('facebook.campanhas') }}" class="sidebar-link"><i class="mdi mdi-facebook-box"></i><span class="hide-menu"> Facebook</span></a></li>
                                 <li class="sidebar-item"><a href="{{ route('relatorios.google.gam') }}" class="sidebar-link"><i class="mdi mdi-google-plus"></i><span class="hide-menu"> Google</span></a></li>
                             </ul>
                         </li>

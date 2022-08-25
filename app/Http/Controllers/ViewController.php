@@ -16,6 +16,7 @@ class ViewController extends Controller
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
 
+        $campanhas_ativas = FacebookLastCampaign::where('status', '=', 'ACTIVE')->count();
         if($data_final && $data_inicial){
             $facebook = FacebookLastCampaign::whereBetween('date_start', [$data_inicial, $data_final])->orderBy('id', 'DESC')->get();
         }
@@ -82,7 +83,8 @@ class ViewController extends Controller
             "impressions_fb"=>$impressions_fb,
             "data_inicial"=>$data_inicial,
             "data_final"=>$data_final,
-            "dolar"=>$valor
+            "dolar"=>$valor,
+            "campanhas_ativas"=>$campanhas_ativas
         ];
         return view('containers.home',$datas);
     }

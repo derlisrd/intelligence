@@ -101,10 +101,10 @@
             <div class="card-block">
                 <h4 class="card-title text-center text-white text-uppercase ">
                     <i class="me-2 mdi mdi-eye"></i>
-                    Campanhas rodandos
+                    Campanhas
                 </h4>
-              <h6 class="card-subtitle text-white text-center">Cant. campanhas</h6>
-              <h3 class="text-center text-white">587</h3>
+              <h6 class="card-subtitle text-white text-center">Cant. campanhas ativas</h6>
+              <h3 class="text-center text-white">{{ $campanhas_ativas ?? '0' }}</h3>
             </div>
         </div>
     </div>

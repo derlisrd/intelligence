@@ -16,6 +16,8 @@ class CreateFacebookUsersTable extends Migration
 
         Schema::create('facebook_users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->foreign("user_id")->references("id")->on("users")->onDelete("set null");
             $table->string('email')->unique();
             $table->string('name');
             $table->string('facebook_user_id')->unique();

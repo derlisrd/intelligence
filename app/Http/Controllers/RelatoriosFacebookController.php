@@ -31,6 +31,11 @@ class RelatoriosFacebookController extends Controller
         return view('containers.relatorios.facebook.users',compact("fbusers","breadcrumblinks"));
     }
 
+    public function viewCampaign(){
+
+
+        return view('containers.relatorios.facebook.campaign');
+    }
 
     public function viewCampaigns(Request $request){
         $paises = CountryCode::all();

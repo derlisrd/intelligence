@@ -70,7 +70,6 @@
                      <table id="zero_config" class="table table-striped table-bordered">
                          <thead>
                              <tr>
-                                <th><b>ID</b></th>
                                  <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
@@ -87,12 +86,10 @@
                          <tbody id="_tablebody">
                              @foreach ($campaigns as $campaign)
                                 <tr>
-                                    <th><b>{{ $campaign['campaign_id'] }}</b></th>
                                     <th><b>{{ $campaign['account_name'] }}</b></th>
-                                    <th><b>{{ $campaign['campaign_name'] }}</b></th>
+                                    <th><a href="{{ route('facebook.campaign',$campaign['campaign_id']) }}">{{ $campaign['campaign_name'] }}</a></th>
                                     <th><b>{{ $campaign['country'] }}</b></th>
                                     <th><b>{{ $campaign['spend'] }}</b></th>
-
                                     <th><b>{{ $campaign['impressions'] }}</b></th>
                                     <th><b>{{ $campaign['status'] }}</b></th>
                                     <th><b>{{ $campaign['clicks'] }}</b></th>
@@ -104,12 +101,10 @@
                          </tbody>
                          <tfoot>
                              <tr>
-                                <th><b>ID</b></th>
                                 <th><b>CONTA</b></th>
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>PAIS</b></th>
                                  <th><b>CUSTO</b></th>
-
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>STATUS</b></th>
                                  <th><b>CLICKS</b></th>

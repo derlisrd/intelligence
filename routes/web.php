@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
         #Route::get('adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.adaccounts');
         Route::get('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"viewCampaigns"])->name('view.relatorios.getCampaigns');
         Route::post('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"getCampaigns"])->name('relatorios.getCampaigns');
+        Route::get('campaign/{campaign_id}',[RelatoriosFacebookController::class,"viewCampaign"])->name('facebook.campaign');
     });
 
     //relatorios do facebook

@@ -51,16 +51,18 @@ class RelatoriosFacebookController extends Controller
         $paises = CountryCode::all();
         $breadcrumblinks = [];
         $account_id = "";
+        $accounts = [];
         $country = "";
         $campaigns = [];
-        $fbuserid = null;
+        $fbuserid = 0;
         foreach($user->facebookusers as $fb){
             $fbuserid = $fb->id;
         }
 
         $fbuser = FacebookUser::find($fbuserid);
-
-        $accounts = ($fbuser->ads_accounts);
+        if($fbuser->coun()>0){
+            $accounts = ($fbuser->ads_accounts);
+        };
 
         return view('containers.relatorios.facebook.campaigns',compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
     }

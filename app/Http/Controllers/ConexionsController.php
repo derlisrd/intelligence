@@ -23,8 +23,12 @@ class ConexionsController extends Controller
         ];
         $urllogin = $endpoint . "?" . http_build_query($params);
         $breadcrumblinks = [["active" => true,"title" => "Conexions","route" => null]];
-        $fbuser = new FacebookUser();
-        $fbusers = $fbuser->all();
+
+        $iduser = Auth::id();
+        $fbusers = FacebookUser::where('user_id',$iduser)->get();
+
+
+
         return view('conexions.facebook', compact('breadcrumblinks', 'urllogin', 'fbusers'));
     }
 
@@ -49,10 +53,18 @@ class ConexionsController extends Controller
 
             $userdata = $this->SaveUserFacebook($access_token);
             $id = $userdata->id;
-            $this->SaveBussinessAccounts($id);
+            //$this->SaveBussinessAccounts($id);
+
+            $endpoint = "https://graph.facebook.com/" . env('FB_API_VERSION') . "/" . $id . "/adaccounts?fields=name,id,account_id&limit=100&access_token=" . $access_token;
+            $response = json_decode(getcurl($endpoint), true);
+            $contas = $response['data'];
+
+            print_r($contas);
             $userfb = $userdata;
         }
-        return view('conexions.facebookcallback', compact('userfb'));
+
+        return view('conexions.facebookshowadaccounts');
+        //return view('conexions.facebookcallback', compact('userfb'));
     }
 
 
@@ -124,9 +136,12 @@ class ConexionsController extends Controller
 
     //show facebook ad accounts
     public function getFacebookAdAccounts(){
+
+
         $adAccounts = FacebookAdsAccount::all();
         return view('conexions.facebookAdAccounts',compact("adAccounts"));
     }
+
 
     public function destroyFacebookAdAccount(Request $request){
         FacebookAdsAccount::destroy($request->id);

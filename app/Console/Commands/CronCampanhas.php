@@ -70,7 +70,7 @@ class CronCampanhas extends Command
 
                 $c = (new AdAccount($act_id))
                ->getCampaigns(['id','name','status','start_time','stop_time','account_id','targeting','account_name'],
-               ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'date_preset'=>'last_90d'])
+               ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'date_preset'=>'last_30d'])
                ->getResponse()->getContent();
 
                 $campaign = $c['data'];

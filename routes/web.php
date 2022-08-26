@@ -48,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
 
 
     //CONEXIONES DE FACEBOOK
+
+
+
+    Route::post('/conexion/facebookadaccount/save',[ConexionsController::class,"saveAdAccount"])->name('conexion.save.accounts');
     Route::get('/conexions/facebookadaccounts',[ConexionsController::class,"getFacebookAdAccounts"])->name("facebook.adaccounts");
     Route::get('/conexions/facebookadaccounts/destroy/{id}',[ConexionsController::class,"destroyFacebookAdAccount"])->name("facebook.adaccount.destroy");
     Route::get("/conexions/facebook",[ConexionsController::class,"facebook"])->name("conexions.facebook");

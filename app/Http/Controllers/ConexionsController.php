@@ -104,7 +104,11 @@ class ConexionsController extends Controller
     }
 
 
+    public function  saveAdAccount(Request $request){
 
+        print_r($request->check_account);
+
+    }
 
 
 

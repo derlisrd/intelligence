@@ -17,6 +17,7 @@ class CreateFacebookAdsAccountsTable extends Migration
             $table->id();
             $table->unsignedBigInteger("facebook_users_id")->nullable();
             $table->foreign("facebook_users_id")->references("id")->on("facebook_users")->onDelete("set null");
+            $table->boolean('account_active')->default(0);
             $table->string('account_name');
             $table->string('account_id');
             $table->string("act_account_id");

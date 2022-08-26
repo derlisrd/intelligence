@@ -54,20 +54,15 @@ class ConexionsController extends Controller
             $res = json_decode(getcurl($endpointme), true);
             $facebook_user_id = $res['id'];
 
-            //$userdata = $this->SaveUserFacebook($access_token);
-            //$id = $userdata->id;
-            //$this->SaveBussinessAccounts($id);
+            $userdata = $this->SaveUserFacebook($access_token);
+            $id = $userdata->id;
+            $this->SaveBussinessAccounts($id);
 
-            $endpoint = "https://graph.facebook.com/" . env('FB_API_VERSION') . "/" . $facebook_user_id . "/adaccounts?fields=name,id,account_id&limit=100&access_token=" . $access_token;
-            $response = json_decode(getcurl($endpoint), true);
-            //$contas = $response['data'];
-            echo $endpoint;
-            echo "<br/>";
-            print_r($response);
-            //$userfb = $userdata;
+
+            $adsaccounts = FacebookAdsAccount::where('facebook_users_id',$id)->get();
         }
 
-        return view('conexions.facebookshowadaccounts');
+        return view('conexions.facebookshowadaccounts',compact('adsaccounts'));
         //return view('conexions.facebookcallback', compact('userfb'));
     }
 

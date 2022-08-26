@@ -9,6 +9,7 @@ class FacebookAdsAccount extends Model
 {
     use HasFactory;
     protected $table = "facebook_ads_accounts";
+    protected $fillable = ['facebook_users_id','account_active','account_name','account_id','act_account_id'];
     protected $hidden = ['updated_at','created_at'];
 
     public function facebook_user(){

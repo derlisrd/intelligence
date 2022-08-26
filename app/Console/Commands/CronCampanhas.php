@@ -60,7 +60,7 @@ class CronCampanhas extends Command
             $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
             $api->setLogger(new CurlLogger());
             $id = $user['id'];
-            $accounts = FacebookAdsAccount::where("facebook_users_id",$id)->get();
+            $accounts = FacebookAdsAccount::where([["facebook_users_id",'=',$id],['account_active','=',1]])->get();
 
 
             foreach($accounts as $account) {

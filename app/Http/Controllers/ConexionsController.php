@@ -107,7 +107,19 @@ class ConexionsController extends Controller
 
     public function  saveAdAccount(Request $request){
 
-        print_r($request->check_account);
+        $checks = ($request->check_account);
+
+        print_r($checks);
+        /* foreach($checks as $key=>$value){
+            if($value==0){
+                $fb = FacebookAdsAccount::find($key);
+                $fb->account_active = true;
+                $fb->update();
+            }
+
+        }
+
+        return back(); */
 
     }
 
@@ -143,12 +155,14 @@ class ConexionsController extends Controller
         //$adAccounts = FacebookAdsAccount::all();
         $id = Auth::id();
         $fb = User::find($id);
+        $adsaccounts = [];
+        $idfbuser = null;
+        foreach($fb->facebookusers as $fbuser){
+            $idfbuser = ($fbuser->id);
+        }
+        $adsaccounts = FacebookAdsAccount::where('facebook_users_id', $idfbuser)->get(); //
 
-        print_r($fb->facebookusers);
-
-
-
-        //return view('conexions.facebookshowadaccounts',compact('adsaccounts'));
+        return view('conexions.facebookshowadaccounts',compact('adsaccounts'));
         //return view('conexions.facebookAdAccounts',compact("adAccounts"));
     }
 

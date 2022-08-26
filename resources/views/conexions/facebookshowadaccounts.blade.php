@@ -13,8 +13,8 @@
     </div>
     <div  class="col-12">
         @foreach ($adsaccounts as $account )
-        <div class="form-check">
-            <input class="form-check-input" name='check_account[]' value="{{ $account->account_ }}" type="checkbox" value="" id="_check_{{ $account->id }}">
+        <div class="form-check form-switch">
+            <input class="form-check-input" @if($account->account_active) checked @endif type="checkbox" role="switch" name='check_account[{{ $account->id }}]' value="{{ $account->account_active }}" id="_check_{{ $account->id }}">
             <label class="form-check-label" for="_check_{{ $account->id }}">
               {{ $account->account_name }}
             </label>
@@ -22,8 +22,13 @@
         @endforeach
     </div>
     <div  class="col-12">
-        <button type='submit' class="btn btn-primary">Salvar</button>
     </div>
 </div>
+
 </form>
 @endsection
+
+<script>
+
+
+</script>

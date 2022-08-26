@@ -17,6 +17,7 @@ class CreateFacebookCampaignsTable extends Migration
             $table->id();
             $table->string('campaign_id');
             $table->string('account_id');
+            $table->string('status')->nullable();
             $table->string('campaign_name');
             $table->date('created_time');
             $table->timestamps();

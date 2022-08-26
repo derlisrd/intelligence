@@ -53,7 +53,7 @@ class CronCampanhas extends Command
     public function handle()
     {
         $users = FacebookUser::all();
-
+        $datetoday = date('Y-m-d');
         foreach($users as $user){
 
             $access_token = $user['access_token'];
@@ -93,7 +93,7 @@ class CronCampanhas extends Command
                             foreach($dados as $dato){
                                 $nomedopais = null;
 
-                                print_r($dato);
+                                //print_r($dato);
 
                                 if(isset($dato['country'])) {
                                     $country_code = CountryCode::where('country_code',$dato['country'])->get();
@@ -105,10 +105,12 @@ class CronCampanhas extends Command
 
 
 
+
                                 $last = FacebookLastCampaign::
                                 where([
                                     ['country', '=', $nomedopais],
-                                    ['campaign_id', '=', $idcampaign]
+                                    ['campaign_id', '=', $idcampaign],
+                                    ['date_preset', '=', $datetoday]
                                 ])
                                 ->get();
                                 $count = $last->count();
@@ -124,6 +126,7 @@ class CronCampanhas extends Command
                                     'cpm'=> $dato['cpm'],
                                     'created_time' => $dato['created_time'],
                                     'ctr' => $dato['ctr'],
+                                    'date_preset' => $dato['date_start'],
                                     'date_start' => $dato['date_start'],
                                     'date_stop' => $dato['date_stop'],
                                     'impressions' => $dato['impressions'],

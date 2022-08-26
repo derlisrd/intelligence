@@ -27,8 +27,8 @@ class CreateFacebookLastCampaignsTable extends Migration
             $table->float("cpm")->nullable();
             $table->dateTime("created_time")->nullable();
             $table->float("ctr")->nullable();
-            $table->dateTime("date_start")->nullable();
-            $table->dateTime("date_stop")->nullable();
+            $table->date("date_start")->nullable();
+            $table->date("date_stop")->nullable();
             $table->string("objective");
             $table->float("spend");
             $table->bigInteger("reach")->nullable();

@@ -107,20 +107,15 @@ class ConexionsController extends Controller
 
     public function  saveAdAccount(Request $request){
 
-        $checks = ($request->check_account);
-
-        print_r($checks);
-        /* foreach($checks as $key=>$value){
-            if($value==0){
-                $fb = FacebookAdsAccount::find($key);
-                $fb->account_active = true;
-                $fb->update();
-            }
-
+        $id = ($request->id);
+        $fb = FacebookAdsAccount::find($id);
+        if($fb->account_active){
+            $fb->account_active = false;
+        }else{
+            $fb->account_active = true;
         }
-
-        return back(); */
-
+        $fb->save();
+        return response()->json(["data"=>"updated"]);
     }
 
 

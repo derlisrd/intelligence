@@ -139,10 +139,9 @@ class ConexionsController extends Controller
 
     //show facebook ad accounts
     public function getFacebookAdAccounts(){
-
-
         $adAccounts = FacebookAdsAccount::all();
-        return view('conexions.facebookAdAccounts',compact("adAccounts"));
+        return view('conexions.facebookshowadaccounts',compact('adsaccounts'));
+        //return view('conexions.facebookAdAccounts',compact("adAccounts"));
     }
 
 

@@ -6,6 +6,7 @@
 
 @section("container")
 <form action={{ route('conexion.save.accounts') }} method="post">
+    @csrf
 <div class="row">
     <div  class="col-12">
         <h3>Seleccionar contas ativas</h3>

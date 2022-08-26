@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FacebookAdsAccount;
 use App\Models\FacebookUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -139,8 +140,15 @@ class ConexionsController extends Controller
 
     //show facebook ad accounts
     public function getFacebookAdAccounts(){
-        $adAccounts = FacebookAdsAccount::all();
-        return view('conexions.facebookshowadaccounts',compact('adsaccounts'));
+        //$adAccounts = FacebookAdsAccount::all();
+        $id = Auth::id();
+        $fb = User::find($id);
+
+        print_r($fb->facebookusers);
+
+
+
+        //return view('conexions.facebookshowadaccounts',compact('adsaccounts'));
         //return view('conexions.facebookAdAccounts',compact("adAccounts"));
     }
 

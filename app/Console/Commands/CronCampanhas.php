@@ -144,6 +144,7 @@ class CronCampanhas extends Command
                                 }
                                 else{
                                     FacebookLastCampaign::create($datosnuevos);
+
                                     //echo "<br> NOVO INSERT O ID =".$idcampaign. " PAIS=".$nomedopais;;
                                 }
                             }

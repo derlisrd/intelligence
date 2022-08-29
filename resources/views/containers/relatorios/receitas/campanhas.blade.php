@@ -13,7 +13,7 @@
                     <i class="me-2 mdi mdi-cash-usd"></i>
                     Dolar
                 </h4>
-              <h6 class="card-subtitle text-center">Valor de dolar no dia e</h6>
+              <h6 class="card-subtitle text-center">Valor dolar do dia e</h6>
               <h3 class="text-center">R$. {{ $dolar ?? '0' }} </h3>
             </div>
         </div>
@@ -61,11 +61,14 @@
                         <th><b>Dominio</b></th>
                         <th><b>Pais</b></th>
                         <th><b>Campanha fb</b></th>
-                        <th><b>Custo fb R$.</b></th>
-                        <th><b>Receita Gam Uss.</b></th>
-                        <th><b>Cpm Gam Uss.</b></th>
                         <th><b>Chave</b></th>
-                        <th><b>Lucro</b></th>
+                        <th><b>Custo fb R$.</b></th>
+                        <th><b>Receita Gam R$.</b></th>
+                        <th><b>Cpm Gam R$.</b></th>
+                        <th><b>Custo fb Us$.</b></th>
+                        <th><b>Receita Gam Us$.</b></th>
+                        <th><b>Cpm Gam Us$.</b></th>
+                        <th><b>Lucro Us$</b></th>
                         <th><b>Lucro % </b></th>
                     </tr>
                 </thead>
@@ -75,11 +78,14 @@
                         <td>{{ $c['domain'] }}</td>
                         <td>{{ $c['country'] }}</td>
                         <td>{{ $c['campaign_name'] }}</td>
-                        <td>R$. {{ $c['spend'] }}</td>
-                        <td>R$. {{ $c['receita'] }}</td>
-                        <td>R$. {{ $c['cpm_gam'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
-                        <td></td>
+                        <td>R$. {{ $c['spend'] }}</td>
+                        <td>R$. {{ (($c['receita'])*$dolar) }}</td>
+                        <td>R$. {{ (($c['cpm_gam'])*$dolar) }}</td>
+                        <td>Us$. {{ ($c['spend']/$dolar) }}</td>
+                        <td>Us$. {{ (($c['receita'])) }}</td>
+                        <td>Us$. {{ (($c['cpm_gam'])) }}</td>
+                        <td>Us$ {{  ($c['receita'])-($c['spend']/$dolar) }}  </td>
                         <td> %</td>
                     </tr>
                    @endforeach
@@ -90,13 +96,15 @@
                         <th><b>Dominio</b></th>
                         <th><b>Pais</b></th>
                         <th><b>Campanha fb</b></th>
-                        <th><b>Custo fb</b></th>
-                        <th><b>Receita Gam</b></th>
-                        <th><b>Cpm Gam</b></th>
                         <th><b>Chave</b></th>
+                        <th><b>Custo fb R$.</b></th>
+                        <th><b>Receita Gam R$.</b></th>
+                        <th><b>Cpm Gam R$.</b></th>
+                        <th><b>Custo fb Us$.</b></th>
+                        <th><b>Receita Gam Us$.</b></th>
+                        <th><b>Cpm Gam Us$.</b></th>
                         <th><b>Lucro</b></th>
                         <th><b>Lucro % </b></th>
-                    </tr>
                 </tfoot>
             </table>
         </div>

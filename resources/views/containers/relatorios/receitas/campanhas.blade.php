@@ -6,9 +6,16 @@
 
 @section("container")
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <h1>Valor dolar: {{ $dolar }}</h1>
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card card-hover p-4 border bg-light rounded-8 shadow">
+            <div class="card-block">
+                <h4 class="card-title text-center text-uppercase ">
+                    <i class="me-2 mdi mdi-cash-usd"></i>
+                    Dolar
+                </h4>
+              <h6 class="card-subtitle text-center">Valor de dolar no dia e</h6>
+              <h3 class="text-center">R$. {{ $dolar ?? '0' }} </h3>
+            </div>
         </div>
     </div>
 <form action="{{ route('receitas.campaigns') }}" method="post">

@@ -78,8 +78,6 @@ class ReceitasController extends Controller
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
-                    'lucro' =>(floatval($fbp->receita) - floatval($row['spend'])),
-                    'porcentaje'=> 0
                 ];
                 array_push($report,$narray);
             }

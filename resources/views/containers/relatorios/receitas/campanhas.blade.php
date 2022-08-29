@@ -6,6 +6,11 @@
 
 @section("container")
 <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <h1>Valor dolar: {{ $dolar }}</h1>
+        </div>
+    </div>
 <form action="{{ route('receitas.campaigns') }}" method="post">
     @csrf
     <div class="col-12 d-flex align-items-center flex-row mt-2">
@@ -49,9 +54,9 @@
                         <th><b>Dominio</b></th>
                         <th><b>Pais</b></th>
                         <th><b>Campanha fb</b></th>
-                        <th><b>Custo fb</b></th>
-                        <th><b>Receita Gam</b></th>
-                        <th><b>Cpm Gam</b></th>
+                        <th><b>Custo fb R$.</b></th>
+                        <th><b>Receita Gam Uss.</b></th>
+                        <th><b>Cpm Gam Uss.</b></th>
                         <th><b>Chave</b></th>
                         <th><b>Lucro</b></th>
                         <th><b>Lucro % </b></th>
@@ -64,11 +69,11 @@
                         <td>{{ $c['country'] }}</td>
                         <td>{{ $c['campaign_name'] }}</td>
                         <td>R$. {{ $c['spend'] }}</td>
-                        <td>R$. {{ round(($c['receita'])*$dolar,2) }}</td>
+                        <td>R$. {{ ($c['receita']) }}</td>
                         <td>R$. {{ $c['cpm_gam'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
-                        <td>R$. {{ $c['lucro'] }}</td>
-                        <td>{{ round( $c['porcentaje'],2) }} %</td>
+                        <td>R$. {{   }}</td>
+                        <td>{{ 0 }} %</td>
                     </tr>
                    @endforeach
 

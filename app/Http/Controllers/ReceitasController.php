@@ -70,7 +70,7 @@ class ReceitasController extends Controller
             $fbp = ($gam->first());
             if($count>0){
                 $narray= [
-                    "spend"=>$row['spend'],
+                    "spend"=>floatval($row['spend']),
                     "domain"=>$fbp->domain,
                     "cpm_gam"=>$fbp->cpm,
                     "receita"=>$fbp->receita,
@@ -78,7 +78,7 @@ class ReceitasController extends Controller
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
-                    'lucro' =>($fbp->receita - $row['spend']),
+                    'lucro' =>(floatval($fbp->receita) - floatval($row['spend'])),
                     'porcentaje'=> 0
                 ];
                 array_push($report,$narray);

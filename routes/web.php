@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[LoginController::class,"login"])->name("auth.login");
 
-Route::view("/","auth.login")->name("login");
-Route::view("/login","auth.login")->name("login.view");
+Route::view("/","auth.login")->name("login")->middleware("guest");
+Route::view("/login","auth.login")->name("login.view")->middleware("guest");
 
 Route::middleware(['auth'])->group(function () {
     //views
@@ -27,15 +27,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/',[RelatoriosFacebookController::class,"getLastCampaigns"])->name('facebook.campanhas');
         Route::post('/',[RelatoriosFacebookController::class,"postCampaigns"])->name('relatorios.postCampaigns');
         Route::get('campaign/{id}',[RelatoriosFacebookController::class,"viewCampaign"])->name('facebook.campaign');
-
         //Route::post('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"getCampaigns"])->name('relatorios.getCampaigns');
-
         Route::get('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"viewCampaigns"])->name('view.relatorios.getCampaigns');
-
     });
 
     //relatorios do facebook
-    #
 
     //RELATORIOS DA GOOGLE
     Route::get('/relatorios/google',[RelatoriosGoogleController::class,"getCampaigns"])->name("relatorios.google.gam");
@@ -45,15 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('relatorios/receitas',[ReceitasController::class,"index"])->name('receitas');
     Route::post('relatorios/receitas',[ReceitasController::class,"campaigns"])->name('receitas.campaigns');
 
-
-
     //CONEXIONES DE FACEBOOK
-
-
-
     Route::get('/conexion/facebookadaccount/save/{id?}',[ConexionsController::class,"saveAdAccount"])->name('conexion.save.accounts');
     Route::get('/conexions/facebookadaccounts',[ConexionsController::class,"getFacebookAdAccounts"])->name("facebook.adaccounts");
-
     Route::get('/conexions/facebookadaccounts/destroy/{id}',[ConexionsController::class,"destroyFacebookAdAccount"])->name("facebook.adaccount.destroy");
     Route::get("/conexions/facebook",[ConexionsController::class,"facebook"])->name("conexions.facebook");
     Route::get("/conexions/facebook/callback",[ConexionsController::class,"facebookcallback"])->name("conexions.facebook.callback");
@@ -68,7 +58,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
     Route::get("fb",[FacebookCampaigns::class,"getcampaigns"]);
-
 
 });
 

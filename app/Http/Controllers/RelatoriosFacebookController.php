@@ -64,10 +64,14 @@ class RelatoriosFacebookController extends Controller
         $fbuser = FacebookUser::find($fbuserid);
 
         if($fbuser){
-            $accounts = ($fbuser->ads_accounts);
+            $ads_accounts = FacebookAdsAccount::where("facebook_users_id",$fbuser->id)
+            ->where("account_active",true)
+            ->orderBy('account_name', 'ASC')
+            ->get();
             return view('containers.relatorios.facebook.campaigns',
-                compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
+                compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises','ads_accounts'));
         };
+
 
         return back();
 
@@ -82,11 +86,17 @@ class RelatoriosFacebookController extends Controller
         $account_id = "";
         $country = "";
         $campaigns = [];
-        return view('containers.relatorios.facebook.campaigns',compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises'));
+        $ads_accounts = FacebookAdsAccount::where("facebook_users_id",$fbuserid)
+            ->where("account_active",true)
+            ->orderBy('account_name', 'ASC')
+            ->get();
+        return view('containers.relatorios.facebook.campaigns',compact("country","account_id","fbuser","fbuserid",'breadcrumblinks','campaigns','paises','ads_accounts'));
     }
 
 
     public function postCampaigns(Request $request){
+
+
 
 
         $paises = CountryCode::all();
@@ -94,6 +104,10 @@ class RelatoriosFacebookController extends Controller
         $fbuserid = $request->fbuserid;
         $fbuser = FacebookUser::find($fbuserid);
         $account_id = $request->account_id;
+        $ads_accounts = FacebookAdsAccount::where("facebook_users_id",$fbuserid)
+        ->where("account_active",true)
+        ->orderBy('account_name', 'ASC')
+        ->get();
         $until = $request->until;
         $to = $request->to;
         $country = $request->country;
@@ -144,7 +158,7 @@ class RelatoriosFacebookController extends Controller
                         "clicks"=>$clicks,
                         "cpm"=>$cpm,
                         "cpc"=>"",
-                        "date_start"=>$c['date_start'],
+                        "created_time"=>$c['created_time'],
                     );
                 }
                 else{
@@ -164,7 +178,7 @@ class RelatoriosFacebookController extends Controller
                         "clicks"=>$clicks,
                         "cpm"=>$cpm,
                         "cpc"=>$cpc,
-                        "date_start"=>$c['date_start'],
+                        "created_time"=>$c['created_time'],
                     ));
                     $i++;
                 }
@@ -185,7 +199,8 @@ class RelatoriosFacebookController extends Controller
             "paises"=>$paises,
             "fbuserid"=>$fbuserid,
             "country"=>$country,
-            "account_id"=>$account_id
+            "account_id"=>$account_id,
+            "ads_accounts"=>$ads_accounts
         ];
 
 

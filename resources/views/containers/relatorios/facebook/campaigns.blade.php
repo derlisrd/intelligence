@@ -13,7 +13,7 @@
             <label for="_accounts">Contas de anuncios</label>
             <select  class="form-select form-select-lg" name="account_id" id="_accounts" >
                 <option value="">Seleccionar conta</option>
-                @foreach ($fbuser->ads_accounts as $v)
+                @foreach ($ads_accounts as $v)
                     <option value="{{ $v->account_id }}" @if($v->account_id==$account_id) selected @endif >{{ $v->account_name }}</option>
                 @endforeach
             </select>
@@ -72,9 +72,9 @@
                          <thead>
                              <tr>
                                  <th><b>CONTA</b></th>
+                                 <th><b>PAIS</b></th>
                                  <th><b>CAMPANHA</b></th>
                                  <th><b>CUSTO</b></th>
-
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>STATUS</b></th>
                                  <th><b>CLICKS</b></th>
@@ -87,21 +87,23 @@
                              @foreach ($campaigns as $campaign)
                                 <tr>
                                     <td><b>{{ $campaign['account_name'] }}</b></td>
+                                    <td><b>{{ $campaign['country'] }}</b></td>
                                     <td><a href="{{ route('facebook.campaign',$campaign['id']) }}">{{ $campaign['campaign_name'] }}</a></td>
-                                    <td><b>{{ $campaign['spend'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['spend'] }}</b></td>
                                     <td><b>{{ $campaign['impressions'] }}</b></td>
                                     <td><b>{{ $campaign['status'] }}</b></td>
                                     <td><b>{{ $campaign['clicks'] }}</b></td>
-                                    <td><b>{{ $campaign['cpm'] }}</b></td>
-                                    <td><b>{{ $campaign['cpc'] }}</b></td>
-                                    <td><b>{{ $campaign['date_start'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['cpm'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['cpc'] }}</b></td>
+                                    <td><b>{{ $campaign['created_time'] }}</b></td>
                                 </tr>
                              @endforeach
                          </tbody>
                          <tfoot>
                              <tr>
                                 <th><b>CONTA</b></th>
-                                 <th><b>PAIS</b></th>
+                                <th><b>PAIS</b></th>
+                                 <th><b>CAMPANHA</b></th>
                                  <th><b>CUSTO</b></th>
                                  <th><b>IMPRESSOES</b></th>
                                  <th><b>STATUS</b></th>

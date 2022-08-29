@@ -34,13 +34,13 @@
                                     <td><b>{{ $campaign['account_name'] }}</b></td>
                                     <td>{{ $campaign['country'] }}</td>
                                     <td>{{ $campaign['campaign_name'] }}</td>
-                                    <td><b>{{ $campaign['spend'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['spend'] }}</b></td>
                                     <td><b>{{ $campaign['impressions'] }}</b></td>
                                     <td><b>{{ $campaign['status'] }}</b></td>
                                     <td><b>{{ $campaign['clicks'] }}</b></td>
-                                    <td><b>{{ $campaign['cpm'] }}</b></td>
-                                    <td><b>{{ $campaign['cpc'] }}</b></td>
-                                    <td><b>{{ $campaign['date_start'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['cpm'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['cpc'] }}</b></td>
+                                    <td><b>{{ $campaign['created_time'] }}</b></td>
                                 </tr>
                              @endforeach
                          </tbody>

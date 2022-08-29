@@ -57,7 +57,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                Deselvovido pelo caramelo con muito amor pra renovaads
+                Deselvovido pelo caramelo con &#10084; pra renovaads
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

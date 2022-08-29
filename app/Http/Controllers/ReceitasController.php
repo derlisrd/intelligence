@@ -14,12 +14,15 @@ class ReceitasController extends Controller
 
 
     public function index(){
+        $dolar = Cotacao::find(1);
+        $dolar = $dolar->valor;
         $data = [
             "domains"=>Domain::orderBy('domain')->get(),"campaigns"=>[],
             "countries"=>CountryCode::all()->sortBy("name"),
             "domain"=>"",
             "country"=>"",
             "value"=>"",
+            "dolar"=>$dolar,
             "reports"=>[],
         ];
 

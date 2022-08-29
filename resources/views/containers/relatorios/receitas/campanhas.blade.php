@@ -72,8 +72,8 @@
                         <td>R$. {{ ($c['receita']) }}</td>
                         <td>R$. {{ $c['cpm_gam'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
-                        <td>{{   }}</td>
-                        <td>{{  }} %</td>
+                        <td></td>
+                        <td> %</td>
                     </tr>
                    @endforeach
 

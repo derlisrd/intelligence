@@ -80,12 +80,12 @@
                         <td>{{ $c['campaign_name'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
                         <td>R$. {{ $c['spend'] }}</td>
-                        <td>R$. {{ (($c['receita'])*$dolar) }}</td>
-                        <td>R$. {{ (($c['cpm_gam'])*$dolar) }}</td>
-                        <td>Us$. {{ ($c['spend']/$dolar) }}</td>
+                        <td>R$. {{ round((($c['receita'])*$dolar),2) }}</td>
+                        <td>R$. {{ round((($c['cpm_gam'])*$dolar),2) }}</td>
+                        <td>Us$. {{ round(($c['spend']/$dolar),2) }}</td>
                         <td>Us$. {{ (($c['receita'])) }}</td>
                         <td>Us$. {{ (($c['cpm_gam'])) }}</td>
-                        <td>Us$ {{  ($c['receita'])-($c['spend']/$dolar) }}  </td>
+                        <td>Us$ {{  round(($c['receita'])-($c['spend']/$dolar),2) }}  </td>
                         <td> %</td>
                     </tr>
                    @endforeach

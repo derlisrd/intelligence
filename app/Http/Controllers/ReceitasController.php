@@ -79,7 +79,7 @@ class ReceitasController extends Controller
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
                     'lucro' =>($fbp->receita - $row['spend']),
-                    'porcentaje'=> ((($fbp->receita - $row['spend']))/$row['spend'])
+                    'porcentaje'=> 0
                 ];
                 array_push($report,$narray);
             }

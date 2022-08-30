@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("fb",[FacebookCampaigns::class,"getcampaigns"]);
 
+
 });
 
 

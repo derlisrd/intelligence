@@ -88,7 +88,7 @@ class ReceitasController extends Controller
             $count = $gam->count();
             $fbp = ($gam->first());
             if($count>0){
-                $percent = 0;
+                $percent = round((($fbp->receita - $custodolar) / $custodolar),2);
                 $narray= [
                     "spend"=> $row['spend'],
                     "domain"=>$fbp->domain,

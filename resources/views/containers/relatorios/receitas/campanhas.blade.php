@@ -123,9 +123,5 @@
    </div>
 </div>
 
-
-
-
-
 @endsection
 

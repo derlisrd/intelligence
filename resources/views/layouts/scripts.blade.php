@@ -11,14 +11,13 @@
 <!--Custom JavaScript -->
 <script src="{{ asset('assets/dist/js/custom.min.js') }}"></script>
 <!--This page JavaScript -->
-<!-- <script src="../../dist/js/pages/dashboards/dashboard1.js"></script> -->
-<!-- Charts js Files -->
-<script src="{{ asset('assets/libs/flot/excanvas.js') }}"></script>
-<script src="{{ asset('assets/libs/flot/jquery.flot.js') }}"></script>
-<script src="{{ asset('assets/libs/flot/jquery.flot.pie.js') }}"></script>
-<script src="{{ asset('assets/libs/flot/jquery.flot.time.js') }}"></script>
-<script src="{{ asset('assets/libs/flot/jquery.flot.stack.js') }}"></script>
-<script src="{{ asset('assets/libs/flot/jquery.flot.crosshair.js') }}"></script>
-<script src="{{ asset('assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
-<script src="{{ asset('assets/dist/js/pages/chart/chart-page-init.js') }}"></script>
-<script src="{{ asset('assets/sweet/sweetalert2.all.min.js') }}"></script>
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.js"></script>
+
+<script>
+$(document).ready( function () {
+    $('#myTable').DataTable();
+});
+</script>
+

@@ -34,7 +34,7 @@ class ReceitasController extends Controller
 
         $dolar = Cotacao::find(1);
         $dolar = $dolar->valor;
-
+        $datetoday = date('Y-m-d');
         $fbc = FacebookLastCampaign::query();
 
         $domain = $request->domain;
@@ -56,6 +56,9 @@ class ReceitasController extends Controller
 
         if($desde && $hasta){
             $fbc->whereBetween('date_preset',[$desde,$hasta]);
+        }
+        else{
+            $fbc->where('date_preset',$datetoday);
         }
 
 
@@ -113,7 +116,9 @@ class ReceitasController extends Controller
             "country"=>$country,
             "value"=>$value,
             "reports"=>$report,
-            "dolar"=>$dolar
+            "dolar"=>$dolar,
+            "desde"=>$desde,
+            "hasta"=>$hasta
         ];
 
 

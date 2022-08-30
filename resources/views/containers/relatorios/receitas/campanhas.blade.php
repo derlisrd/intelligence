@@ -40,6 +40,14 @@
             </select>
         </div>
         <div class="p-2 mx-2">
+            <label for="desde">Desde: </label>
+            <input type="date" name="desde" class="form-control form-control-lg" value="{{  $desde ?? '' }}" />
+        </div>
+        <div class="p-2 mx-2">
+            <label for="hasta">Ate: </label>
+            <input type="date" name="hasta" class="form-control form-control-lg" value="{{  $hasta ?? '' }}" />
+        </div>
+        <div class="p-2 mx-2">
             <label for="country">Chave de valor</label>
             <input  class="form-control input-lg" id="value" value="{{ $value ?? '' }}" name="value" />
         </div>
@@ -53,9 +61,9 @@
     <div class="card-body">
         <div class="table-responsive" id="_table-responsive">
             <h3 class="card-title p-2">
-               Campanhas Ativas
+               Campanhas
             </h3>
-            <table id="zero_config" class="table table-striped table-bordered">
+            <table id="myTable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th><b>Dominio</b></th>
@@ -88,7 +96,7 @@
                         <td>Us$. {{ (($c['cpm_gam'])) }}</td>
                         <td>Us$ {{  round(($c['receita'])-($c['spend']/$dolar),2) }}  </td>
                         <td> %</td>
-                        <td> {{ $c['date_gam'] . ' ' . $c['date_preset']}}</td>
+                        <td> {{ $c['date_preset']}}</td>
                     </tr>
                    @endforeach
 

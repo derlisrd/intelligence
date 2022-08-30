@@ -15,6 +15,8 @@ Route::post('/login',[LoginController::class,"login"])->name("auth.login");
 Route::view("/","auth.login")->name("login")->middleware("guest");
 Route::view("/login","auth.login")->name("login.view")->middleware("guest");
 
+
+
 Route::middleware(['auth'])->group(function () {
     //views
     Route::get('/home',[ViewController::class,"home"])->name("home") ;

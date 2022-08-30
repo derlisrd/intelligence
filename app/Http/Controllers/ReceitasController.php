@@ -41,6 +41,9 @@ class ReceitasController extends Controller
         $country = $request->country;
         $value = $request->value;
 
+        $desde = $request->desde;
+        $hasta = $request->hasta;
+
         if($domain){
             $fbc->where('campaign_name','LIKE','%'.$domain.'%');
         }
@@ -51,12 +54,19 @@ class ReceitasController extends Controller
             $fbc->where('campaign_name','LIKE','%'.$value.'%');
         }
 
+        if(!$desde && !$hasta){
+            $fbc->whereBetween('date_preset',[$desde,$hasta]);
+        }
+
+
+
         $facebook = ($fbc->get()->toArray());
         $report = [];
         //echo "<pre>";
         foreach($facebook as $row){
             $keyvalue = $row['campaign_name'];
             $pais = $row['country'];
+            $date_preset = $row['date_preset'];
             $arr = explode('#',$keyvalue);
             //preg_match_all('!\d+!', $arr[1], $matches);
             //$valuefb = ($matches[0][0]);
@@ -67,7 +77,8 @@ class ReceitasController extends Controller
                 ["domain","=",$domain],
                 ["name","=",'utm_campaign'],
                 ["value","=",$val],
-                ["country","=",$pais]
+                ["country","=",$pais],
+                ["date","=",$date_preset]
             ])->get();
             $count = $gam->count();
             $fbp = ($gam->first());
@@ -81,6 +92,8 @@ class ReceitasController extends Controller
                     "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
+                    "date_preset"=>$date_preset,
+                    "date_gam"=>$fbp->date
                 ];
                 array_push($report,$narray);
             }

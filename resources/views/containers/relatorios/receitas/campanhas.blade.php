@@ -53,7 +53,7 @@
     <div class="card-body">
         <div class="table-responsive" id="_table-responsive">
             <h3 class="card-title p-2">
-               Campanhas
+               Campanhas Ativas
             </h3>
             <table id="zero_config" class="table table-striped table-bordered">
                 <thead>
@@ -70,6 +70,7 @@
                         <th><b>Cpm Gam Us$.</b></th>
                         <th><b>Lucro Us$</b></th>
                         <th><b>Lucro % </b></th>
+                        <th><b>Data</b></th>
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
@@ -87,6 +88,7 @@
                         <td>Us$. {{ (($c['cpm_gam'])) }}</td>
                         <td>Us$ {{  round(($c['receita'])-($c['spend']/$dolar),2) }}  </td>
                         <td> %</td>
+                        <td> {{ $c['date_gam'] . ' ' . $c['date_preset']}}</td>
                     </tr>
                    @endforeach
 
@@ -105,6 +107,7 @@
                         <th><b>Cpm Gam Us$.</b></th>
                         <th><b>Lucro</b></th>
                         <th><b>Lucro % </b></th>
+                        <th><b>Data</b></th>
                 </tfoot>
             </table>
         </div>

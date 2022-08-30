@@ -72,6 +72,7 @@ class GamCampaingsCron extends Command
                 $last = GoogleGamCampaigns::where('domain', $value['DOMAIN'])
                 ->where('name', $value['CUSTOM_CRITERIA_NAME'])
                 ->where('value', $value['CUSTOM_CRITERIA_VALUE'])
+                ->where('date',$value['DATE'])
                 ->where('country', $value['COUNTRY'])
                 ->get();
                 $count = $last->count();

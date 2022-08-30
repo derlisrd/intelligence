@@ -20,7 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home',[ViewController::class,"home"])->name("home") ;
     Route::post('/home',[ViewController::class,"home"])->name("home_filter") ;
 
-
+    //relatorios do facebook
     Route::prefix('relatorios/facebook')->group(function () {
         #Route::get("/",[RelatoriosFacebookController::class,"getFacebookUsers"])->name("relatorios.facebook.users");
         #Route::get('adaccounts/{user_fb_id}',[RelatoriosFacebookController::class,"getCampaignsByAdAccountId"])->name('relatorios.facebook.adaccounts');
@@ -30,8 +30,6 @@ Route::middleware(['auth'])->group(function () {
         //Route::post('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"getCampaigns"])->name('relatorios.getCampaigns');
         Route::get('campaigns/user_{user_fb_id}',[RelatoriosFacebookController::class,"viewCampaigns"])->name('view.relatorios.getCampaigns');
     });
-
-    //relatorios do facebook
 
     //RELATORIOS DA GOOGLE
     Route::get('/relatorios/google',[RelatoriosGoogleController::class,"getCampaigns"])->name("relatorios.google.gam");
@@ -53,7 +51,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/api/facebook/campaigns/act_{act_id}/{fbuserid}",[ApiFacebookController::class,"getCampaignsByAdAccountId"])->name("api.facebook.getCampaigns.by.account.id");
     Route::get("/api/facebook/allcampaigns",[ApiFacebookController::class,"getAllCampaigns"])->name("api.all.facebook.getCampaigns");
     Route::delete("/api/facebook/destroyadaccount/{id}",[ApiFacebookController::class,"destroyAdAccount"]);
-
 
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 

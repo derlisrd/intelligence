@@ -17,7 +17,7 @@
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable({
-            'iDisplayLength': 10
+            'iDisplayLength': 5
         });
     });
 </script>

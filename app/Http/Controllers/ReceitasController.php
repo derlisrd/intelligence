@@ -88,7 +88,7 @@ class ReceitasController extends Controller
             $count = $gam->count();
             $fbp = ($gam->first());
             if($count>0){
-                $percent = round((($fbp->receita - $custodolar) / $custodolar),2);
+
                 $narray= [
                     "impressions_fb"=>$row['impressions'],
                     "clicks_fb"=>$row['clicks'],
@@ -107,9 +107,9 @@ class ReceitasController extends Controller
                     "impressions"=>$fbp->impressions,
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
-                    "date_preset"=>$date_preset,
-                    "date_gam"=>$fbp->date,
-                    "percent"=> $percent
+
+
+
                 ];
                 array_push($report,$narray);
             }

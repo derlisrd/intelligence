@@ -81,11 +81,13 @@
                         <th class="bg-primary text-white">Clicks</th>
                         <th class="bg-primary text-white">CTR</th>
                         <th class="bg-primary text-white">CPM</th>
-                        <th class="bg-primary text-white">Receita</th>
-                        <th class="bg-success text-white">Results</th>
+                        <th class="bg-light">Facebook Custo</th>
+                        <th class="bg-secondary text-white">Receita</th>
+                        <th class="bg-success text-white">Lucro</th>
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
+
                    @foreach ($reports as $c)
                    <tr>
                         <td class="stickycolumn">{{ $c['domain'] }}</td>
@@ -104,17 +106,16 @@
                         <td>{{ $c['clicks'] }}</td>
                         <td>{{ $c['ctr'] }}</td>
                         <td>{{ $c['cpm'] }}</td>
-                        <td>{{ $c['receita'] }}</td>
-                        <td>
-                            <p>Un monte de coisas</p>
-                        </td>
+                        <td>{{ $c['spend'] }}</td>
+                        <td><b> {{ $c['receita'] }} / {{ $dolar }} </b></td>
+                        <td>  </td>
                     </tr>
                    @endforeach
 
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th class="stickycolumn"><b>Dominio</b></th>
+                        <th class="stickycolumn bg-white"><b>Dominio</b></th>
                         <th><b>Pais</b></th>
                         <th><b>Chave</b></th>
                         <th class="bg-info text-white">Conta</th>
@@ -129,8 +130,9 @@
                         <th class="bg-primary text-white">Clicks</th>
                         <th class="bg-primary text-white">CTR</th>
                         <th class="bg-primary text-white">CPM</th>
-                        <th class="bg-primary text-white">Receita</th>
-                        <th class="bg-success text-white">Results</th>
+                        <th class="bg-light">Facebook Custo</th>
+                        <th class="bg-secondary text-white">Receita</th>
+                        <th class="bg-success text-white">Lucro</th>
                 </tfoot>
             </table>
         </div>

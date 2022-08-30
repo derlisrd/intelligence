@@ -89,13 +89,13 @@
                         <td>{{ $c['campaign_name'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
                         <td>R$. {{ $c['spend'] }}</td>
-                        <td>R$. {{ round((($c['receita'])*$dolar),2) }}</td>
-                        <td>R$. {{ round((($c['cpm_gam'])*$dolar),2) }}</td>
-                        <td>Us$. {{ round(($c['spend']/$dolar),2) }}</td>
+                        <td>R$. {{ round((($c['receita'])*$dolar),3) }}</td>
+                        <td>R$. {{ round((($c['cpm_gam'])*$dolar),3) }}</td>
+                        <td>Us$. {{ round(($c['spend']/$dolar),3) }}</td>
                         <td>Us$. {{ (($c['receita'])) }}</td>
                         <td>Us$. {{ (($c['cpm_gam'])) }}</td>
-                        <td>Us$ {{  round(($c['receita'])-($c['spend']/$dolar),2) }}  </td>
-                        <td> %</td>
+                        <td>Us$ {{  ( round(($c['receita'])-($c['spend']/$dolar),3)) }}  </td>
+                        <td> {{ $c['percent'] }} %</td>
                         <td> {{ $c['date_preset']}}</td>
                     </tr>
                    @endforeach

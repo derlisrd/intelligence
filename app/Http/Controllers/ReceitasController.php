@@ -71,6 +71,8 @@ class ReceitasController extends Controller
             $pais = $row['country'];
             $date_preset = $row['date_preset'];
             $arr = explode('#',$keyvalue);
+            $custodolar = $row['spend'] / $dolar;
+
             //preg_match_all('!\d+!', $arr[1], $matches);
             //$valuefb = ($matches[0][0]);
             //["value","LIKE",'%'.$valuefb.'%'],
@@ -86,8 +88,9 @@ class ReceitasController extends Controller
             $count = $gam->count();
             $fbp = ($gam->first());
             if($count>0){
+                $percent = 0;
                 $narray= [
-                    "spend"=>floatval($row['spend']),
+                    "spend"=> $row['spend'],
                     "domain"=>$fbp->domain,
                     "cpm_gam"=>$fbp->cpm,
                     "receita"=>$fbp->receita,
@@ -97,6 +100,7 @@ class ReceitasController extends Controller
                     "country"=>$fbp->country,
                     "date_preset"=>$date_preset,
                     "date_gam"=>$fbp->date,
+                    "percent"=> $percent
                 ];
                 array_push($report,$narray);
             }

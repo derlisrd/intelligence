@@ -54,7 +54,7 @@ class ReceitasController extends Controller
             $fbc->where('campaign_name','LIKE','%'.$value.'%');
         }
 
-        if(!$desde && !$hasta){
+        if($desde && $hasta){
             $fbc->whereBetween('date_preset',[$desde,$hasta]);
         }
 
@@ -93,7 +93,7 @@ class ReceitasController extends Controller
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
                     "date_preset"=>$date_preset,
-                    "date_gam"=>$fbp->date
+                    "date_gam"=>$fbp->date,
                 ];
                 array_push($report,$narray);
             }

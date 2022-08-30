@@ -90,12 +90,21 @@ class ReceitasController extends Controller
             if($count>0){
                 $percent = round((($fbp->receita - $custodolar) / $custodolar),2);
                 $narray= [
+                    "impressions_fb"=>$row['impressions'],
+                    "clicks_fb"=>$row['clicks'],
+                    "ctr_fb"=>$row['ctr'],
+                    "cpc_fb"=>$row['cpc'],
+                    "campaign_name"=>$row['campaign_name'],
+                    "account_name"=>$row['account_name'],
+                    "objective"=>$row['objective'],
                     "spend"=> $row['spend'],
+
+                    "clicks"=>$fbp->clicks,
                     "domain"=>$fbp->domain,
-                    "cpm_gam"=>$fbp->cpm,
+                    "cpm"=>$fbp->cpm,
+                    "ctr"=>$fbp->ctr,
                     "receita"=>$fbp->receita,
                     "impressions"=>$fbp->impressions,
-                    "campaign_name"=>$row['campaign_name'],
                     "key_value"=>$fbp->value,
                     "country"=>$fbp->country,
                     "date_preset"=>$date_preset,

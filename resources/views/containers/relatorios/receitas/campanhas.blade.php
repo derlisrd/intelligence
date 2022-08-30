@@ -66,62 +66,85 @@
             <table id="myTable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th><b>Dominio</b></th>
+                        <th class="stickycolumn bg-white"><b>Dominio</b></th>
                         <th><b>Pais</b></th>
-                        <th><b>Campanha fb</b></th>
                         <th><b>Chave</b></th>
-                        <th><b>Custo fb R$.</b></th>
-                        <th><b>Receita Gam R$.</b></th>
-                        <th><b>Cpm Gam R$.</b></th>
-                        <th><b>Custo fb Us$.</b></th>
-                        <th><b>Receita Gam Us$.</b></th>
-                        <th><b>Cpm Gam Us$.</b></th>
-                        <th><b>Lucro Us$</b></th>
-                        <th><b>Lucro % </b></th>
-                        <th><b>Data</b></th>
+                        <th class="bg-info text-white">Conta</th>
+                        <th class="bg-info text-white">Campanha</th>
+                        <th class="bg-info text-white">Objetivo</th>
+                        <th class="bg-info text-white">Impressao</th>
+                        <th class="bg-info text-white">Clicks</th>
+                        <th class="bg-info text-white">CTR</th>
+                        <th class="bg-info text-white">CPC</th>
+                        <th class="bg-primary text-white">Dominio</th>
+                        <th class="bg-primary text-white">Impressoes</th>
+                        <th class="bg-primary text-white">Clicks</th>
+                        <th class="bg-primary text-white">CTR</th>
+                        <th class="bg-primary text-white">CPM</th>
+                        <th class="bg-primary text-white">Receita</th>
+                        <th class="bg-success text-white">Results</th>
                     </tr>
                 </thead>
                 <tbody id="_tablebody">
                    @foreach ($reports as $c)
                    <tr>
-                        <td>{{ $c['domain'] }}</td>
+                        <td class="stickycolumn">{{ $c['domain'] }}</td>
                         <td>{{ $c['country'] }}</td>
-                        <td>{{ $c['campaign_name'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
-                        <td>R$. {{ $c['spend'] }}</td>
-                        <td>R$. {{ round((($c['receita'])*$dolar),3) }}</td>
-                        <td>R$. {{ round((($c['cpm_gam'])*$dolar),3) }}</td>
-                        <td>Us$. {{ round(($c['spend']/$dolar),3) }}</td>
-                        <td>Us$. {{ (($c['receita'])) }}</td>
-                        <td>Us$. {{ (($c['cpm_gam'])) }}</td>
-                        <td>Us$ {{  ( round(($c['receita'])-($c['spend']/$dolar),3)) }}  </td>
-                        <td> {{ $c['percent'] }} %</td>
-                        <td> {{ $c['date_preset']}}</td>
+
+                        <td>{{ $c['account_name'] }}</td>
+                        <td>{{ $c['campaign_name'] }}</td>
+                        <td>{{ $c['objective'] }}</td>
+                        <td>{{ $c['impressions_fb'] }}</td>
+                        <td>{{ $c['clicks_fb'] }}</td>
+                        <td>{{ $c['ctr_fb'] }}</td>
+                        <td>{{ $c['cpc_fb'] }}</td>
+                        <td>{{ $c['domain'] }}</td>
+                        <td>{{ $c['impressions'] }}</td>
+                        <td>{{ $c['clicks'] }}</td>
+                        <td>{{ $c['ctr'] }}</td>
+                        <td>{{ $c['cpm'] }}</td>
+                        <td>{{ $c['receita'] }}</td>
+                        <td>
+                            <p>Un monte de coisas</p>
+                        </td>
                     </tr>
                    @endforeach
 
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th><b>Dominio</b></th>
+                        <th class="stickycolumn"><b>Dominio</b></th>
                         <th><b>Pais</b></th>
-                        <th><b>Campanha fb</b></th>
                         <th><b>Chave</b></th>
-                        <th><b>Custo fb R$.</b></th>
-                        <th><b>Receita Gam R$.</b></th>
-                        <th><b>Cpm Gam R$.</b></th>
-                        <th><b>Custo fb Us$.</b></th>
-                        <th><b>Receita Gam Us$.</b></th>
-                        <th><b>Cpm Gam Us$.</b></th>
-                        <th><b>Lucro</b></th>
-                        <th><b>Lucro % </b></th>
-                        <th><b>Data</b></th>
+                        <th class="bg-info text-white">Conta</th>
+                        <th class="bg-info text-white">Campanha</th>
+                        <th class="bg-info text-white">Objetivo</th>
+                        <th class="bg-info text-white">Impressao</th>
+                        <th class="bg-info text-white">Clicks</th>
+                        <th class="bg-info text-white">CTR</th>
+                        <th class="bg-info text-white">CPC</th>
+                        <th class="bg-primary text-white">Dominio</th>
+                        <th class="bg-primary text-white">Impressoes</th>
+                        <th class="bg-primary text-white">Clicks</th>
+                        <th class="bg-primary text-white">CTR</th>
+                        <th class="bg-primary text-white">CPM</th>
+                        <th class="bg-primary text-white">Receita</th>
+                        <th class="bg-success text-white">Results</th>
                 </tfoot>
             </table>
         </div>
     </div>
    </div>
 </div>
-
+<style>
+    .stickycolumn{
+        position:sticky !important;
+        left:0 !important;
+        background-color:white !important;
+        border-right: 2px solid black;
+        z-index: 10;
+    }
+</style>
 @endsection
 

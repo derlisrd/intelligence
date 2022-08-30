@@ -40,7 +40,7 @@ class FacebookCampaigns extends Controller
                print_r($c['data']);
                echo '</pre>'; */
                $date = date('Y-m-d');
-               $f = ['cost_per_conversion','dda_results','conversions','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
+               $f = ['website_ctr','cost_per_conversion','actions','ad_click_actions','dda_results','conversions','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
                $b = ['breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
 
             $i = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();

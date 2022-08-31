@@ -13,7 +13,7 @@
                      <h3 class="card-title p-2">
                         Campanha
                      </h3>
-                     <table id="zero_config" class="table table-striped table-bordered">
+                     <table id="myTable" class="table table-striped table-bordered">
                          <thead>
                              <tr>
                                  <th><b>Conta</b></th>

@@ -86,10 +86,11 @@ class ReceitasController extends Controller
                 ["date","=",$date_preset]
             ])->get();
             $count = $gam->count();
-            $fbp = ($gam->first());
+            $google = ($gam->first());
             if($count>0){
 
                 $narray= [
+                    "date"=>$google->date,
                     "impressions_fb"=>$row['impressions'],
                     "clicks_fb"=>$row['clicks'],
                     "ctr_fb"=>$row['ctr'],
@@ -99,23 +100,23 @@ class ReceitasController extends Controller
                     "objective"=>$row['objective'],
                     "spend"=> $row['spend'],
 
-                    "clicks"=>$fbp->clicks,
-                    "domain"=>$fbp->domain,
-                    "cpm"=>$fbp->cpm,
-                    "ctr"=>$fbp->ctr,
-                    "receita"=>$fbp->receita,
-                    "impressions"=>$fbp->impressions,
-                    "key_value"=>$fbp->value,
-                    "country"=>$fbp->country,
+                    "clicks"=>$google->clicks,
+                    "domain"=>$google->domain,
+                    "cpm"=>$google->cpm,
+                    "ctr"=>$google->ctr,
+                    "receita"=>$google->receita,
+                    "impressions"=>$google->impressions,
+                    "key_value"=>$google->value,
+                    "country"=>$google->country,
 
 
 
                 ];
                 array_push($report,$narray);
             }
-            //echo "count:$count campaign:". $keyvalue . " value:$valuefb  pais:$pais $fbp <br/>";
+            //echo "count:$count campaign:". $keyvalue . " value:$valuefb  pais:$pais $google <br/>";
 
-            //echo "keyvalue $keyvalue valuefb $valuefb receita do dominio =" . $fbp->domain . " receita=". $fbp->receita." <br/>";
+            //echo "keyvalue $keyvalue valuefb $valuefb receita do dominio =" . $google->domain . " receita=". $google->receita." <br/>";
         }
 
         /* echo "</pre>";

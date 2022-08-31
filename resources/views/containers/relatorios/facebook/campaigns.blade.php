@@ -68,18 +68,20 @@
                      <h3 class="card-title p-2">
                         Campanhas
                      </h3>
-                     <table id="zero_config" class="table table-striped table-bordered">
+                     <table id="myTable" class="table table-striped table-bordered">
                          <thead>
                              <tr>
-                                 <th><b>CONTA</b></th>
-                                 <th><b>PAIS</b></th>
-                                 <th><b>CAMPANHA</b></th>
-                                 <th><b>CUSTO</b></th>
-                                 <th><b>IMPRESSOES</b></th>
-                                 <th><b>STATUS</b></th>
-                                 <th><b>CLICKS</b></th>
+                                 <th><b>Conta</b></th>
+                                 <th><b>Data</b></th>
+                                 <th><b>Pais</b></th>
+                                 <th><b>Campanha</b></th>
+                                 <th><b>Custo</b></th>
+                                 <th><b>Impressoes</b></th>
+                                 <th><b>Status</b></th>
+                                 <th><b>Clicks</b></th>
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
+                                 <th><b>CTR</b></th>
                                  <th><b>DATA DE CRIAÇAO</b></th>
                              </tr>
                          </thead>

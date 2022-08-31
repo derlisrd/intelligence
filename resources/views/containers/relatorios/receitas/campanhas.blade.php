@@ -67,6 +67,7 @@
                 <thead>
                     <tr>
                         <th class="stickycolumn bg-white"><b>Dominio</b></th>
+                        <th><b>Data</b></th>
                         <th><b>Pais</b></th>
                         <th><b>Chave</b></th>
                         <th class="bg-info text-white">Conta</th>
@@ -81,7 +82,7 @@
                         <th class="bg-primary text-white">Clicks</th>
                         <th class="bg-primary text-white">CTR</th>
                         <th class="bg-primary text-white">CPM</th>
-                        <th class="bg-light">Facebook Custo</th>
+                        <th class="bg-info text-white">FB: custo</th>
                         <th class="bg-secondary text-white">Receita</th>
                         <th class="bg-success text-white">Lucro</th>
                     </tr>
@@ -91,9 +92,9 @@
                    @foreach ($reports as $c)
                    <tr>
                         <td class="stickycolumn">{{ $c['domain'] }}</td>
+                        <td>{{ $c['date'] }}</td>
                         <td>{{ $c['country'] }}</td>
                         <td>{{ $c['key_value'] }}</td>
-
                         <td>{{ $c['account_name'] }}</td>
                         <td>{{ $c['campaign_name'] }}</td>
                         <td>{{ $c['objective'] }}</td>
@@ -116,6 +117,7 @@
                 <tfoot>
                     <tr>
                         <th class="stickycolumn bg-white"><b>Dominio</b></th>
+                        <th><b>Data</b></th>
                         <th><b>Pais</b></th>
                         <th><b>Chave</b></th>
                         <th class="bg-info text-white">Conta</th>
@@ -130,7 +132,7 @@
                         <th class="bg-primary text-white">Clicks</th>
                         <th class="bg-primary text-white">CTR</th>
                         <th class="bg-primary text-white">CPM</th>
-                        <th class="bg-light">Facebook Custo</th>
+                        <th class="bg-info text-white">FB: custo</th>
                         <th class="bg-secondary text-white">Receita</th>
                         <th class="bg-success text-white">Lucro</th>
                 </tfoot>

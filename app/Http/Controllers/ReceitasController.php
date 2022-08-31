@@ -66,7 +66,7 @@ class ReceitasController extends Controller
         $report = [];
 
 
-         echo "<pre>";
+        /*  echo "<pre>"; */
         foreach($facebook as $fb){
             $keyvalue = $fb['campaign_name'];
             $pais = $fb['country'];
@@ -75,16 +75,9 @@ class ReceitasController extends Controller
 
             if(!$domain){
                 $domain = $arr[0];
-                echo "domain: ". $domain . "<br>";
             }
-            echo $keyvalue."<br>";
-            //preg_match_all('!\d+!', $arr[1], $matches);
-            //$valuefb = ($matches[0][0]);
-            //["value","LIKE",'%'.$valuefb.'%'],
             $val = $arr[1];
-
-            //print($arr[0]) ; echo   ."<br>";
-             /* $gam = GoogleGamCampaigns::where([
+             $gam = GoogleGamCampaigns::where([
                 ["domain","=",$domain],
                 ["name","=",'utm_campaign'],
                 ["value","=",$val],
@@ -93,6 +86,7 @@ class ReceitasController extends Controller
                 ])->get();
             $count = $gam->count();
             $google = ($gam->first());
+
             if($count>0){
                 $narray= [
                     "date"=>$google->date,
@@ -115,12 +109,12 @@ class ReceitasController extends Controller
                     "country"=>$google->country
                 ];
                 array_push($report,$narray);
-            } */
+            }
 
         }
 
-         echo "</pre>";
-        return;
+        /*  echo "</pre>";
+        return; */
 
 
         $data = [

@@ -35,7 +35,7 @@ class ReceitasController extends Controller
         $dolar = Cotacao::find(1);
         $dolar = $dolar->valor;
         $datetoday = date('Y-m-d');
-        $fbc = FacebookLastCampaign::query();
+        $flc = FacebookLastCampaign::query();
 
         $domain = $request->domain;
         $country = $request->country;
@@ -45,60 +45,65 @@ class ReceitasController extends Controller
         $hasta = $request->hasta;
 
         if($domain){
-            $fbc->where('campaign_name','LIKE','%'.$domain.'%');
+            $flc->where('campaign_name','LIKE','%'.$domain.'%');
         }
         if($country){
-            $fbc->where('country','=',$country);
+            $flc->where('country','=',$country);
         }
         if($value){
-            $fbc->where('campaign_name','LIKE','%'.$value.'%');
+            $flc->where('campaign_name','LIKE','%'.$value.'%');
         }
 
         if($desde && $hasta){
-            $fbc->whereBetween('date_preset',[$desde,$hasta]);
+            $flc->whereBetween('date_preset',[$desde,$hasta]);
         }
         else{
-            $fbc->where('date_preset',$datetoday);
+            $flc->where('date_preset',$datetoday);
         }
 
+        $facebook = $flc->get();
 
-
-        $facebook = ($fbc->get()->toArray());
         $report = [];
-        //echo "<pre>";
-        foreach($facebook as $row){
-            $keyvalue = $row['campaign_name'];
-            $pais = $row['country'];
-            $date_preset = $row['date_preset'];
-            $arr = explode('#',$keyvalue);
-            $custodolar = $row['spend'] / $dolar;
 
+
+         echo "<pre>";
+        foreach($facebook as $fb){
+            $keyvalue = $fb['campaign_name'];
+            $pais = $fb['country'];
+            $date_preset = $fb['date_preset'];
+            $arr = explode('#',$keyvalue);
+
+            if(!$domain){
+                $domain = $arr[0];
+                echo "domain: ". $domain . "<br>";
+            }
+            echo $keyvalue."<br>";
             //preg_match_all('!\d+!', $arr[1], $matches);
             //$valuefb = ($matches[0][0]);
             //["value","LIKE",'%'.$valuefb.'%'],
             $val = $arr[1];
+
             //print($arr[0]) ; echo   ."<br>";
-             $gam = GoogleGamCampaigns::where([
+             /* $gam = GoogleGamCampaigns::where([
                 ["domain","=",$domain],
                 ["name","=",'utm_campaign'],
                 ["value","=",$val],
                 ["country","=",$pais],
                 ["date","=",$date_preset]
-            ])->get();
+                ])->get();
             $count = $gam->count();
             $google = ($gam->first());
             if($count>0){
-
                 $narray= [
                     "date"=>$google->date,
-                    "impressions_fb"=>$row['impressions'],
-                    "clicks_fb"=>$row['clicks'],
-                    "ctr_fb"=>$row['ctr'],
-                    "cpc_fb"=>$row['cpc'],
-                    "campaign_name"=>$row['campaign_name'],
-                    "account_name"=>$row['account_name'],
-                    "objective"=>$row['objective'],
-                    "spend"=> $row['spend'],
+                    "impressions_fb"=>$fb['impressions'],
+                    "clicks_fb"=>$fb['clicks'],
+                    "ctr_fb"=>$fb['ctr'],
+                    "cpc_fb"=>$fb['cpc'],
+                    "campaign_name"=>$fb['campaign_name'],
+                    "account_name"=>$fb['account_name'],
+                    "objective"=>$fb['objective'],
+                    "spend"=> $fb['spend'],
 
                     "clicks"=>$google->clicks,
                     "domain"=>$google->domain,
@@ -107,20 +112,15 @@ class ReceitasController extends Controller
                     "receita"=>$google->receita,
                     "impressions"=>$google->impressions,
                     "key_value"=>$google->value,
-                    "country"=>$google->country,
-
-
-
+                    "country"=>$google->country
                 ];
                 array_push($report,$narray);
-            }
-            //echo "count:$count campaign:". $keyvalue . " value:$valuefb  pais:$pais $google <br/>";
+            } */
 
-            //echo "keyvalue $keyvalue valuefb $valuefb receita do dominio =" . $google->domain . " receita=". $google->receita." <br/>";
         }
 
-        /* echo "</pre>";
-        return; */
+         echo "</pre>";
+        return;
 
 
         $data = [

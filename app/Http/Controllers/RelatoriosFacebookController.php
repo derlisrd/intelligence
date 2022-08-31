@@ -108,7 +108,7 @@ class RelatoriosFacebookController extends Controller
         ->where("account_active",true)
         ->orderBy('account_name', 'ASC')
         ->get();
-        $until = $request->until;
+        $since = $request->since;
         $to = $request->to;
         $country = $request->country;
 
@@ -116,8 +116,8 @@ class RelatoriosFacebookController extends Controller
 
         $last = FacebookLastCampaign::query();
 
-        if($until && $to){
-            $last->whereBetween("date_start", $until." 00:00:00", $to." 23:59:59");
+        if($since && $to){
+            $last->whereBetween("date_preset", [$since, $to]);
         }
         if($account_id){
             $last->where("account_id", $account_id);
@@ -137,6 +137,7 @@ class RelatoriosFacebookController extends Controller
             $clicks = 0;
             $cpm  = 0;
             $cpc = 0;
+            $ctr = 0 ;
             $i = (-1);
             $idcampaign = null;
             foreach($campaigns as $c){
@@ -146,28 +147,10 @@ class RelatoriosFacebookController extends Controller
                     $clicks += $c['clicks'];
                     $cpm  += $c['cpm'];
                     $cpc  += $c['cpc'];
+                    $ctr  += $c['ctr'];
                     $arr[$i] = array(
                         "id"=>$c['id'],
-                        "campaign_name" => $c['campaign_name'],
-                        "account_name"=>$c['account_name'],
-                        "campaign_id" => $c['campaign_id'],
-                        "impressions" => $impressions,
-                        "spend" => $spend,
-                        "status"=>$c['status'],
-                        "country"=>"",
-                        "clicks"=>$clicks,
-                        "cpm"=>$cpm,
-                        "cpc"=>"",
-                        "created_time"=>$c['created_time'],
-                    );
-                }
-                else{
-                    $impressions = $c['impressions'];
-                    $spend = $c['spend'];
-                    $clicks = $c['clicks'];
-                    $cpm  = $c['cpm'];
-                    array_push($arr, array(
-                        "id"=>$c['id'],
+                        "date_preset"=>$c['date_preset'],
                         "campaign_name" => $c['campaign_name'],
                         "account_name"=>$c['account_name'],
                         "campaign_id" => $c['campaign_id'],
@@ -178,6 +161,29 @@ class RelatoriosFacebookController extends Controller
                         "clicks"=>$clicks,
                         "cpm"=>$cpm,
                         "cpc"=>$cpc,
+                        "ctr"=>$ctr,
+                        "created_time"=>$c['created_time'],
+                    );
+                }
+                else{
+                    $impressions = $c['impressions'];
+                    $spend = $c['spend'];
+                    $clicks = $c['clicks'];
+                    $cpm  = $c['cpm'];
+                    array_push($arr, array(
+                        "id"=>$c['id'],
+                        "date_preset"=>$c['date_preset'],
+                        "campaign_name" => $c['campaign_name'],
+                        "account_name"=>$c['account_name'],
+                        "campaign_id" => $c['campaign_id'],
+                        "impressions" => $impressions,
+                        "spend" => $spend,
+                        "status"=>$c['status'],
+                        "country"=>"",
+                        "clicks"=>$clicks,
+                        "cpm"=>$cpm,
+                        "cpc"=>$cpc,
+                        "ctr"=>$ctr,
                         "created_time"=>$c['created_time'],
                     ));
                     $i++;
@@ -200,7 +206,9 @@ class RelatoriosFacebookController extends Controller
             "fbuserid"=>$fbuserid,
             "country"=>$country,
             "account_id"=>$account_id,
-            "ads_accounts"=>$ads_accounts
+            "ads_accounts"=>$ads_accounts,
+            "since"=>$since,
+            "to"=>$to,
         ];
 
 

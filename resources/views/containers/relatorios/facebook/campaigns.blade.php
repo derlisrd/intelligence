@@ -30,11 +30,11 @@
         <div class="col-sm d-flex align-items-center mt-2">
             <div class="">
                 <label for="_since" class="form-label">Desde</label>
-                <input type="date" name="since" id="_since" class="form-control form-control-lg"  />
+                <input type="date" name="since" value="{{ $since ?? '' }}" id="_since" class="form-control form-control-lg"  />
             </div>
             <div class="">
                 <label for="_since" class="form-label">Ate</label>
-                <input type="date" name="to" id="_ate" class="form-control form-control-lg"  />
+                <input type="date" name="to" id="_ate" value="{{ $to ?? '' }}" class="form-control form-control-lg"  />
             </div>
         </div>
     </div>
@@ -82,13 +82,14 @@
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
                                  <th><b>CTR</b></th>
-                                 <th><b>DATA DE CRIAÇAO</b></th>
+                                 <th><b>Criaçao</b></th>
                              </tr>
                          </thead>
                          <tbody id="_tablebody">
                              @foreach ($campaigns as $campaign)
                                 <tr>
                                     <td><b>{{ $campaign['account_name'] }}</b></td>
+                                    <td><b>{{ $campaign['date_preset'] }}</b></td>
                                     <td><b>{{ $campaign['country'] }}</b></td>
                                     <td><a href="{{ route('facebook.campaign',$campaign['id']) }}">{{ $campaign['campaign_name'] }}</a></td>
                                     <td><b>R$. {{ $campaign['spend'] }}</b></td>
@@ -97,22 +98,25 @@
                                     <td><b>{{ $campaign['clicks'] }}</b></td>
                                     <td><b>R$. {{ $campaign['cpm'] }}</b></td>
                                     <td><b>R$. {{ $campaign['cpc'] }}</b></td>
+                                    <td><b>R$. {{ $campaign['ctr'] }}</b></td>
                                     <td><b>{{ $campaign['created_time'] }}</b></td>
                                 </tr>
                              @endforeach
                          </tbody>
                          <tfoot>
                              <tr>
-                                <th><b>CONTA</b></th>
-                                <th><b>PAIS</b></th>
-                                 <th><b>CAMPANHA</b></th>
-                                 <th><b>CUSTO</b></th>
-                                 <th><b>IMPRESSOES</b></th>
-                                 <th><b>STATUS</b></th>
-                                 <th><b>CLICKS</b></th>
+                                <th><b>Conta</b></th>
+                                 <th><b>Data</b></th>
+                                 <th><b>Pais</b></th>
+                                 <th><b>Campanha</b></th>
+                                 <th><b>Custo</b></th>
+                                 <th><b>Impressoes</b></th>
+                                 <th><b>Status</b></th>
+                                 <th><b>Clicks</b></th>
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
-                                 <th><b>DATA DE CRIAÇAO</b></th>
+                                 <th><b>CTR</b></th>
+                                 <th><b>Criaçao</b></th>
                              </tr>
                          </tfoot>
                      </table>

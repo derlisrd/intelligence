@@ -76,7 +76,9 @@ class CronCampanhas extends Command
                 $campaign = $c['data'];
 
                 $date = date('Y-m-d');
-                $f = ['actions','action_values{value}','conversions','reach','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
+
+                //'actions','action_values{value}',
+                $f = ['conversions','reach','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
                 $b = ['level'=>'campaign','breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
 
 

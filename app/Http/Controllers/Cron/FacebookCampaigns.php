@@ -39,9 +39,10 @@ class FacebookCampaigns extends Controller
             echo '<pre>';
                print_r($c['data']);
                echo '</pre>'; */
-               $date = date('Y-m-d');
-               $f = ['website_ctr','cost_per_conversion','actions','ad_click_actions','dda_results','conversions','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
-               $b = ['breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
+               //$date = date('Y-m-d');
+               $date = "2022-08-29";
+               $f = ['action_values','conversion_rate_ranking','conversions','cost_per_conversion','website_purchase_roas','conversion_values','website_ctr','cost_per_conversion','actions','ad_click_actions','dda_results','conversions','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
+               $b = ['level'=>'campaign','breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
 
             $i = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();
 

@@ -77,6 +77,8 @@
                         <th class="bg-info text-white">Clicks</th>
                         <th class="bg-info text-white">CTR</th>
                         <th class="bg-info text-white">CPC</th>
+                        <th class="bg-info text-white">CPM</th>
+                        <th class="bg-info text-white">Web content view</th>
                         <th class="bg-primary text-white">Dominio</th>
                         <th class="bg-primary text-white">Impressoes</th>
                         <th class="bg-primary text-white">Clicks</th>
@@ -102,14 +104,16 @@
                         <td>{{ $c['clicks_fb'] }}</td>
                         <td>{{ $c['ctr_fb'] }}</td>
                         <td>{{ $c['cpc_fb'] }}</td>
+                        <td>{{ $c['cpm_fb'] }}</td>
+                        <td>{{ $c['web_content_view'] }}</td>
                         <td>{{ $c['domain'] }}</td>
                         <td>{{ $c['impressions'] }}</td>
                         <td>{{ $c['clicks'] }}</td>
                         <td>{{ $c['ctr'] }}</td>
                         <td>{{ $c['cpm'] }}</td>
                         <td>{{ $c['spend'] }}</td>
-                        <td><b> {{ $c['receita'] }} / {{ $dolar }} </b></td>
-                        <td>  </td>
+                        <td><b> {{ $c['receita'] }}*{{ $dolar }}={{ round($c["receita"] * $dolar,2) }} </b></td>
+                        <td> <b>R$.{{ round( ($c["receita"] * $dolar)-$c['spend'],2) }}</b> </td>
                     </tr>
                    @endforeach
 
@@ -127,6 +131,8 @@
                         <th class="bg-info text-white">Clicks</th>
                         <th class="bg-info text-white">CTR</th>
                         <th class="bg-info text-white">CPC</th>
+                        <th class="bg-info text-white">CPM</th>
+                        <th class="bg-info text-white">Web content view</th>
                         <th class="bg-primary text-white">Dominio</th>
                         <th class="bg-primary text-white">Impressoes</th>
                         <th class="bg-primary text-white">Clicks</th>

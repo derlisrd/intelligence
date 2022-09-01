@@ -31,6 +31,7 @@ class CreateFacebookLastCampaignsTable extends Migration
             $table->date("date_start")->nullable();
             $table->date("date_stop")->nullable();
             $table->string("objective");
+            $table->string("web_content_view")->nullable();
             $table->float("spend");
             $table->bigInteger("reach")->nullable();
             $table->bigInteger("impressions");

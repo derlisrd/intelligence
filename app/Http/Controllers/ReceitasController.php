@@ -89,16 +89,18 @@ class ReceitasController extends Controller
 
             if($count>0){
                 $narray= [
-                    "date"=>$google->date,
                     "impressions_fb"=>$fb['impressions'],
                     "clicks_fb"=>$fb['clicks'],
                     "ctr_fb"=>$fb['ctr'],
+                    "cpm_fb"=>$fb['cpm'],
                     "cpc_fb"=>$fb['cpc'],
                     "campaign_name"=>$fb['campaign_name'],
                     "account_name"=>$fb['account_name'],
                     "objective"=>$fb['objective'],
                     "spend"=> $fb['spend'],
+                    "web_content_view"=>$fb["web_content_view"],
 
+                    "date"=>$google->date,
                     "clicks"=>$google->clicks,
                     "domain"=>$google->domain,
                     "cpm"=>$google->cpm,

@@ -115,12 +115,12 @@ class CronCampanhas extends Command
                                 ->get();
                                 $count = $last->count();
                                 $landing_page_view = null;
-                                $web_content_view = null;
+                                $fb_pixel_view_content = null;
                                 $view_content = null;
 
                                 $datosnuevos = [
                                     "landing_page_view"=>$landing_page_view,
-                                    "web_content_view"=>$web_content_view,
+                                    "fb_pixel_view_content"=>$fb_pixel_view_content,
                                     "view_content"=>$view_content,
                                     'account_currency' => $dato['account_currency'],
                                     'account_name' => $dato['account_name'],

@@ -98,7 +98,7 @@ class ReceitasController extends Controller
                     "account_name"=>$fb['account_name'],
                     "objective"=>$fb['objective'],
                     "spend"=> $fb['spend'],
-                    "web_content_view"=>$fb["web_content_view"],
+                    "fb_pixel_view_content"=>$fb["fb_pixel_view_content"],
 
                     "date"=>$google->date,
                     "clicks"=>$google->clicks,

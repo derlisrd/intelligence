@@ -102,16 +102,16 @@
                         <td>{{ $c['objective'] }}</td>
                         <td>{{ $c['impressions_fb'] }}</td>
                         <td>{{ $c['clicks_fb'] }}</td>
-                        <td>{{ $c['ctr_fb'] }}</td>
+                        <td>{{ $c['ctr_fb'] }}%</td>
                         <td>{{ $c['cpc_fb'] }}</td>
                         <td>{{ $c['cpm_fb'] }}</td>
                         <td>{{ $c['web_content_view'] }}</td>
                         <td>{{ $c['domain'] }}</td>
                         <td>{{ $c['impressions'] }}</td>
                         <td>{{ $c['clicks'] }}</td>
-                        <td>{{ $c['ctr'] }}</td>
+                        <td>{{ $c['ctr'] }}%</td>
                         <td>{{ $c['cpm'] }}</td>
-                        <td>{{ $c['spend'] }}</td>
+                        <td>R$.{{ $c['spend'] }}</td>
                         <td><b> {{ $c['receita'] }}*{{ $dolar }}={{ round($c["receita"] * $dolar,2) }} </b></td>
                         <td> <b>R$.{{ round( ($c["receita"] * $dolar)-$c['spend'],2) }}</b> </td>
                     </tr>

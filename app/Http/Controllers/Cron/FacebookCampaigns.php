@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Cron;
 
 use App\Http\Controllers\Controller;
+use App\Models\CountryCode;
 use App\Models\FacebookAdsAccount;
+use App\Models\FacebookLastCampaign;
 use App\Models\FacebookUser;
 use FacebookAds\Api;
 use FacebookAds\Logger\CurlLogger;
@@ -30,7 +32,7 @@ class FacebookCampaigns extends Controller
             $api->setLogger(new CurlLogger());
 
             $act_id = 'act_170709447283865';
-            $idcampaign = '23851453481370712';
+            $idcampaign = '23850480526260712';
             /* $c = (new AdAccount($act_id))
                ->getCampaigns(['id','name','status','start_time','stop_time','account_id','targeting','account_name'],
                ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'date_preset'=>'today'])
@@ -40,14 +42,21 @@ class FacebookCampaigns extends Controller
                print_r($c['data']);
                echo '</pre>'; */
                //$date = date('Y-m-d');
-               $date = "2022-08-29";
-               $f = ['action_values','conversion_rate_ranking','conversions','cost_per_conversion','website_purchase_roas','conversion_values','website_ctr','cost_per_conversion','actions','ad_click_actions','dda_results','conversions','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
+               $date = "2022-08-30";
+               //'website_ctr','actions',
+               $f = ['actions','action_values{action_type}','conversions','reach','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
                $b = ['level'=>'campaign','breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
 
-            $i = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();
+            $dato = (new Campaign($idcampaign))->getInsights($f,$b)->getResponse()->getContent();
 
+           /*  $landing_page_view = isset($dato['data'][1]['actions'][0]['value']) ? $dato['data'][1]['actions'][0]['value'] : null;
+            $web_content_view = isset($dato['data'][1]['actions'][1]['value']) ? $dato['data'][1]['actions'][1]['value'] : null;
+            $view_content = isset($dato['data'][1]['actions'][2]['value']) ? $dato['data'][1]['actions'][2]['value'] : null;*/
             echo '<pre>';
-               print_r($i);
+                if(count(($dato['data']))>0){
+                    print_r($dato['data']);
+                }
+
             echo '</pre>';
 
         }
@@ -56,6 +65,51 @@ class FacebookCampaigns extends Controller
 
     }
 
+
+    public function face()
+    {
+        $users = FacebookUser::all();
+        $datetoday = date('Y-m-d');
+        foreach($users as $user){
+
+            $access_token = $user['access_token'];
+            $api = Api::init(env('FB_APP_ID'), env('FB_APP_SECRET'), $access_token);
+            $api->setLogger(new CurlLogger());
+            $id = $user['id'];
+            $accounts = FacebookAdsAccount::where([["facebook_users_id",'=',$id],['account_active','=',1]])->get();
+
+
+                $act_id = 'act_386871958696671';
+                //$account_id = $account['account_id'];
+                //$account_name = $account['account_name'];
+
+                $c = (new AdAccount($act_id))
+               ->getCampaigns(['id','name','status','start_time','stop_time','account_id','targeting','account_name'],
+               ["limit"=>200,'date_format' => 'Y-m-d H:i:s','breakdowns'=>['country'],'date_preset'=>'last_90d'])
+               ->getResponse()->getContent();
+
+                $campaign = $c['data'];
+
+                $date = "2022-08-30";
+                $f = ['actions','action_values'=>['offsite_conversion.fb_pixel_view_content'],'conversions','reach','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
+                $b = ['level'=>'campaign','breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
+
+                print "<pre>";
+                if(count($campaign) > 0){
+                    foreach($campaign as $v){
+                        $status = $v['status'];
+                        $campaign_name = $v['name'];
+                        $idcampaign = $v['id'];
+                        //$idcampaign = $v['campaign_id'];
+                        $campana = [];
+                        $dato = (new Campaign("23850480526260712"))->getInsights($f,$b)->getResponse()->getContent();
+                        print_r($dato);
+                    }
+                }
+                print "</pre>";
+
+        }
+    }
 
 
 

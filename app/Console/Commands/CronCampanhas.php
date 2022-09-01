@@ -76,8 +76,8 @@ class CronCampanhas extends Command
                 $campaign = $c['data'];
 
                 $date = date('Y-m-d');
-                $f = ['cost_per_conversion','dda_results','conversions','reach','conversions','conversion_values','ad_id','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
-                $b = ['breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
+                $f = ['actions','action_values{value}','conversions','reach','objective','created_time','impressions','cpc','cpm','ctr','campaign_name','clicks','spend','account_currency','account_id','account_name','campaign_id','objective'];
+                $b = ['level'=>'campaign','breakdowns'=>['country'],"limit"=>200,'date_format' => 'Y-m-d H:i:s','date_preset'=>'today','time_range'=>['since'=>"$date",'until'=>"$date"]];
 
 
                 if(count($campaign) > 0){
@@ -104,8 +104,6 @@ class CronCampanhas extends Command
                                 }
 
 
-
-
                                 $last = FacebookLastCampaign::
                                 where([
                                     ['country', '=', $nomedopais],
@@ -114,8 +112,14 @@ class CronCampanhas extends Command
                                 ])
                                 ->get();
                                 $count = $last->count();
+                                $landing_page_view = null;
+                                $web_content_view = null;
+                                $view_content = null;
 
                                 $datosnuevos = [
+                                    "landing_page_view"=>$landing_page_view,
+                                    "web_content_view"=>$web_content_view,
+                                    "view_content"=>$view_content,
                                     'account_currency' => $dato['account_currency'],
                                     'account_name' => $dato['account_name'],
                                     'account_id' => $dato['account_id'],
@@ -151,12 +155,8 @@ class CronCampanhas extends Command
                         }
                     }
                 }
-
             }
         }
-
-
-
     }
 
 

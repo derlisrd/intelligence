@@ -14,6 +14,7 @@
 
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.js"></script>
+
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable({

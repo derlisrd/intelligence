@@ -106,6 +106,7 @@ class CronCampanhas extends Command
                                 }
 
 
+
                                 $last = FacebookLastCampaign::
                                 where([
                                     ['country', '=', $nomedopais],
@@ -117,6 +118,20 @@ class CronCampanhas extends Command
                                 $landing_page_view = null;
                                 $fb_pixel_view_content = null;
                                 $view_content = null;
+
+                                if(isset($dato['actions']) ) {
+                                    foreach ($dato['actions'] as $action) {
+                                        if($action['action_type']=='landing_page_view'){
+                                            $landing_page_view = $action['value'];
+                                        }
+                                        if($action['action_type']=='offsite_conversion.fb_pixel_view_content'){
+                                            $fb_pixel_view_content = $action['value'];
+                                        }
+                                        if($action['action_type']=='view_content'){
+                                            $view_content = $action['value'];
+                                        }
+                                    }
+                                }
 
                                 $datosnuevos = [
                                     "landing_page_view"=>$landing_page_view,

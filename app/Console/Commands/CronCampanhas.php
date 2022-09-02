@@ -115,9 +115,9 @@ class CronCampanhas extends Command
                                 ])
                                 ->get();
                                 $count = $last->count();
-                                $landing_page_view = null;
-                                $fb_pixel_view_content = null;
-                                $view_content = null;
+                                $landing_page_view = 0;
+                                $fb_pixel_view_content = 0;
+                                $view_content = 0;
 
                                 if(isset($dato['actions']) ) {
                                     foreach ($dato['actions'] as $action) {

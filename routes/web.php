@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("/auth/logout",[LoginController::class,"logout"])->name("auth.logout");
 
-    Route::get("fb",[FacebookCampaigns::class,"getcampaigns"]);
+    Route::get("fb",[FacebookCampaigns::class,"fb"]);
 
 
     Route::get("face",[FacebookCampaigns::class,"face"]);

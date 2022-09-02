@@ -13,12 +13,14 @@
 <!--This page JavaScript -->
 
 
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.12.1/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready( function () {
         $('#myTable').DataTable({
-            'iDisplayLength': 5
+            'iDisplayLength': 5,
+            responsive: true
         });
     });
 </script>

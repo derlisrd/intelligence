@@ -78,14 +78,14 @@
                         <th class="bg-info text-white">CTR</th>
                         <th class="bg-info text-white">CPC</th>
                         <th class="bg-info text-white">CPM</th>
-                        <th class="bg-info text-white">Web content view</th>
+                        <th class="bg-info text-white">Facebook pixel view</th>
                         <th class="bg-primary text-white">Dominio</th>
                         <th class="bg-primary text-white">Impressoes</th>
                         <th class="bg-primary text-white">Clicks</th>
                         <th class="bg-primary text-white">CTR</th>
                         <th class="bg-primary text-white">CPM</th>
-                        <th class="bg-info text-white">FB: custo</th>
-                        <th class="bg-secondary text-white">Receita</th>
+                        <th class="bg-success text-white">FB: custo</th>
+                        <th class="bg-success text-white">Receita</th>
                         <th class="bg-success text-white">Lucro</th>
                     </tr>
                 </thead>
@@ -112,7 +112,7 @@
                         <td>{{ $c['ctr'] }}%</td>
                         <td>{{ $c['cpm'] }}</td>
                         <td>R$.{{ $c['spend'] }}</td>
-                        <td><b> {{ $c['receita'] }}*{{ $dolar }}={{ round($c["receita"] * $dolar,2) }} </b></td>
+                        <td><b> {{ round(($c["receita"] * $dolar),2) }} </b></td>
                         <td> <b>R$.{{ round( ($c["receita"] * $dolar)-$c['spend'],2) }}</b> </td>
                     </tr>
                    @endforeach
@@ -132,14 +132,14 @@
                         <th class="bg-info text-white">CTR</th>
                         <th class="bg-info text-white">CPC</th>
                         <th class="bg-info text-white">CPM</th>
-                        <th class="bg-info text-white">Web content view</th>
+                        <th class="bg-info text-white">Facebook pixel view</th>
                         <th class="bg-primary text-white">Dominio</th>
                         <th class="bg-primary text-white">Impressoes</th>
                         <th class="bg-primary text-white">Clicks</th>
                         <th class="bg-primary text-white">CTR</th>
                         <th class="bg-primary text-white">CPM</th>
-                        <th class="bg-info text-white">FB: custo</th>
-                        <th class="bg-secondary text-white">Receita</th>
+                        <th class="bg-success text-white">FB: custo</th>
+                        <th class="bg-success text-white">Receita</th>
                         <th class="bg-success text-white">Lucro</th>
                 </tfoot>
             </table>

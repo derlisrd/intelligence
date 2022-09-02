@@ -96,9 +96,6 @@ class RelatoriosFacebookController extends Controller
 
     public function postCampaigns(Request $request){
 
-
-
-
         $paises = CountryCode::all();
 
         $fbuserid = $request->fbuserid;
@@ -163,6 +160,7 @@ class RelatoriosFacebookController extends Controller
                         "cpc"=>$cpc,
                         "ctr"=>$ctr,
                         "created_time"=>$c['created_time'],
+                        "fb_pixel_view_content"=>$c['fb_pixel_view_content']
                     );
                 }
                 else{
@@ -185,6 +183,7 @@ class RelatoriosFacebookController extends Controller
                         "cpc"=>$cpc,
                         "ctr"=>$ctr,
                         "created_time"=>$c['created_time'],
+                        "fb_pixel_view_content"=>$c['fb_pixel_view_content']
                     ));
                     $i++;
                 }

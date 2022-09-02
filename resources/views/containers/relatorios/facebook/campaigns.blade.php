@@ -82,6 +82,7 @@
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
                                  <th><b>CTR</b></th>
+                                 <th><b>Pixel</b></th>
                                  <th><b>Criaçao</b></th>
                              </tr>
                          </thead>
@@ -99,6 +100,7 @@
                                     <td><b>R$. {{ $campaign['cpm'] }}</b></td>
                                     <td><b>R$. {{ $campaign['cpc'] }}</b></td>
                                     <td><b>R$. {{ $campaign['ctr'] }}</b></td>
+                                    <td><b>{{ $campaign['fb_pixel_view_content'] }}</b></td>
                                     <td><b>{{ $campaign['created_time'] }}</b></td>
                                 </tr>
                              @endforeach
@@ -116,6 +118,7 @@
                                  <th><b>CPM</b></th>
                                  <th><b>CPC</b></th>
                                  <th><b>CTR</b></th>
+                                 <th><b>Pixel</b></th>
                                  <th><b>Criaçao</b></th>
                              </tr>
                          </tfoot>

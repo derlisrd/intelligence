@@ -43,9 +43,11 @@ class ReceitasController extends Controller
 
         $desde = $request->desde;
         $hasta = $request->hasta;
+        $no_domain = true;
 
         if($domain){
             $flc->where('campaign_name','LIKE','%'.$domain.'%');
+            $no_domain = false;
         }
         if($country){
             $flc->where('country','=',$country);
@@ -64,6 +66,8 @@ class ReceitasController extends Controller
         $facebook = $flc->get();
 
         $report = [];
+
+
 
 
         /*  echo "<pre>"; */
@@ -122,7 +126,7 @@ class ReceitasController extends Controller
         $data = [
             "domains"=>Domain::orderBy('domain')->get(),"campaigns"=>[],
             "countries"=>CountryCode::all()->sortBy("name"),
-            "domain"=>$domain,
+            "domain"=> $no_domain ? "" : $domain,
             "country"=>$country,
             "value"=>$value,
             "reports"=>$report,
